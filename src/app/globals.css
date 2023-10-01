@@ -154,7 +154,7 @@
 .container {
   margin: 0 auto;
   width: calc(100% - 20px);
-  max-width: 1440px;
+  max-width: 1520px;
 }
 
 @media (min-width: 640px) {
