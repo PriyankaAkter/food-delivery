@@ -6,7 +6,7 @@ const HomeCategories = () => {
     const sliceItems1 = items.slice(8,14)
   return (
     <div className='py-16'>
-        <h6 className='mb-8'>What’s on your mind?</h6>
+        <h6 className='mb-8 font-bold'>What’s on your mind?</h6>
         <div className="grid grid-cols-6 gap-[52px]">
           {sliceItems1.map((item, index) => (
             <div className=" p-8 grid gap-5" key={index}>

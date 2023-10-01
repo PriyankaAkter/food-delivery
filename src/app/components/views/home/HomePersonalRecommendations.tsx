@@ -8,7 +8,7 @@ const HomePersonalRecommendations = () => {
     const sliceItems1 = items.slice(14)
   return (
     <div className='py-16'>
-        <h6 className="mb-8">Personalized recommendations</h6>
+        <h6 className="mb-8 font-bold">Personalized recommendations</h6>
         <div className="grid grid-cols-4 gap-24 rounded-[10px] ">
           {sliceItems1.map((item, index) => (
             <div className="bg-[#F8F8F8] p-8 grid gap-5" key={index}>

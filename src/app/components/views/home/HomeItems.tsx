@@ -13,7 +13,7 @@ const sliceItems2 = items.slice(4,8)
   return (
     <div className="grid grid-cols-2 gap-40 py-16">
       <div className="">
-        <h6 className="mb-5">Nearby Restaurants</h6>
+        <h6 className="mb-5 font-bold">Nearby Restaurants</h6>
         <div className="grid grid-cols-2 gap-8 rounded-[10px] ">
           {sliceItems1.map((item, index) => (
             <div className="bg-[#F8F8F8] p-8 grid gap-5" key={index}>
@@ -43,7 +43,7 @@ const sliceItems2 = items.slice(4,8)
         </div>
       </div>
       <div className="">
-        <h6 className="mb-5">Recommended Food Items</h6>
+        <h6 className="mb-5 font-bold">Recommended Food Items</h6>
         <div className="grid grid-cols-2 gap-8 rounded-[10px] ">
           {sliceItems2.map((item, index) => (
             <div className="bg-[#F8F8F8] p-8 grid gap-5" key={index}>
