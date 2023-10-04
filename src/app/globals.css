@@ -73,9 +73,9 @@
     background: white;
     /* font-family: 'Inter', sans-serif; */
   }
-  .display {
-    @apply text-3xl font-normal font-yellowTail md:text-4xl text-secondary;
-  }
+  /* .display {
+    @apply text-3xl font-normal md:text-4xl text-secondary;
+  } */
   h1 {
     @apply text-3xl font-medium text-[#202020] font-poppins sm:text-4xl md:text-[40px] xl:text-6xl;
   }

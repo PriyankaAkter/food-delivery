@@ -11,14 +11,14 @@ const sliceItems2 = items.slice(4,8)
 
 
   return (
-    <div className="grid grid-cols-2 gap-40 py-16">
+    <div className="grid grid-cols-1 2xl:grid-cols-2 gap-40 py-16">
       <div className="">
         <h6 className="mb-5 font-bold">Nearby Restaurants</h6>
-        <div className="grid grid-cols-2 gap-8 rounded-[10px] ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-2 gap-8 rounded-[10px] ">
           {sliceItems1.map((item, index) => (
             <div className="bg-[#F8F8F8] p-8 grid gap-5" key={index}>
               <div className="w-full h-[256px] relative">
-                <Image src={item.img} alt="Food" fill />
+                <Image src={item.img} alt="Food" fill objectFit="cover" className="rounded-xl" />
               </div>
               <h6 className="font-bold">{item.name}</h6>
               <div className="flex justify-between items-center">
@@ -44,7 +44,7 @@ const sliceItems2 = items.slice(4,8)
       </div>
       <div className="">
         <h6 className="mb-5 font-bold">Recommended Food Items</h6>
-        <div className="grid grid-cols-2 gap-8 rounded-[10px] ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-2 gap-8 rounded-[10px] ">
           {sliceItems2.map((item, index) => (
             <div className="bg-[#F8F8F8] p-8 grid gap-5" key={index}>
               <div className="w-full h-[256px] relative">
