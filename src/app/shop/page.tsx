@@ -1,9 +1,12 @@
 import React from 'react'
+import ShopHero from './components/ShopHero'
+import ShopItems from './components/ShopItems'
 
 const Page = () => {
   return (
     <div>
-        Shop Page
+        <ShopHero />
+        <ShopItems />
     </div>
   )
 }

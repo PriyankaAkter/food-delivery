@@ -3,15 +3,15 @@ import ButtonOne from "../../shared/ButtonOne";
 
 export const HomeHero = () => {
   return (
-    <div className="py-20">
-      <div className="grid grid-cols-1 2xl:grid-cols-2 gap-[60px] ">
+    <div className="py-20 container">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-[60px] ">
         <div className="flex flex-col justify-center gap-10">
           <div className="text-5xl leading-[60px] 2xl:text-[60px] font-medium">
             Premium <span className="text-[#FC8019]">quality</span> <br />
             Food for your
             <span className="text-[#FC8019]"> healthy </span>& Daily Life
           </div>
-          <p className="w-full xl:w-[712px]">
+          <p className="w-full ">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -29,7 +29,7 @@ export const HomeHero = () => {
           <ButtonOne href="/" title="Get Started" className="bg-black text-white w-[200px]" />
         </div>
         <div className="grid 2xl:grid-cols-2 gap-[60px] 2xl:place-items-center ">
-          <div className="relative w-full sm:w-[450px] 2xl:w-full h-[350px] 2xl:h-[600px]">
+          <div className="relative w-full sm:w-[450px] xl:w-full h-[350px] 2xl:h-[600px]">
             <Image src="/assests/images/home/hero1.png" fill alt="image" objectFit="cover" className="rounded-xl" />
           </div>
           <div className="relative w-full h-[350px] 2xl:h-[450px] hidden 2xl:flex">

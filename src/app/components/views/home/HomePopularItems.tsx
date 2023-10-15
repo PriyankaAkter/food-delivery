@@ -4,8 +4,10 @@ import Card from "../../shared/Card";
 
 const HomePopularItems = () => {
   const sliceItems1 = items.slice(0, 4);
+  // console.log({sliceItems1});
+  
   return (
-    <div className="">
+    <div className="container">
       <div className="flex  justify-between items-center mb-5">
         <h5 className="mb-5 font-bold">Popular Dishes</h5>
         <div className="text-[#FC8019] flex gap-2  items-center">

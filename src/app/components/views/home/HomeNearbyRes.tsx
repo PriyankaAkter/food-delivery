@@ -7,8 +7,10 @@ import ButtonOne from "../../shared/ButtonOne";
 
 const HomeNearbyRes = () => {
   const sliceItems1 = items.slice(0, 4);
+  // console.log({sliceItems1});
+  
   return (
-    <div className="py-16">
+    <div className="py-16 container" >
       <div className="flex  justify-between items-center mb-5">
         <h5 className="mb-5 font-bold">Nearby Restaurants</h5>
         <div className="text-[#FC8019] flex gap-2  items-center">
@@ -16,9 +18,9 @@ const HomeNearbyRes = () => {
           <IoIosArrowForward className="w-5 h-5" />
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8 rounded-[10px] ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8 rounded-[10px]" >
         {sliceItems1.map((item, index) => (
-          <div className="bg-[#F8F8F8] p-5 grid gap-3" key={index}>
+          <div className="bg-white p-5 grid gap-3 rounded-md" key={index} style={{boxShadow:'0px 4px 20px 0px rgba(0, 0, 0, 0.16)'}}>
             
             <div className="w-full h-[256px] relative">
               <Image src={item.shopImg} alt="Res" fill objectFit="cover" />
@@ -38,7 +40,7 @@ const HomeNearbyRes = () => {
             
 
             <ButtonOne
-              href="/shop"
+              href={`/restaurants/${item.shop_slug}`}
               title="Visit"
               className="text-white py-3 bg-[#FC8019] w-full"
             />

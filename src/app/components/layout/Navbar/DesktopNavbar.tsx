@@ -18,7 +18,7 @@ const DesktopNavbar = () => {
         <nav className="2xl:flex gap-16 text-xl font-bold hidden ">
           
             <Link href="/">Home</Link>
-        
+            <Link href="/restaurants">Restaurants</Link>
             <Link href="/shop">Shop</Link>
 
             <Link href="/contact">Contact</Link>
@@ -33,7 +33,8 @@ const DesktopNavbar = () => {
             ></input>
             {/* <BiSearch className="w-8 h-8 text-black" /> */}
           </form>
-          <FiShoppingBag className="w-8 h-8 text-black" />
+          <Link href='/checkout'><FiShoppingBag className="w-8 h-8 text-black" /></Link>
+          
           <ButtonOne
             href="/login"
             title="Sign Up"

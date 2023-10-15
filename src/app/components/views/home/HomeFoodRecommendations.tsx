@@ -5,7 +5,7 @@ import Card from "../../shared/Card";
 const HomeFoodRecommendations = () => {
     const sliceItems1 = items.slice(4,8)
   return (
-    <div className="py-16">
+    <div className="py-16 container">
       <div className="flex  justify-between items-center mb-5">
         <h5 className="mb-5 font-bold">Recommended Food Items</h5>
         <div className="text-[#FC8019] flex gap-2  items-center">

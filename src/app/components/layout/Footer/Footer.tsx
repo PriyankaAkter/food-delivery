@@ -6,7 +6,7 @@ import { FiTwitter } from "react-icons/fi";
 
 const Footer = () => {
   return (
-    <div className="bg-[#FC8019] w-screen py-16 2xl:py-28 ">
+    <div className="bg-black w-screen py-16 2xl:py-28 ">
       <div className="container grid grid-cols-1 lg:grid-cols-3 justify-items-center
        text-white gap-5">
         <div className="flex gap-2 items-center">

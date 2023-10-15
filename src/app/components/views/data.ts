@@ -4,188 +4,242 @@ export const items = [
         img: "/assests/images/home/img1.png",
         shopImg: "/assests/images/home/res1.png",
         name: "Ramachandra Parlour",
+        food_slug: 'ramachandra-parlour',
         shop: "Khanaz",
+        shop_slug: "khanaz",
         rating: "4.0",
         time: "30 Mins",
         price: "200",
         items: 20,
-        delivery:"Free"
+        delivery:"Free",
+        category: "indian"
     },
     {
         id: 2,
         img: "/assests/images/home/img2.png",
         shopImg: "/assests/images/home/res2.png",
         name: "Uma Parlour - Pure Vegetarian",
+        food_slug: 'uma-parlour-pure-vegetarian',
         shop: "Thai Restro",
+        shop_slug: "thai_restro",
         rating: "3.2",
         time: "20 Mins",
         price: "150",
         items: 30,
-        delivery:"Free"
+        delivery:"Free",
+        category: "indian"
     },
     {
         id: 3,
         img: "/assests/images/home/img3.png",
         shopImg: "/assests/images/home/res3.png",
         name: "Swap - Diet Meal Box",
+        food_slug: 'swap-diet-meal-box',
         shop: "Dominos",
+        shop_slug: "dominos",
         rating: "4.5",
         time: "40 Mins",
         price: "300",
         items: 15,
-        delivery:"Free"
+        delivery:"Free",
+        category: "desert"
     },
     {
         id: 4,
         img: "/assests/images/home/img4.png",
         shopImg: "/assests/images/home/res4.png",
         name: "The Good Bowl- Traditional Bowls",
+        food_slug: 'the-good-bowl-traditional-bowls',
         shop: "Hot & Spicy",
+        shop_slug: "hot_and_spicy",
         rating: "4.0",
         time: "30 Mins",
         price: "200",
         items: 10,
-        delivery:"Free"
+        delivery:"Free",
+        category: "rice"
     },
     {
         id: 5,
         img: "/assests/images/home/img5.png",
         shopImg: "/assests/images/home/res1.png",
         name: "Paneer Tikka Rice Bowl",
+        food_slug: 'paneer-tikka-rice-bowl',
         shop: "Khanaz",
+        shop_slug: "khanaz",
         rating: "4.0",
         time: "20 Mins",
-        price: "200"
+        price: "200",
+        category: "rice"
     },
     {
         id: 6,
         img: "/assests/images/home/img6.png",
         name: "Aloo Paratha Curd Meal (2 pcs)",
+        food_slug: 'aloo-paratha-curd-meal-2-pcs',
         shopImg: "/assests/images/home/res1.png",
-        shop: "Khanaz",
+        shop: "Hot & Spicy",
+        shop_slug: "hot_and_spicy",
         rating: "4.0",
         time: "30 Mins",
-        price: "200"
+        price: "200",
+        category: "fast-food"
     },
     {
         id: 7,
         img: "/assests/images/home/img7.png",
         shopImg: "/assests/images/home/res1.png",
         name: "Baked Pizza Wrap - Vegetarian",
+        food_slug: 'baked-pizza-wrap-vegetarian',
         shop: "Khanaz",
+        shop_slug: "khanaz",
         rating: "4.0",
         time: "30 Mins",
-        price: "200"
+        price: "200",
+        category: "fast-food"
     },
     {
         id: 8,
         img: "/assests/images/home/img8.png",
         shopImg: "/assests/images/home/res1.png",
         name: "Mixed Veg Fried Rice with dry fruits",
-        shop: "Khanaz",
+        food_slug: 'mixed-veg-fried-rice-with-dry-fruits',
+        shop: "Thai Restro",
+        shop_slug: "thai_restro",
         rating: "4.0",
         time: "30 Mins",
-        price: "200"
+        price: "200",
+        category: "rice"
     },
     {
         id: 9,
         img: "/assests/images/home/img9.png",
         shopImg: "/assests/images/home/res1.png",
         name: "Sandwich",
-        shop: "Khanaz",
+        food_slug: 'sandwich',
+        shop: "Dominos",
+        shop_slug: "dominos",
         rating: "4.0",
         time: "30 Mins",
-        price: "200"
+        price: "200",
+        category: "fast-food"
     },
     {
         id: 10,
         img: "/assests/images/home/img10.png",
         shopImg: "/assests/images/home/res1.png",
         name: "North Indian Thal",
-        shop: "Khanaz",
+        food_slug: 'north-indian-thal',
+        shop: "Dominos",
+        shop_slug: "dominos",
         rating: "4.0",
         time: "30 Mins",
-        price: "200"
+        price: "200",
+        category: "rice"
     },
     {
         id: 11,
         img: "/assests/images/home/img11.png",
         shopImg: "/assests/images/home/res1.png",
         name: "Egg BreakFast",
-        shop: "Khanaz",
+        food_slug: 'egg-break-fast',
+        shop: "Hot & Spicy",
+        shop_slug: "hot_and_spicy",
         rating: "4.0",
         time: "30 Mins",
-        price: "200"
+        price: "200",
+        category: "fast-food"
     },
     {
         id: 12,
         img: "/assests/images/home/img12.png",
         shopImg: "/assests/images/home/res1.png",
         name: "Rolls & Puffs",
-        shop: "Khanaz",
+        food_slug: 'rolls-puffs',
+        shop: "Hot & Spicy",
+        shop_slug: "hot_and_spicy",
         rating: "4.0",
         time: "30 Mins",
-        price: "200"
+        price: "200",
+        category: "fast-food"
     },
     {
         id: 13,
         img: "/assests/images/home/img13.png",
         shopImg: "/assests/images/home/res1.png",
         name: "Salads",
-        shop: "Khanaz",
+        food_slug: 'salads',
+        shop: "Dominos",
+        shop_slug: "dominos",
         rating: "4.0",
         time: "30 Mins",
-        price: "200"
+        price: "200",
+        category: "salads"
     },
     {
         id: 14,
         img: "/assests/images/home/img12.png",
         shopImg: "/assests/images/home/res1.png",
         name: "Biriyani Box",
-        shop: "Khanaz",
+        food_slug: 'biriyani-box',
+        shop: "Thai Restro",
+        shop_slug: "thai_restro",
         rating: "4.0",
         time: "30 Mins",
-        price: "200"
+        price: "200",
+        category: "rice"
     },
     {
         id: 15,
         img: "/assests/images/home/img15.png",
         shopImg: "/assests/images/home/res1.png",
         name: "Baked Pizza Wrap - Vegetarian",
-        shop: "Khanaz",
+        food_slug: 'baked-pizza-wrap-vegetarian',
+        shop: "Hot & Spicy",
+        shop_slug: "hot_and_spicy",
         rating: "4.0",
         time: "30 Mins",
-        price: "200"
+        price: "200",
+        category: "fast-food"
     },
     {
         id: 16,
         img: "/assests/images/home/img16.png",
         shopImg: "/assests/images/home/res1.png",
         name: "Butter Chicken Pizza - 8 serve",
-        shop: "Khanaz",
+        food_slug: 'butter-chicken-pizza-8-serve',
+        shop: "Thai Restro",
+        shop_slug: "thai_restro",
         rating: "4.0",
         time: "30 Mins",
-        price: "200"
+        price: "200",
+        category: "fast-food"
     },
     {
         id: 17,
         img: "/assests/images/home/img17.png",
         shopImg: "/assests/images/home/res1.png",
         name: "Mexican Patty Signature Wraps",
-        shop: "Khanaz",
+        food_slug: 'mexican-patty-signature-wraps',
+        shop: "Dominos",
+        shop_slug: "dominos",
         rating: "4.0",
         time: "30 Mins",
-        price: "200"
+        price: "200",
+        category: "fast-food"
     },
     {
         id: 18,
         img: "/assests/images/home/img18.png",
         shopImg: "/assests/images/home/res1.png",
         name: "Southwest Chicken Salad",
-        shop: "Khanaz",
+        food_slug: 'southwest-chicken-salad',
+        shop: "Thai Restro",
+        shop_slug: "thai_restro",
         rating: "4.0",
         time: "30 Mins",
-        price: "200"
+        price: "200",
+        category: "fast-food"
     },
 
 ]
