@@ -1,0 +1,176 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                 String    @id @default(cuid())
+  userId             String
+  providerType       String
+  providerId         String
+  providerAccountId  String
+  refreshToken       String?
+  accessToken        String?
+  accessTokenExpires DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  user               User      @relation(fields: [userId], references: [id])
+
+  @@unique([providerId, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  expires      DateTime
+  sessionToken String   @unique
+  accessToken  String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  password String
+  role UserRole @default(USER)
+
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model VerificationRequest {
+  id         String   @id @default(cuid())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([identifier, token])
+}
+
+// model User {
+//   id String @id @default(uuid())
+//   username String @unique
+//   email String @unique
+//   password String
+//   role String? @default("user")
+//   createdAt    DateTime @default(now())
+//   updatedAt  DateTime  @updatedAt
+// }
+
+model Customer {
+  id String @id @default(uuid())
+  name String
+  email String 
+  phone String
+  country String
+  district String
+  city String
+  orders Order[]
+  // userPreference UserPreference? @relation(fields: [userPreferenceId], references: [id])
+  //  userPreferenceId String? @unique
+  
+  // writtenPosts Post[] @relation("WrittenPosts")
+  // favoritePosts Post[] @relation("FavoritePosts")
+  createdAt    DateTime @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+
+
+model Restaurant {
+  id String @id @default(uuid()) 
+  name String @unique
+  slug String?
+  image String?
+  email String @unique
+  password String?
+  address String?
+  // district String?
+  // city String?
+  phone String?
+  deliveryTime String?
+  openingHour String?
+  closingHour String?
+  foods Food[]
+  createdAt    DateTime @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+
+model Food {
+  id String @id @default(uuid()) 
+  name String
+  image String?
+  slug String?
+  price Decimal
+  stock String?
+  description String?
+  // order Order[]
+  // author User @relation("WrittenPosts",fields: [authorId], references: [id])
+  // authorId String @unique
+  // categories Category[]
+  // favoriteBy User? @relation("FavoritePosts",fields: [favoriteById], references: [id])
+  // favoriteById String @unique
+  category Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+  restaurant Restaurant @relation(fields: [RestaurantId], references: [id])
+  RestaurantId String
+  createdAt    DateTime @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model Category {
+  id String @id @default(uuid())
+  cat_id Int?
+  name String @unique
+  slug String @unique
+  food Food[]
+  createdAt    DateTime @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model Order{
+  id String @id @default(uuid()) 
+  order_id Int?
+  value Decimal
+  quantity Int?
+  status Status @default(UnPaid)
+  customer Customer @relation(fields: [CustomerId],references: [id])
+  CustomerId String @unique
+  // foods Food[]
+  createdAt    DateTime @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+
+enum Status {
+  Paid
+  UnPaid
+}
+enum UserRole {
+  USER
+  ADMIN
+  SUPER_ADMIN
+}
+// enum Stock{
+//   InStock
+//   OutOfStock
+// }
+
+

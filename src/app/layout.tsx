@@ -1,8 +1,10 @@
-import "./globals.css";
+import "./global.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import Footer from './components/layout/Footer/Footer'
-import Navbar from "./components/layout/Navbar/Navbar";
+import QueryProvider from "./providers/QueryProvider";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toast } from "@/components/ui/toast";
+import Session from "./providers/Session";
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "900"],
@@ -22,11 +24,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable} `}>
-        <Navbar />
+        <Session>
+
+       <QueryProvider>
+
+       
         <div className=''>
         {children}
         </div>
-      <Footer />
+        {/* <Toast /> */}
+        </QueryProvider>
+        </Session>
       </body>
     </html>
   );

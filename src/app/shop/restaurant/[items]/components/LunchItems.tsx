@@ -9,7 +9,7 @@
 //       <div className="py-16 container">
 //           <div className="flex  justify-between items-center mb-5">
 //             <h5 className="mb-5 font-bold">Lunch Items</h5>
-//             <div className="text-[#FC8019] flex gap-2  items-center">
+//             <div className="text-[#F29F05] flex gap-2  items-center">
 //               <p className="font-bold">See More</p>
 //               <IoIosArrowForward className="w-5 h-5" />
 //             </div>
