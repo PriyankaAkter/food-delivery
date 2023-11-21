@@ -13,8 +13,8 @@ import { AdminLogOut } from "./AdminLogOut";
 
 export const SideBar = async () => {
   const session = await getServerSession(authOptions);
-  console.log({session});
-  
+  console.log({ session });
+
   return (
     <div className="w-[450px] bg-[#f1f2f6] py-14 px-14 h-screen">
       <div className="flex justify-between items-center mb-24">
@@ -26,18 +26,14 @@ export const SideBar = async () => {
             </div>
           )} */}
           <div className="w-16 h-16 relative">
-            
             <Image
-                fill
-                src="/assests/images/home/res1.png"
-                alt="profile"
-                className="rounded-full"
-                
-              />
-            
-              
-            </div>
-              <h6>{session?.user?.name}</h6>
+              fill
+              src="/assests/images/home/res1.png"
+              alt="profile"
+              className="rounded-full"
+            />
+          </div>
+          <h6>{session?.user?.name}</h6>
         </div>
 
         <div className="">
@@ -95,8 +91,6 @@ export const SideBar = async () => {
             <MdLogout className="text-primary w-5 h-5 hover:text-secondary" />
           </div>
           <AdminLogOut />
-          
-         
         </div>
       </div>
     </div>

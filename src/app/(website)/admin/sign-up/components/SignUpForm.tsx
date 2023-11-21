@@ -7,32 +7,19 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 
 
-
-// model User {
-//   id            String    @id @default(cuid())
-//   name          String?
-//   email         String?   @unique
-//   password String
-//   role String? @default("user")
-//   emailVerified DateTime?
-//   image         String?
-//   createdAt     DateTime  @default(now())
-//   updatedAt     DateTime  @updatedAt
-//   accounts      Account[]
-//   sessions      Session[]
-// }
-
-type formDataType = {
+type RestaurantformDataType = {
   name: string;
   email: string;
   password: string;
   confirmPassword: string;
+  
 };
 
-const signUpSchema: ZodType<formDataType> = z
+const signUpSchema: ZodType<RestaurantformDataType> = z
   .object({
     name: z.string().min(1, "Username is required"),
     email: z.string().min(1, "Email is required"),
+   
     password: z
       .string()
       .min(1, "Password is required")
@@ -54,15 +41,18 @@ const SignUpForm = () => {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<formDataType>({ resolver: zodResolver(signUpSchema) });
+  } = useForm<RestaurantformDataType>({ resolver: zodResolver(signUpSchema) });
 
-  const onSubmit = async (data: formDataType) => {
+  const onSubmit = async (data: RestaurantformDataType) => {
     console.log("Form data", data);
+    const role = "ADMIN"
     try {
-      const response = await axios.post("/api/user", {
+      const response = await axios.post("http://localhost:3000/api/admin/register", {
         name: data.name,
         email: data.email,
         password: data.password,
+        confirmPassword: data.confirmPassword,
+        role: role
       });
 
       if (response.status === 200) {
@@ -81,9 +71,9 @@ const SignUpForm = () => {
       action=""
       className="w-[500px] mx-auto py-10 grid gap-4 px-8 border"
     >
-      <h6 className="">Sign Up Form</h6>
+      <h6 className="">Restaurant register Form</h6>
       <div className=" flex flex-col gap-2">
-        <label htmlFor="username">Username</label>
+        <label htmlFor="username">Name</label>
         <input
           {...register("name")}
           type="text"
@@ -93,6 +83,7 @@ const SignUpForm = () => {
           <span className="text-red-500">{errors.name.message}</span>
         )}
       </div>
+      
       <div className=" flex flex-col gap-2">
         <label htmlFor="email">Email</label>
         <input
@@ -104,6 +95,7 @@ const SignUpForm = () => {
           <span className="text-red-500">{errors.email.message}</span>
         )}
       </div>
+     
       {/* <div className=" flex flex-col gap-2">
         <label htmlFor="role">Role</label>
         <input
@@ -141,19 +133,7 @@ const SignUpForm = () => {
         Sign Up
       </button>
 
-      <div className="grid grid-cols-3 gap-3 place-items-center">
-         <div className="w-full h-[1px] bg-gray-500"></div>
-         <h6>Or</h6>
-         <div className="w-full h-[1px] bg-gray-500"></div>
-      </div>
-      <button type="button" className="bg-black text-white py-3" onClick={()=>signIn("google",{callbackUrl:'/'})}>
-        Sign up with Google
-      </button>
-
       
-      <button type="button" className="bg-black text-white py-3" onClick={()=>signIn("github",{callbackUrl:"/"})}>
-        Sign up with Github
-      </button>
     </form>
   );
 };

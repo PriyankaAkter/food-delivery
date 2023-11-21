@@ -2,10 +2,11 @@ import { RiFolderSharedLine } from "react-icons/ri";
 import Image from "next/image";
 import { AiOutlineHome,AiOutlineHistory } from "react-icons/ai";
 import {BiSolidMessageAlt } from "react-icons/bi";
-import { MdDashboard } from "react-icons/md";
+import { MdDashboard, MdLogout } from "react-icons/md";
 import { RiCoupon5Line } from "react-icons/ri";
 import { FiSettings } from "react-icons/fi";
 import Link from "next/link";
+import { SuperAdminLogOut } from "./SuperAdminLogOut";
 
 export const SideBar = () => {
   // console.log(navbar);
@@ -70,7 +71,7 @@ export const SideBar = () => {
        
        
         
-        <div className="flex gap-8 items-center">
+        {/* <div className="flex gap-8 items-center">
           <div>
             <FiSettings className="text-primary w-5 h-5 hover:text-secondary" />
           </div>
@@ -80,6 +81,12 @@ export const SideBar = () => {
           >
             Settings
           </Link>
+        </div> */}
+        <div className="flex gap-8 items-center">
+          <div>
+            <MdLogout className="text-primary w-5 h-5 hover:text-secondary" />
+          </div>
+          <SuperAdminLogOut />
         </div>
       </div>
 
