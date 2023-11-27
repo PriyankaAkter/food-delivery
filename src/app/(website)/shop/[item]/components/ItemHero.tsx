@@ -8,63 +8,85 @@ import {
   AiOutlinePlus,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { addCart } from "@/app/redux_store/cartAddSlice";
+import { ProductType } from "@/app/types/type";
+import { useAppDispatch, useAppSelector } from "@/app/redux_store/store";
 
 
-const ItemHero = ({ item }: any) => {
-  console.log({ item });
+interface ItemHeroCards {
+  item: ProductType
+}
 
+
+
+const ItemHero:React.FC<ItemHeroCards> = ({item} ) => {
+  // console.log({ item });
+
+  const products = {
+    id: item?.id,
+    name: item?.name,
+    image: item?.image, 
+    slug: item?.slug,
+    price: item?.price,
+    stock: item?.stock,
+    
+    categoryId: item?.categoryId,
+    description: item?.description,
+    RestaurantId: item?.RestaurantId
+    // restaurant: RestaurantColumnType
+
+  }
+
+  console.log({products});
+  
+  // const dispatch = useDispatch();
+  // const carts = useSelector((state) => state.cart.products);
+  // const isExist = carts.find(cart=>item?.id===cart?.id)
+  const dispatch = useAppDispatch()
+  const cart = useAppSelector((state)=>state.cart.products)
   return (
-    <div className="grid gap-16 grid-cols-2  py-24 container">
+    <div className="flex  gap-20 items-center py-24  max-w-[1200px] mx-auto">
       <div>
-        <div className="w-full h-[515px] relative">
-          <Image src={item?.img} alt="Food" fill className="object-cover" />
+        <div className="w-[500px] h-[415px] relative">
+          <Image src={item?.image || ""} alt="Food" fill className="object-cover" />
         </div>
       </div>
       <div className="grid gap-3">
         <div className="grid gap-2">
           <h3 className="font-bold ">{item?.name}</h3>
-          <p>
-            Prepared with slow-cooked beef leg bone marrow in a spicy & aromatic
-            stew
-          </p>
-          <p>Baking Time: 10 - 20 min</p>
+          <p>Ingredients: {item?.description}</p>
+          <p>Baking Time: {item?.restaurant?.deliveryTime}</p>
           <div className="flex items-center gap-2">
             <ImSpoonKnife className="w-5 h-5 text-black" />
-            <h6 className="font-bold">{item?.shop}</h6>
+            <h6 className="font-bold">{item?.restaurant?.name}</h6>
           </div>
 
-          {/* <div className="bg-[#FFECDF] px-6 w-fit rounded-md flex justify-center items-center
-          ">
-            <p>In Stock</p>
-          </div> */}
           <h3 className="text-[#F29F05]">{item?.price} tk</h3>
+          <p>{item?.stock}</p>
+          {/* <div
+            className="bg-[#b2ffc0] px-6 py-2 w-fit rounded-md flex justify-center items-center
+          "
+          >
+            
+          </div> */}
         </div>
-        <div className="grid gap-2">
-          <div className="flex items-center gap-2 justify-start">
-            <AiFillStar className="w-5 h-5 text-[#FFB93E]" />
-            <span>(4.5) 25k Reviews</span>
+        <div className="">
+          <div className="flex items-center gap-4 mb-6">
+            <button className="border border-[#F29F05]  text-[#F29F05]rounded-[4px]  p-3">
+              <AiOutlinePlus className="w-4 h-4 " />
+            </button>
+            <h6 className="text-[#F29F05]">{cart?.length}</h6>
+            <button className="border border-[#F29F05]  rounded-[4px]  p-3">
+              <AiOutlineMinus />
+            </button>
           </div>
-
-          <div className="flex gap-12 mt-6 mb-6">
-            <div className="flex gap-7 items-center">
-              <button className="border border-[#F29F05] w-fit rounded-[4px]  p-3">
-                <AiOutlinePlus className="w-6 h-6 text-[#F29F05]" />
-              </button>
-              <h6 className="text-[#F29F05]">1</h6>
-              <button className="border border-[#F29F05] w-fit rounded-[4px]  p-3">
-                <AiOutlineMinus className="w-6 h-6 text-[#F29F05]" />
-              </button>
-            </div>
-            <button className="bg-[#F29F05] w-fit rounded-[4px] text-white flex items-center gap-3 justify-center px-10">
-              <AiOutlineShoppingCart className="w-[22px] h-[22px] text-white" />
+          <div>
+            <button onClick={()=>dispatch(addCart(products))} className="bg-[#F29F05] text-white flex items-center gap-2 py-4 px-8 rounded-md">
+              <AiOutlineShoppingCart className="w-4 h-4" />
               Add to Cart
             </button>
           </div>
-          
-          <button className="bg-inherit text-xl font-medium  text-black w-fit flex items-center justify-center gap-2">
-            <AiOutlineHeart />
-            <span>Add to Wishlist</span>
-          </button>
         </div>
       </div>
     </div>

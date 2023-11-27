@@ -78,7 +78,7 @@ const SettingsForm = () => {
 
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="my-16">
+    <form onSubmit={handleSubmit(onSubmit)} className="my-16 w-full">
       <h5>Change your account details</h5>
       <div className="grid gap-4">
         <div className="grid grid-cols-2 gap-16 mt-8">

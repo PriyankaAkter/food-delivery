@@ -1,8 +1,15 @@
 import { AiFillStar } from "react-icons/ai";
 import { items } from "../../components/views/data";
 import Link from "next/link";
+import { RestaurantColumnType } from "@/app/types/type";
 
-const RestaurantCard = ({item}:any) => {
+
+
+interface RestaurantCardProps {
+  item: RestaurantColumnType;
+}
+
+const RestaurantCard: React.FC<RestaurantCardProps> = ({item}) => {
   // const uniqueRestaurant = new Set();
 
   // const unique_restaurant = items.filter((item) => {
@@ -20,7 +27,7 @@ const RestaurantCard = ({item}:any) => {
         <div className="relative ">
           <div
             style={{
-              backgroundImage: `url(${item.image})`,
+              backgroundImage: `url(${item?.image})`,
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",

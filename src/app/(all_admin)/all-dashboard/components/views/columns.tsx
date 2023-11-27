@@ -56,15 +56,15 @@ export const columns: ColumnDef<RestaurantsData>[] = [
     accessorKey: "joining_date",
   },
 
-  {
-    id: "action",
-    header: "ACTION",
-    cell: ({row}) => {
-      return (
-        <div className="">
-         <Link href={`/all-dashboard/restaurants/${row.original.slug}`} className="py-3 px-4 border border-black rounded-md">View Details</Link>
-        </div>
-      );
-    },
-  },
+  // {
+  //   id: "action",
+  //   header: "ACTION",
+  //   cell: ({row}) => {
+  //     return (
+  //       <div className="">
+  //        <Link href={`/all-dashboard/restaurants/${row.original.slug}`} className="rounded-md">View Details</Link>
+  //       </div>
+  //     );
+  //   },
+  // },
 ];

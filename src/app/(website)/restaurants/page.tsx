@@ -25,11 +25,11 @@ const Page = () => {
 // console.log({data});
 
 return (
-  <div className="py-28 container">
+  <div className="py-10 container">
     <h6 className="text-black mb-4">All Restaurants</h6>
     {/* <div className="h-[2px] w-20 bg-[#F3AB24] my-10"></div> */}
     
-    <div className="w-full grid grid-cols-4 gap-16">
+    <div className="w-full grid grid-cols-3 gap-16">
       {
         data?.restaurants?.map((item:any,index:any)=>
           <RestaurantCard key="index" item={item}  />

@@ -7,11 +7,9 @@ import Navbar from "./components/layout/Navbar/Navbar";
 function WebsiteLayout({ children }: { children: React.ReactNode }) {
   return (
     <div>
-     <Navbar />
-        {children}
-     <Footer />
-     {/* <Toast />
-      */}
+      <Navbar />
+      {children}
+      <Footer />
     </div>
   );
 }

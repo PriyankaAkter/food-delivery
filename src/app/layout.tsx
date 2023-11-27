@@ -2,6 +2,7 @@ import "./global.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import QueryProvider from "./providers/QueryProvider";
+import ReduxProvider from "./providers/ReduxProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toast } from "@/components/ui/toast";
 import Session from "./providers/Session";
@@ -25,15 +26,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.variable} `}>
         <Session>
-
-       <QueryProvider>
-
-       
-        <div className=''>
-        {children}
-        </div>
-        {/* <Toast /> */}
-        </QueryProvider>
+          <QueryProvider>
+            <ReduxProvider>
+            <div className="">{children}</div>
+            </ReduxProvider>
+          </QueryProvider>
         </Session>
       </body>
     </html>

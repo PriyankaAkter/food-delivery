@@ -2,15 +2,18 @@ import { RiFolderSharedLine } from "react-icons/ri";
 import Image from "next/image";
 import { AiOutlineHome,AiOutlineHistory } from "react-icons/ai";
 import {BiSolidMessageAlt } from "react-icons/bi";
-import { MdDashboard } from "react-icons/md";
+import { MdDashboard, MdLogout } from "react-icons/md";
 import { RiCoupon5Line } from "react-icons/ri";
 import { FiSettings } from "react-icons/fi";
 import Link from "next/link";
+import { SuperAdminLogOur } from "./SuperAdminLogOur";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
-export const SideBar = () => {
-  // console.log(navbar);
+export const SideBar = async () => {
+  const session = await getServerSession(authOptions)
   return (
-    <div className="w-[450px] bg-[#f1f2f6] py-14 px-14 h-screen">
+    <div className="w-[400px] bg-[#f1f2f6] py-14 px-14 h-screen">
       <div className="flex justify-between items-center mb-24">
         <div className="flex gap-4">
           <div className="w-16 h-16 relative ">
@@ -22,9 +25,9 @@ export const SideBar = () => {
             />
           </div>
           <div>
-            <p>Hello,</p>
-            <h6>Priyanka</h6>
-            <p>super admin</p>
+            {/* <p>Hello,</p> */}
+            <h6>{session?.user?.name}</h6>
+            <p>{session?.user?.role}</p>
           </div>
         </div>
 
@@ -72,14 +75,11 @@ export const SideBar = () => {
         
         <div className="flex gap-8 items-center">
           <div>
-            <FiSettings className="text-primary w-5 h-5 hover:text-secondary" />
+            <MdLogout className="text-primary w-5 h-5 hover:text-secondary" />
           </div>
-          <Link
-            href="/dashboard/settings"
-            className="text-xl font-medium hover:text-secondary"
-          >
-            Settings
-          </Link>
+          <SuperAdminLogOur />
+          
+         
         </div>
       </div>
 

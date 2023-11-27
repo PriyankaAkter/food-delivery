@@ -4,21 +4,43 @@ import ItemHero from './components/ItemHero'
 import RelatedItems from './components/RelatedItems'
 import { useParams } from 'next/navigation'
 import { items } from '@/app/(website)/components/views/data'
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
+import { ProductType, RestaurantColumnType } from '@/app/types/type'
 
 const Page = () => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["restaurants"],
+    queryFn: async () => {
+      const restaurantData = await axios.get(
+        `http://localhost:3000/api/allfoods`
+      );
+      return restaurantData.data;
+    },
+  });
 
-  const params = useParams()
-  console.log({params});
 
-  const item = items.find((item)=> item.food_slug==params.item)
-  console.log({item});
+  console.log({data});
+  
 
-  const relatedItems = items.filter((item1)=> item1.category==item?.category)
-  console.log({relatedItems});
+  const params = useParams();
+  const foodSlug = params.item;
+
+  // Find the restaurant that contains the desired food item
+  const restaurant = data?.restaurants.find((restaurant:RestaurantColumnType) =>
+    restaurant?.foods?.some((food:ProductType) => food.slug === foodSlug)
+  );
+
+  // Find the specific food item
+  const foodItem = restaurant?.foods.find((food:ProductType) => food.slug === foodSlug);
+
+
+ console.log({foodItem});
+ 
   return (
     <div>
-        <ItemHero item={item} />
-        <RelatedItems relatedItems={relatedItems} />
+        <ItemHero item={foodItem} />
+        {/* <RelatedItems relatedItems={relatedItems} /> */}
     </div>
   )
 }

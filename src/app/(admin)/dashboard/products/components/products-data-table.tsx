@@ -159,7 +159,7 @@ export function ProductDataTable() {
 
   return (
     <div
-      className="rounded-[10px] w-[1460px]"
+      className="rounded-[10px] w-full overflow-x-auto"
       style={{ boxShadow: "0px 4px 10px 0px rgba(0, 0, 0, 0.16)" }}
     >
       <div className="flex justify-between items-center py-8 px-6">

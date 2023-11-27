@@ -37,7 +37,7 @@ export function DashboardDataTable<TData, TValue>({
 
   return (
     <div
-      className="rounded-[10px] w-full"
+      className="rounded-[10px] w-full overflow-x-auto"
       style={{ boxShadow: "0px 4px 10px 0px rgba(0, 0, 0, 0.16)" }}
     >
       <div className="py-8 px-6">

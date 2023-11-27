@@ -4,6 +4,7 @@ import RestaurantCard from "../../../restaurants/components/RestaurantCard";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { RestaurantColumnType } from "@/app/types/type";
 
 const HomeNearbyRes = () => {
   
@@ -11,10 +12,10 @@ const HomeNearbyRes = () => {
   const { data, isLoading, error } = useQuery({
       queryKey: ["restaurants"],
       queryFn: async () => {
-        const categoryData = await axios.get(
+        const restaurantData = await axios.get(
           `http://localhost:3000/api/restaurant`
         );
-        return categoryData.data;
+        return restaurantData.data;
       },
     });
 
@@ -30,9 +31,9 @@ const HomeNearbyRes = () => {
           <IoIosArrowForward className="w-5 h-5" />
         </Link>
       </div>
-      <div className="w-full grid grid-cols-4 gap-16">
+      <div className="w-full grid grid-cols-3 gap-10">
         {
-          data?.restaurants?.map((item:any,index:any)=>
+          data?.restaurants?.map((item:RestaurantColumnType,index:number)=>
             <RestaurantCard key="index" item={item}  />
           )
         }
