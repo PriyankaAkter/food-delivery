@@ -18,6 +18,7 @@ import CartCount from "./CartCount";
 const DesktopNavbar = async () => {
   const session = await getServerSession(authOptions);
   // console.log({session});
+  
 
   return (
     <div className="w-screen bg-inherit h-32 lg:flex hidden">
