@@ -5,7 +5,7 @@ const Page = () => {
   return (
     <div className='flex' >
         <SideBar />
-        <div className='p-20'>
+        <div className='container1 py-8 px-10'>
 
         <ProductDataTable  />
         </div>

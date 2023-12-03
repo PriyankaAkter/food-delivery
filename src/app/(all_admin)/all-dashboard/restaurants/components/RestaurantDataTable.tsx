@@ -131,13 +131,13 @@ const columns: ColumnDef<RestaurantColumnType>[] = [
         <div>
          
 
-             <DialogDemo
+             {/* <DialogDemo
             className="bg-[#F57213] hover:bg-[#F57213] text-white"
             button1="Add New"
             title="Add Restaurant"
             icon={<AiOutlinePlus className="w-3 h-3 text-white" />}
             update="save"
-          />  
+          />   */}
        
         </div>
       </div>

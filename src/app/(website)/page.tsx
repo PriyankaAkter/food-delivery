@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <div>
      <HomeHero />
-     <HomeMenu />
+     {/* <HomeMenu /> */}
       {/* <HomeCategories /> */}
       {/* <HomeMenu /> */}
       {/* <HomePopularItems /> */}

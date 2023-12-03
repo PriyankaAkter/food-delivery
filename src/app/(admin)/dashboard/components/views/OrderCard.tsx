@@ -15,7 +15,7 @@ const OrderCard = () => {
     setIsChecked(!isChecked);
   };
   return (
-    <div className=" w-[441px] border border-[#E9EFF6] rounded-[10px] p-6">
+    <div className="w-full  border border-[#E9EFF6] h-auto  rounded-[10px] p-10">
       <div>
         <h6>Order #316</h6>
         <p>5 Dec 2023, 13:29</p>

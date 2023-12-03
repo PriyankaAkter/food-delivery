@@ -1,7 +1,10 @@
+
+
+
 'use client'
 import { signOut, useSession } from "next-auth/react";
 
-export const AdminLogOut = () => {
+export const SuperAdminLogOur = () => {
  
     return (
   

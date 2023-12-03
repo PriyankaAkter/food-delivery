@@ -4,15 +4,20 @@ import { AiFillStar } from "react-icons/ai";
 import { RiCoupon5Fill } from "react-icons/ri";
 import { BsTelephoneForwardFill } from "react-icons/bs";
 import { MdEmail } from "react-icons/md";
+import { RestaurantColumnType } from "@/app/types/type";
 
 
-const Hero = ({item}:any) => {
+interface RestaurantCardProps {
+  item: RestaurantColumnType;
+}
+
+const Hero:React.FC<RestaurantCardProps> = ({item}) => {
   return (
     <div className="w-screen bg-black h-[300px]">
       <div className="container py-6 flex gap-10 items-center">
         <div className="flex text-white gap-20 items-center">
           <div className="w-[400px] h-[250px] relative">
-            <Image src={item?.image} alt="Images" fill />
+            <Image src={item?.image || ""} alt="Images" fill />
           </div>
           <div>
             <h4>{item?.name}</h4>

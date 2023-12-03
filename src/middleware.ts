@@ -29,4 +29,4 @@ export default withAuth({
 
 
 // export const config = { matcher: ["/admin/:path*"] };
-export const config = { matcher: ["/dashboard/:path*","/all-dashboard/:path*"] };
+export const config = { matcher: ["/all-dashboard/:path*"] };

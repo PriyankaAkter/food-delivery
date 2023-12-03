@@ -245,7 +245,9 @@
 /* Admin panel */
 .container1 {
   margin: 0 auto;
+  max-width: 1200px;
   width: calc(100% - 100px);
+  
   
 }
 

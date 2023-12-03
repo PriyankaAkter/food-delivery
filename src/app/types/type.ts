@@ -1,10 +1,11 @@
 export type RestaurantColumnType = {
   id?: string
-  name: string
+  name?: string
   slug?: string
   email?: string
   address?: string
-  image?:string | null | undefined
+  password?: string
+  image?:string
   phone?: string
   foods?: ProductType[]
   deliveryTime?: string
@@ -12,10 +13,11 @@ export type RestaurantColumnType = {
   closingHour?: String
 }
   export type CategoryType = {
-    id: string
-    cat_id: string
-    name: string
-    slug: string
+    id?: string
+    cat_id?: string
+    name?: string
+    slug?: string
+    foods?: ProductType[]
   }
 
 
@@ -42,11 +44,11 @@ export type RestaurantColumnType = {
   //   updatedAt  DateTime  @updatedAt
   // }
   export type ProductType = {
-    id: string
-    name: string
-    image?: string | null
-    slug: string
-    price: number
+    id?: string
+    name?: string
+    image?: string 
+    slug?: string
+    price?: number
     stock?: string
     category?: CategoryType
     categoryId?: string

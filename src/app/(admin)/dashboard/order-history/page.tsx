@@ -6,7 +6,7 @@ export function Page() {
   return (
     <div className='flex' >
         <SideBar />
-        <div className='p-20'>
+        <div className='p-10 container1'>
 
         <OrderHistory  />
         </div>

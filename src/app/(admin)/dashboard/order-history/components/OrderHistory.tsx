@@ -8,7 +8,7 @@ const OrderHistory = () => {
   return (
     
       <div
-        className="rounded-[10px] w-[1460px] mx-auto"
+        className="rounded-[10px] w-full "
         style={{ boxShadow: "0px 4px 10px 0px rgba(0, 0, 0, 0.16)" }}
       >
         <div className="flex justify-between items-center py-8 px-6">

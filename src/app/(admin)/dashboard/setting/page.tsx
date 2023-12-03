@@ -9,7 +9,7 @@ const Page = () => {
   return (
     <div className="flex">
       <SideBar />
-      <div className="w-[1460px]">
+      <div className="container1">
         <Settings />
       </div>
     </div>

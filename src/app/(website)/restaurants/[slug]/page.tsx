@@ -5,6 +5,7 @@ import { items } from '@/app/(website)/components/views/data'
 import AllItems from './components/AllItems'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
+import { RestaurantColumnType } from '@/app/types/type'
 
 const Page = () => {
   const { data, isLoading, error } = useQuery({
@@ -21,7 +22,7 @@ console.log({data});
   const params = useParams()
   console.log({params});
 
-  const item = data?.restaurants.find((item:any)=> item.slug==params.slug)
+  const item = data?.restaurants.find((item:RestaurantColumnType)=> item.slug==params.slug)
   console.log({item});
 
   // const allItems = data?.restaurants?.filter((item1:any)=>item1.slug==params.slug)
