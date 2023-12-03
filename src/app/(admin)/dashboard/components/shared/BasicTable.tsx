@@ -55,7 +55,7 @@ export function BasicTable<TData, TValue>({
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
+          {table && table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row, index) => {
               const rowClass =
                 index % 2 === 0

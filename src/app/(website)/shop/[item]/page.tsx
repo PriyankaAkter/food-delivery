@@ -9,37 +9,37 @@ import axios from 'axios'
 import { ProductType, RestaurantColumnType } from '@/app/types/type'
 
 const Page = () => {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["restaurants"],
-    queryFn: async () => {
-      const restaurantData = await axios.get(
-        `http://localhost:3000/api/allfoods`
-      );
-      return restaurantData.data;
-    },
-  });
-
-
-  console.log({data});
-  
-
   const params = useParams();
   const foodSlug = params.item;
 
-  // Find the restaurant that contains the desired food item
-  const restaurant = data?.restaurants.find((restaurant:RestaurantColumnType) =>
-    restaurant?.foods?.some((food:ProductType) => food.slug === foodSlug)
-  );
+  //single product fetch
+  const { data} = useQuery({
+    queryKey: ["product"],
+    queryFn: async () => {
+      const product = await axios.get(
+        `http://localhost:3000/api/allproducts/${foodSlug}`
+      );
+      return product.data;
+    },
+  });
+  console.log({params});
+ //all products fetch
+  const { data:allProducts} = useQuery({
+    queryKey: ["allproducts"],
+    queryFn: async () => {
+      const allproducts = await axios.get(
+        `http://localhost:3000/api/allproducts`
+      );
+      return allproducts.data;
+    },
+  });
 
-  // Find the specific food item
-  const foodItem = restaurant?.foods.find((food:ProductType) => food.slug === foodSlug);
+  console.log({allProducts});
+  
 
-
- console.log({foodItem});
- 
   return (
     <div>
-        <ItemHero item={foodItem} />
+        <ItemHero item={data?.product} />
         {/* <RelatedItems relatedItems={relatedItems} /> */}
     </div>
   )

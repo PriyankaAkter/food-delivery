@@ -28,7 +28,7 @@ export const SideBar = async () => {
           <div className="w-16 h-16 relative">
             <Image
               fill
-              src="/assests/images/home/res1.png"
+              src={session?.user?.image || ""}
               alt="profile"
               className="rounded-full"
             />

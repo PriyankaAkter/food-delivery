@@ -33,23 +33,24 @@ const Card:React.FC<CardProps> = ({item}) => {
       <div className="px-5">
         <div className="flex justify-between items-center">
           <Link
-            href={`/shop/${item?.slug}`}
+            href={`/shop/${item?.id}`}
             className="font-medium text-[#0F172A] text-2xl"
           >
             {item?.name}
           </Link>
-          <AiOutlineHeart className="w-6 h-6 text-black" />
+          
+          {/* <AiOutlineHeart className="w-6 h-6 text-black" /> */}
         </div>
-
+        <h6 className="mt-4">{item?.restaurant?.name}</h6>
         <h6 className="text-[#FFB93E] text-[28px] font-medium mt-5">{item?.price}.00 tk</h6>
         
         {/* <h6>{item?.restaurant?.name}</h6> */}
-        <p>{item?.restaurant?.deliveryTime}</p>
+        {/* <p>{item?.restaurant?.deliveryTime}</p> */}
         
-        {/* <button onClick={()=> dispatch(clearCart())} className="bg-[#F29F05] py-3 rounded-[4px] mt-7 text-white flex items-center gap-3 w-full justify-center">
+        <button onClick={()=> dispatch(addCart(item))} className="bg-[#F29F05] py-3 rounded-[4px] mt-7 text-white flex items-center gap-3 w-full justify-center">
           <AiOutlineShoppingCart className="w-[22px] h-[22px] text-white" />
           Add to Cart
-        </button> */}
+        </button>
       </div>
     </div>
   );

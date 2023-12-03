@@ -30,7 +30,7 @@ const ItemHero:React.FC<ItemHeroCards> = ({item} ) => {
     slug: item?.slug,
     price: item?.price,
     stock: item?.stock,
-    
+    quantity: item?.quantity,
     categoryId: item?.categoryId,
     description: item?.description,
     RestaurantId: item?.RestaurantId

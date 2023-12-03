@@ -1,4 +1,6 @@
 "use client";
+import { items } from "@/app/(website)/components/views/data";
+import { OrderType, ProductType } from "@/app/types/type";
 import {
   Accordion,
   AccordionContent,
@@ -9,16 +11,29 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useState } from "react";
 import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
-const OrderCard = () => {
+
+interface OrderProps {
+  order: OrderType;
+}
+
+const OrderCard: React.FC<OrderProps> = ({ order }) => {
   const [isChecked, setIsChecked] = useState(false);
   const handleClick = () => {
     setIsChecked(!isChecked);
   };
+
+  
+
+
+  const totalPrice = order?.items?.reduce((sum, item) => sum + (Number(item.price) * Number(item?.quantity)), 0);
+  // console.log({totalPrice});
+  const totalItems = order?.items?.reduce((sum, item) => sum + (1 * Number(item?.quantity)), 0);
+
   return (
     <div className="w-full  border border-[#E9EFF6] h-auto  rounded-[10px] p-10">
       <div>
-        <h6>Order #316</h6>
-        <p>5 Dec 2023, 13:29</p>
+        <h6>Order #{order?.id}</h6>
+        <p>{order?.createdAt}</p>
       </div>
       <hr />
       <div>
@@ -28,102 +43,54 @@ const OrderCard = () => {
               Client Details
             </AccordionTrigger>
             <AccordionContent>
-              <p>Name: Priyanka</p>
-              <p>Email: priyanka555@gmail.com</p>
+              <p>Name: {order?.userName}</p>
+              <p>Email: {order?.userEmail}</p>
             </AccordionContent>
           </AccordionItem>
         </Accordion>
       </div>
       <hr />
-      <div className="h-[420px] overflow-y-auto px-3">
-        <div className="flex gap-6 py-3 items-center">
-          <div className="w-20 h-16 relative">
-            <Image
-              src="/assests/images/home/img1.png"
-              alt="product"
-              fill
-              className="rounded-full"
-            />
-          </div>
-          <div className="w-full grid gap-6">
-            <div className="flex justify-between items-start">
-              <div className="flex-1">
-                <h6>Custurd Pudding</h6>
-                <p>Milk with bananas, Apple..</p>
-              </div>
-              <button onClick={handleClick} className="pt-2">
-                {!isChecked ? <ImCheckboxUnchecked /> : <ImCheckboxChecked />}
-              </button>
-            </div>
 
-            <div className="flex justify-between items-center">
-              <p className="font-medium">150.00 tk</p>
-              <p className="font-medium">Quantity: 1</p>
+      <div className="h-[420px] overflow-y-auto px-3 ">
+        {order?.items?.map((item: ProductType, index: number) => (
+          <div className="flex gap-6 py-3 items-center" key={index}>
+            <div className="w-20 h-16 relative">
+              <Image
+                src={item?.image || ""}
+                alt="product"
+                fill
+                className="rounded-full"
+              />
             </div>
-          </div>
-        </div>
-        <hr />
-        <div className="flex gap-6 py-3 items-center">
-          <div className="w-20 h-16 relative">
-            <Image
-              src="/assests/images/home/img5.png"
-              alt="product"
-              fill
-              className="rounded-full"
-            />
-          </div>
-          <div className="w-full grid gap-6">
-            <div className="flex justify-between items-start">
-              <div className="flex-1">
-                <h6>Custurd Pudding</h6>
-                <p>Milk with bananas, Apple..</p>
+            <div className="w-full grid gap-6">
+              <div className="flex justify-between items-start">
+                <div className="flex-1">
+                  <h6>{item?.name}</h6>
+                  <p>{item?.description}</p>
+                </div>
+                <button onClick={handleClick} className="pt-2">
+                  {!isChecked ? <ImCheckboxUnchecked /> : <ImCheckboxChecked />}
+                </button>
               </div>
-              <button onClick={handleClick} className="pt-2">
-                {!isChecked ? <ImCheckboxUnchecked /> : <ImCheckboxChecked />}
-              </button>
-            </div>
 
-            <div className="flex justify-between items-center">
-              <p className="font-medium">150.00 tk</p>
-              <p className="font-medium">Quantity: 1</p>
-            </div>
-          </div>
-        </div>
-        <hr />
-        <div className="flex gap-6 py-3 items-center">
-          <div className="w-20 h-16 relative">
-            <Image
-              src="/assests/images/home/img4.png"
-              alt="product"
-              fill
-              className="rounded-full"
-            />
-          </div>
-          <div className="w-full grid gap-6">
-            <div className="flex justify-between items-start">
-              <div className="flex-1">
-                <h6>Custurd Pudding</h6>
-                <p>Milk with bananas, Apple..</p>
+              <div className="flex justify-between items-center">
+                <p className="font-medium">{item?.price} tk</p>
+                <p className="font-medium">Quantity: {item?.quantity}</p>
               </div>
-              <button onClick={handleClick} className="pt-2">
-                {!isChecked ? <ImCheckboxUnchecked /> : <ImCheckboxChecked />}
-              </button>
-            </div>
-
-            <div className="flex justify-between items-center">
-              <p className="font-medium">150.00 tk</p>
-              <p className="font-medium">Quantity: 1</p>
             </div>
           </div>
-        </div>
+        ))}
       </div>
       <hr />
+      
       <div className="flex justify-between items-center py-4">
         <div>
-          <p>X Items</p>
-          <p className="font-medium">1000.00 tk</p>
+          <p>{totalItems} Items</p>
+          <p className="font-medium">{totalPrice} tk</p>
         </div>
-        <Button className="bg-[#F57213] hover:bg-[#F57213] text-white">Accept</Button>
+        <Button className="bg-[#F57213] hover:bg-[#F57213] text-white">
+          Accept
+        </Button>
       </div>
     </div>
   );

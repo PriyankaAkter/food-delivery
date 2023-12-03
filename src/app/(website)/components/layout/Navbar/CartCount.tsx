@@ -12,14 +12,24 @@ const CartCount = () => {
   console.log({ cart });
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const products = JSON.parse(localStorage.getItem("cart"));
-     
-      if(products){
-        products.forEach(element => {
-          dispatch(addCart(element))
-        });
-      }
+      const storedProducts = localStorage.getItem("cart");
       
+      if (storedProducts) {
+        try {
+          const products = JSON.parse(storedProducts);
+  
+          // Check if the parsed data is an array
+          if (Array.isArray(products)) {
+            products.forEach((element: any) => {
+              dispatch(addCart(element));
+            });
+          } else {
+            console.error("Stored products is not an array:", products);
+          }
+        } catch (error) {
+          console.error("Error parsing stored products:", error);
+        }
+      }
     }
   }, []);
 

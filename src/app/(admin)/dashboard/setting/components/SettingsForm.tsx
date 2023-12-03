@@ -159,7 +159,7 @@ const SettingsForm = () => {
             // className="border  w-full"
             className="border border-gray-500 rounded-md py-3 pl-2 w-full"
             rows={10}
-            {...register("address", { required: true })}
+            {...register("address")}
             id="address"
             defaultValue={data?.restaurant?.address}
           ></textarea>

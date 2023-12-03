@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 
 
 type RestaurantformDataType = {
@@ -129,11 +130,11 @@ const SignUpForm = () => {
           <span className="text-red-500">{errors.confirmPassword.message}</span>
         )}
       </div>
-      <button type="submit" className="bg-black text-white py-3">
+      <button type="submit" className="bg-black text-white py-3 cursor-pointer mt-6">
         Sign Up
       </button>
 
-      
+      <p className="text-center">Already have an account? <Link className="font-semibold" href='/sign-in'>Sign In</Link></p>
     </form>
   );
 };

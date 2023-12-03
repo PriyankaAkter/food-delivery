@@ -47,7 +47,7 @@ export const DELETE = async (req:NextRequest,{params:{id}}:{params:{id:string}})
     } catch (error) {
         return NextResponse.json(
             { message: "Something went wrong" },
-            { status: 200 }
+            { status: 400 }
           );
     }
     
@@ -79,7 +79,7 @@ export const PUT = async (req:NextRequest,{params:{id}}:{params:{id:string}}) =>
   } catch (error) {
       return NextResponse.json(
           { message: "Something went wrong" },
-          { status: 200 }
+          { status: 400 }
         );
   }
   

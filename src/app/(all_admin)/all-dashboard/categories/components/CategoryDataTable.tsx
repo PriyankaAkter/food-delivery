@@ -51,10 +51,10 @@ export function CategoryDataTable() {
   
 
   const columns: ColumnDef<CategoryType>[] = [
-    {
-      header: "ID",
-      accessorKey: "id",
-    },
+    // {
+    //   header: "ID",
+    //   accessorKey: "id",
+    // },
     {
       header: "Category Id",
       accessorKey: "cat_id",

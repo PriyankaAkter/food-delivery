@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import {signIn} from 'next-auth/react'
 import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
+import Link from "next/link";
 
 type formDataType = {
   email: string;
@@ -109,30 +110,12 @@ const SignInForm = () => {
           <span className="text-red-500">{errors.password.message}</span>
         )}
       </div>
-      <input type="submit" />
+      <input className="bg-black text-white py-3 cursor-pointer mt-6" type="submit" />
       {/* <button type="submit" className="bg-black text-white py-3">
         Sign in
       </button> */}
-
-      <div className="grid grid-cols-3 gap-3 place-items-center">
-         <div className="w-full h-[1px] bg-gray-500"></div>
-         <h6>Or</h6>
-         <div className="w-full h-[1px] bg-gray-500"></div>
-      </div>
-      <button type="button" className="bg-black text-white py-3" onClick={()=>signIn("google", {
-        
-        redirect: false
-      })}>
-        Sign in with Google
-      </button>
-
+      <p className="text-center">Haven’t any account? <Link className="font-semibold" href='/sign-up'>Sign Up</Link></p>
       
-      <button type="button" className="bg-black text-white py-3" onClick={()=>signIn("github", {
-        
-        redirect: false
-      })}>
-        Sign in with Github
-      </button>
     </form>
    
   );

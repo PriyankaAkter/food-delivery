@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 
 
 
@@ -137,23 +138,12 @@ const SignUpForm = () => {
           <span className="text-red-500">{errors.confirmPassword.message}</span>
         )}
       </div>
-      <button type="submit" className="bg-black text-white py-3">
+      <button type="submit" className="bg-black text-white py-3 mt-6">
         Sign Up
       </button>
-
-      <div className="grid grid-cols-3 gap-3 place-items-center">
-         <div className="w-full h-[1px] bg-gray-500"></div>
-         <h6>Or</h6>
-         <div className="w-full h-[1px] bg-gray-500"></div>
-      </div>
-      <button type="button" className="bg-black text-white py-3" onClick={()=>signIn("google",{callbackUrl:'/'})}>
-        Sign up with Google
-      </button>
-
+       
       
-      <button type="button" className="bg-black text-white py-3" onClick={()=>signIn("github",{callbackUrl:"/"})}>
-        Sign up with Github
-      </button>
+      <p className="text-center">Already have an account? <Link className="font-semibold" href='/sign-in'>Sign In</Link></p>
     </form>
   );
 };

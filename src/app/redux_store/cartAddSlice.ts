@@ -42,32 +42,34 @@ const slice = createSlice({
       }
     },
 
-    // addQuantity: (state, action) => {
-    //   const findId = state.products.findIndex(
-    //     (product) => product.id === action.payload
-    //   );
-    //   if (findId !== -1) {
-    //     const productQuantity = state.products[findId];
-    //     // productQuantity["quantity"] = productQuantity["quantity"] + 1;
-    //     // state.products[findId] = productQuantity;
-    //     productQuantity["quantity"] = productQuantity["quantity"] + 1;
-    //     state.products[findId] = productQuantity;
-    //     localStorage.setItem("cart", JSON.stringify(state.products));
-    //   }
-    // },
-    // decrementQuantity: (state, action) => {
-    //   const findId = state.products.findIndex(
-    //     (product) => product.id === action.payload
-    //   );
-    //   if (findId !== -1) {
-    //     const productQuantity = state.products[findId];
-    //     productQuantity["quantity"] = productQuantity["quantity"] - 1;
-    //     state.products[findId] = productQuantity;
-    //     localStorage.setItem("cart", JSON.stringify(state.products));
-    //   }
-    // },
+    addQuantity: (state, action) => {
+      const { id } = action.payload || {};
+      const findId = state.products.findIndex(product => product.id === id);
+    
+      if (findId !== -1 && state.products[findId]) {
+        const updatedProducts = [...state.products];
+        updatedProducts[findId] = {
+          ...updatedProducts[findId],
+          quantity: (updatedProducts[findId].quantity || 0) + 1,
+        };
+    
+        state.products = updatedProducts;
+        localStorage.setItem("cart", JSON.stringify(updatedProducts));
+      }
+    },
+    decrementQuantity: (state, action) => {
+      const findId = state?.products.findIndex(
+        (product) => product?.id === action.payload.id
+      );
+      if (findId !== -1) {
+        const productQuantity = state?.products[findId];
+        productQuantity["quantity"] = productQuantity["quantity"] - 1;
+        state.products[findId] = productQuantity;
+        localStorage.setItem("cart", JSON.stringify(state.products));
+      }
+    },
   },
 });
 
-export const { addCart, removeProduct, clearCart } = slice.actions;
+export const { addCart, removeProduct, clearCart, addQuantity,decrementQuantity } = slice.actions;
 export default slice.reducer;
