@@ -15,6 +15,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { BiSolidPencil } from "react-icons/bi";
 import { AiOutlinePlus } from "react-icons/ai";
 import Image from "next/image";
+import BasicTable1 from "../../components/shared/BasicTable1";
 
 export function ProductDataTable() {
   const queryClient = useQueryClient();
@@ -127,7 +128,7 @@ export function ProductDataTable() {
 
         if (!row?.original?.price) return "--";
 
-        return <div>{row.original?.price}</div>;
+        return <div>{row.original?.price} tk</div>;
       },
     },
     {
@@ -137,7 +138,7 @@ export function ProductDataTable() {
         console.log(row.original);
 
         return (
-          <div className="flex gap-5">
+          <div className="flex gap-3 justify-center">
             <DialogDemo
               initialValue={row.original}
               className="p-3 rounded-lg bg-bone hover:bg-none border border-[#F57213]"
@@ -175,20 +176,9 @@ export function ProductDataTable() {
           <Select />
         </div>
       </div>
-      <hr className="pb-10" />
-      <BasicTable data={data?.foods} columns={columns} />
-      <div className="py-10">
-        <hr />
-        <div className="flex justify-between items-center px-6 pt-5">
-          <h6>Rows Per Page 10</h6>
-          <div className="flex items-center gap-4">
-            <GrFormPrevious className="w-6 h-6 text-black" />
-            <h6>1</h6>
-            <h6>2</h6>
-            <GrFormNext className="w-6 h-6 text-black" />
-          </div>
-        </div>
-      </div>
+      
+      <BasicTable1 data={data?.foods} columns={columns} />
+      
     </div>
   );
 }

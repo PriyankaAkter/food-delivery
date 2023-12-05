@@ -10,6 +10,7 @@ import { RiDeleteBin5Fill } from 'react-icons/ri';
 import { BiSolidPencil } from 'react-icons/bi';
 import { DialogDemo } from './DialogDemo';
 import Image from 'next/image';
+import BasicTable1 from '@/app/(admin)/dashboard/components/shared/BasicTable1';
 
 
 
@@ -110,7 +111,7 @@ const columns: ColumnDef<RestaurantColumnType>[] = [
       console.log(row.original);
       
       return (
-        <div className="flex gap-5">
+        <div className="flex gap-5 justify-center">
           <DialogDemo initialValue={row.original} className="p-3 rounded-lg bg-bone hover:bg-none border border-[#F57213]" title="Update Restaurant" update="update" icon={<BiSolidPencil className="text-[#F57213] w-5 h-5" />}  />
           <button onClick={()=>DeleteRestaurant(row.original)} className="p-3 rounded-lg bg-bone hover:bg-none border border-[#F57213]">
             <RiDeleteBin5Fill className="text-[#F57213] w-4 h-4" />
@@ -141,20 +142,9 @@ const columns: ColumnDef<RestaurantColumnType>[] = [
        
         </div>
       </div>
-      <hr className="pb-10" />
-      <BasicTable data={data?.restaurants} columns={columns} />
-      <div className="py-10">
-        <hr />
-        <div className="flex justify-between items-center px-6 pt-5">
-          <h6>Rows Per Page 10</h6>
-          <div className="flex items-center gap-4">
-            <GrFormPrevious className="w-6 h-6 text-black" />
-            <h6>1</h6>
-            <h6>2</h6>
-            <GrFormNext className="w-6 h-6 text-black" />
-          </div>
-        </div>
-      </div>
+      
+      <BasicTable1 data={data?.restaurants} columns={columns} />
+      
     </div>
   )
 }

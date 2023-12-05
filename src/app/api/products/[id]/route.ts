@@ -14,7 +14,8 @@ export const GET = async (req:NextRequest,{params:{id}}:{params:{id:string}}) =>
           },
           include: {
             category: true,
-            restaurant: true
+            restaurant: true,
+            orders: true
           }
         })
         return NextResponse.json(
@@ -63,7 +64,8 @@ export const PUT = async (req:NextRequest,{params:{id}}:{params:{id:string}}) =>
       const product = await prisma.food.update({
         include:{
           category: true,
-          restaurant: true
+          restaurant: true,
+          orders: true
         },
           where: {
             id

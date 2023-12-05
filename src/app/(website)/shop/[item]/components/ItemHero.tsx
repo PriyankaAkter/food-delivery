@@ -72,15 +72,15 @@ const ItemHero:React.FC<ItemHeroCards> = ({item} ) => {
           </div> */}
         </div>
         <div className="">
-          <div className="flex items-center gap-4 mb-6">
+          {/* <div className="flex items-center gap-4 mb-6">
             <button className="border border-[#F29F05]  text-[#F29F05]rounded-[4px]  p-3">
               <AiOutlinePlus className="w-4 h-4 " />
             </button>
-            <h6 className="text-[#F29F05]">{cart?.length}</h6>
+            <h6 className="text-[#F29F05]">{item?.quantity}</h6>
             <button className="border border-[#F29F05]  rounded-[4px]  p-3">
               <AiOutlineMinus />
             </button>
-          </div>
+          </div> */}
           <div>
             <button onClick={()=>dispatch(addCart(products))} className="bg-[#F29F05] text-white flex items-center gap-2 py-4 px-8 rounded-md">
               <AiOutlineShoppingCart className="w-4 h-4" />

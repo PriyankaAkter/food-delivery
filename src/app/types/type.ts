@@ -1,3 +1,4 @@
+import { products } from './../(admin)/dashboard/products/components/data';
 export type RestaurantColumnType = {
   id?: string
   name?: string
@@ -8,6 +9,7 @@ export type RestaurantColumnType = {
   image?:string
   phone?: string
   foods?: ProductType[]
+  orders?: OrderType[]
   deliveryTime?: string
   openingHour?: string
   closingHour?: String
@@ -79,7 +81,8 @@ export type RestaurantColumnType = {
     slug?: string
     price?: number
     stock?: string
-    quantity?: string
+    quantity?: number
+    orders?: OrderType[]
     category?: CategoryType
     categoryId?: string
     description?: string
@@ -124,7 +127,13 @@ export type RestaurantColumnType = {
     userEmail?: string
     price?: number | string
     status?: string
+    user?:CustomerType,
+    userId?: string
     items?: ProductType[]
     payment_id?: string
+    deliver?: string
+    products?: ProductType[]
+    restaurant?: RestaurantColumnType
+    restaurantId?: string
     createdAt?:string
   }

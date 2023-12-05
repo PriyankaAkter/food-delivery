@@ -10,7 +10,8 @@ export const GET = async () => {
     const products = await prisma.food.findMany({
       include: {
         category:true,
-        restaurant:true
+        restaurant:true,
+        orders: true
       },
     });
 

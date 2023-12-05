@@ -32,15 +32,20 @@ type DialogOrderType = {
 
 export function DialogOrder({ initialValue }: DialogOrderType) {
   const {data:session} = useSession()
-  console.log({ initialValue });
-  const totalPrice = initialValue?.items?.reduce((sum, item) => sum + (Number(item.price) * Number(item?.quantity)), 0);
-  console.log({totalPrice});
+  // console.log({ initialValue });
+ 
   
 
 
-  const filterItems = initialValue?.items?.filter((item:ProductType)=>item?.restaurant?.email === session?.user?.email)
+  // const filterItems = initialValue?.items?.filter((item:ProductType)=>item?.restaurant?.email === session?.user?.email)
   // const [isAdd,setIsAdd] = useState(true)
-  console.log({filterItems});
+  // console.log({filterItems});
+
+  const totalPrice = initialValue?.items?.reduce((sum, item) => sum + (Number(item.price) * Number(item?.quantity)), 0);
+  // console.log({totalPrice});
+
+  // const totalItems = filterItems?.reduce((sum, item) => sum + (1 * Number(item?.quantity)), 0);
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -55,7 +60,7 @@ export function DialogOrder({ initialValue }: DialogOrderType) {
         </DialogHeader>
         <div className="grid ">
           {initialValue?.items?.map((item: ProductType, index: number) => (
-            <div className="flex border-y  justify-between pr-6  items-center py-4 ">
+            <div className="flex border-y  justify-between pr-6  items-center py-4 " key={index}>
               <div className="flex gap-5 items-center py-4">
                 <div className="w-16 h-16 relative">
                   <Image
@@ -74,8 +79,8 @@ export function DialogOrder({ initialValue }: DialogOrderType) {
                 </div>
               </div>
               <div className="flex gap-5 items-center py-4 ">
+                <p>{item?.price } tk</p>
                 <p>Quantity: {item?.quantity}</p>
-                <p>{item?.price} tk</p>
               </div>
             </div>
           ))}

@@ -17,6 +17,7 @@ export const GET = async () => {
             restaurant: true,
           },
         },
+        orders: true
       },
     });
 

@@ -15,7 +15,8 @@ export const GET = async () => {
             category:true,
             restaurant:true
           }
-        }
+        },
+        orders: true
       },
     });
 

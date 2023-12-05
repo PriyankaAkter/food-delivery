@@ -12,6 +12,10 @@ export const GET = async (req:NextRequest,{params:{id}}:{params:{id:string}}) =>
       const restaurant = await prisma.restaurant.findUnique({
           where: {
             id: id
+          },
+          include:{
+            foods: true,
+            orders: true
           }
         })
         return NextResponse.json(

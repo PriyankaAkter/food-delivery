@@ -67,6 +67,7 @@ const OrderCard: React.FC<OrderProps> = ({ order }) => {
                 <div className="flex-1">
                   <h6>{item?.name}</h6>
                   <p>{item?.description}</p>
+                  <p>{item?.restaurant?.name}</p>
                 </div>
                 <button onClick={handleClick} className="pt-2">
                   {!isChecked ? <ImCheckboxUnchecked /> : <ImCheckboxChecked />}

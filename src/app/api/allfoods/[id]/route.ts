@@ -17,7 +17,8 @@ export const GET = async (req:NextRequest,{params:{id}}:{params:{id:string}}) =>
             category:true,
             restaurant:true
           }
-        }
+        },
+        orders: true
       },
     });
 

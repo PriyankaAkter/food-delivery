@@ -110,7 +110,8 @@ export const GET = async () => {
             category:true,
             restaurant:true
           }
-        }
+        },
+        orders: true
       },
     });
 
@@ -159,6 +160,7 @@ export const POST = async (req: Request) => {
       include: {
         category: true,
         restaurant: true,
+        orders: true
       },
     });
 

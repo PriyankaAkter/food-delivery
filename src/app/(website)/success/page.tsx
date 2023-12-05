@@ -31,6 +31,7 @@ const SuccessPage = () => {
            const data = await axios.post('http://localhost:3000/api/orders',{
             price: totalPrice,
             items: cart,
+            
             // userEmail: session?.user?.email,
             // userName: session?.user?.name,
             payment_id:payment_intent,

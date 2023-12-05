@@ -9,6 +9,7 @@ import { OrderType, ProductType } from "@/app/types/type";
 import { DialogOrder } from "./DialogOrder";
 import { useSession } from "next-auth/react";
 import { RiDeleteBin5Fill } from "react-icons/ri";
+import BasicTable1 from "../../components/shared/BasicTable1";
 
 const OrderHistory = () => {
   const { data: session } = useSession();
@@ -28,11 +29,11 @@ const OrderHistory = () => {
 
   // console.log({ data });
 
-  const fetchOrders = data?.orders?.map((order: OrderType) =>
-    order?.items?.filter(
-      (i: ProductType) => i?.restaurant?.email === session?.user?.email
-    )
-  );
+  // const fetchOrders = data?.orders?.map((order: OrderType) =>
+  //   order?.items?.filter(
+  //     (i: ProductType) => i?.restaurant?.email === session?.user?.email
+  //   )
+  // );
   // console.log({ fetchOrders });
 
 
@@ -86,9 +87,14 @@ const OrderHistory = () => {
       header: "ORDER VALUE",
       accessorKey: "price",
       cell: ({ row }) => {
-        // console.log(row.original);
+        console.log(row.original);
         if (!row.original?.price) return "";
-        return <div>{row.original?.price}</div>;
+        // const fecthItems = row?.original?.items?.filter((item:ProductType,index:number)=>
+        // item?.restaurant?.name == session?.user?.name
+        // )
+        // const totalPrice = fecthItems?.reduce((sum, item) => sum + (Number(item.price) * Number(item?.quantity)), 0);
+  // console.log({totalPrice});
+        return <div>{row.original?.price} tk</div>;
       },
     },
 
@@ -97,7 +103,7 @@ const OrderHistory = () => {
       header: "ACTION",
       cell: ({ row }) => {
         return (
-          <div className="flex gap-5">
+          <div className="flex gap-5 justify-center">
             <DialogOrder initialValue={row?.original} />
             <button
               onClick={() => DeleteOrder(row.original)}
@@ -118,20 +124,9 @@ const OrderHistory = () => {
       <div className="flex justify-between items-center py-8 px-6">
         <h6>All Orders</h6>
       </div>
-      <hr className="pb-10" />
-      <BasicTable data={data?.orders} columns={columns} />
-      <div className="py-10">
-        <hr />
-        <div className="flex justify-between items-center px-6 pt-5">
-          <h6>Rows Per Page 10</h6>
-          <div className="flex items-center gap-4">
-            <GrFormPrevious className="w-6 h-6 text-black" />
-            <h6>1</h6>
-            <h6>2</h6>
-            <GrFormNext className="w-6 h-6 text-black" />
-          </div>
-        </div>
-      </div>
+    
+      <BasicTable1 data={data?.orders} columns={columns} />
+      
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import { items } from './../../(website)/components/views/data';
 import { authOptions } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { getServerSession } from "next-auth";
@@ -39,9 +40,11 @@ export const GET = async () => {
   // const session = await getServerSession(authOptions);
   try {
     const orders = await prisma.order.findMany({
-      include: {
+      include:{
         user: true,
-      },
+        products: true,
+        restaurant: true
+      }
     });
     return NextResponse.json(
       { message: "All Orders: ", orders },
@@ -63,16 +66,19 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   if (session) {
     try {
       // const body = await req.json()
-      // console.log(body+'===========')
+      console.log(body+'===========')
       const isExist = await prisma.order.findUnique({
         where: {
           payment_id: body?.payment_id,
+          
         },
         include:{
-          user:true
+          user: true,
+          
+        restaurant: true
         }
       });
-
+     
       if (isExist) {
         return NextResponse.json(
           { message: "New Order: ", isExist },
@@ -85,13 +91,14 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
           ...body,
           userEmail: session?.user?.email,
           userName: session?.user?.name,
-          user: {
-            connect: {
-              name: session?.user?.name,
-              email: session?.user?.email,
-              image: session?.user?.image
-            },
-          },
+          userId: session?.user?.id,
+          // user: {
+          //   connect: {
+          //     name: session?.user?.name,
+          //     email: session?.user?.email,
+          //     // image: session?.user?.image
+          //   },
+          // },
         },
       });
 

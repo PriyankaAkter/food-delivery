@@ -10,7 +10,8 @@ export const GET = async (req:Request) => {
             category: true,
             restaurant:true
           }
-        }
+        },
+        orders: true
       }
     })
     return NextResponse.json(

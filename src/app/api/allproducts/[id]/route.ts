@@ -14,7 +14,8 @@ export const GET = async (req:NextRequest,{params:{id}}:{params:{id:string}}) =>
           },
           include:{
             category:true,
-            restaurant:true
+            restaurant:true,
+            orders: true
           }
         })
         return NextResponse.json(

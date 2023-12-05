@@ -11,7 +11,11 @@ const userSchema = z.object({
 
 export const GET = async () => {
   try {
-    const users = await prisma.user.findMany({});
+    const users = await prisma.user.findMany({
+      include:{
+        orders: true
+      }
+    });
     return NextResponse.json({ message: "All Users", users }, { status: 200 });
   } catch (error) {
     console.log(error);

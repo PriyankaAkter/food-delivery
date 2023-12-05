@@ -7,9 +7,10 @@ import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "@/app/redux_store/store";
 import { ProductType } from "@/app/types/type";
 import {
-  addQuantity,
+  
   clearCart,
   decrementQuantity,
+  incrementQuantity,
   removeProduct,
 } from "@/app/redux_store/cartAddSlice";
 import axios from "axios";
@@ -97,6 +98,7 @@ const CartItems = () => {
                       <td className="px-8">
                         <div className="text-base sm:text-[22px] font-normal text-primary w-28 sm:w-[171px] mx-auto p-1 bg-[#EFF6F1] rounded-full flex justify-between items-center">
                           <button
+                          disabled={e?.quantity==1}
                             onClick={() => dispatch(decrementQuantity(e))}
                             className="bg-white p-2 rounded-full text-base sm:text-2xl"
                           >
@@ -104,7 +106,7 @@ const CartItems = () => {
                           </button>
                           <span>{e?.quantity}</span>
                           <button
-                            onClick={() => dispatch(addQuantity(e))}
+                            onClick={() => dispatch(incrementQuantity(e))}
                             className="bg-white p-2 rounded-full text-base sm:text-2xl"
                           >
                             <AiOutlinePlus />
@@ -112,7 +114,7 @@ const CartItems = () => {
                         </div>
                       </td>
                       <td className="text-base sm:text-[22px] font-medium text-primary px-8">
-                        {e?.price && e?.price * 1} tk
+                        {e?.price && (e?.price * e?.quantity)} tk
                       </td>
                       <td className="px-8">
                         <button
