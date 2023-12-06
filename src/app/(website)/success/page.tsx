@@ -35,7 +35,8 @@ const SuccessPage = () => {
             // userEmail: session?.user?.email,
             // userName: session?.user?.name,
             payment_id:payment_intent,
-            status:"Paid"
+            status:"Paid",
+            // deliver: "PENDING"
           })
           dispatch(clearCart());
           console.log({data});

@@ -75,12 +75,21 @@ const OrderHistory = () => {
       },
     },
     {
-      header: "STATUS",
+      header: "PAYMENT STATUS",
       accessorKey: "status",
       cell: ({ row }) => {
         // console.log(row.original);
         if (!row.original?.status) return "";
         return <div>{row.original?.status}</div>;
+      },
+    },
+    {
+      header: "DELIVER STATUS",
+      accessorKey: "deliver",
+      cell: ({ row }) => {
+        // console.log(row.original);
+        if (!row.original?.delivery) return "";
+        return <div>{row.original?.delivery}</div>;
       },
     },
     {

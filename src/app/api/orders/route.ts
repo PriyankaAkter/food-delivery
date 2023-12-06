@@ -92,6 +92,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
           userEmail: session?.user?.email,
           userName: session?.user?.name,
           userId: session?.user?.id,
+          delivery: "PENDING", 
           // user: {
           //   connect: {
           //     name: session?.user?.name,
