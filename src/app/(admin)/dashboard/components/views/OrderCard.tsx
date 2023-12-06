@@ -8,6 +8,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
 import Image from "next/image";
 import { useState } from "react";
 import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
@@ -17,17 +18,81 @@ interface OrderProps {
 }
 
 const OrderCard: React.FC<OrderProps> = ({ order }) => {
-  const [isChecked, setIsChecked] = useState(false);
-  const handleClick = () => {
-    setIsChecked(!isChecked);
+  const [deliveryStatus, setDeliveryStatus] = useState(
+    order?.delivery || "PENDING"
+  );
+  const [isCanceled, setIsCanceled] = useState(false);
+
+  const handleStatus = async () => {
+    try {
+      if (isCanceled) {
+        console.log("Order is canceled. Cannot change status.");
+        // const cancleStatus = await axios.put(
+        //   `http://localhost:3000/api/orders/${order?.id}`,
+        //   {
+        //     delivery: "CANCLE",
+        //   }
+        // );
+        return alert("Order is canceled. Cannot change status.")
+      }
+      let newStatus;
+      switch (deliveryStatus) {
+        case "PENDING":
+          newStatus = "PROCESSING";
+          break;
+        case "PROCESSING":
+          newStatus = "OUT_OF_DELIVERY";
+          break;
+        case "OUT_OF_DELIVERY":
+          newStatus = "DELIVERED";
+          break;
+        // case "delivered":
+        //   // If it's delivered, clicking again will reset to pending
+        //   newStatus = "pending";
+        //   break;
+        default:
+          newStatus = "PENDING";
+      }
+
+      const updateStatus = await axios.put(
+        `http://localhost:3000/api/orders/${order?.id}`,
+        {
+          delivery: newStatus,
+        }
+      );
+
+      // Update the local state to reflect the new delivery status
+      setDeliveryStatus(newStatus);
+
+      console.log({ updateStatus });
+    } catch (error: any) {
+      console.error("Error updating order status:", error);
+    }
   };
 
+
+  const handleCancel = async () => {
+    try {
+      setIsCanceled(true);
   
+      const cancelStatusUpdate = await axios.put(`http://localhost:3000/api/orders/${order?.id}`, {
+        delivery: "CANCELLED", 
+      });
+  
+      console.log({ cancelStatusUpdate });
+    } catch (error: any) {
+      console.error("Error updating cancellation status:", error);
+    }
+  };
 
-
-  const totalPrice = order?.items?.reduce((sum, item) => sum + (Number(item.price) * Number(item?.quantity)), 0);
-  // console.log({totalPrice});
-  const totalItems = order?.items?.reduce((sum, item) => sum + (1 * Number(item?.quantity)), 0);
+  const totalPrice = order?.items?.reduce(
+    (sum, item) => sum + Number(item.price) * Number(item?.quantity),
+    0
+  );
+  const totalItems = order?.items?.reduce(
+    (sum, item) => sum + 1 * Number(item?.quantity),
+    0
+  );
 
   return (
     <div className="w-full  border border-[#E9EFF6] h-auto  rounded-[10px] p-10">
@@ -69,9 +134,9 @@ const OrderCard: React.FC<OrderProps> = ({ order }) => {
                   <p>{item?.description}</p>
                   <p>{item?.restaurant?.name}</p>
                 </div>
-                <button onClick={handleClick} className="pt-2">
+                {/* <button onClick={handleClick} className="pt-2">
                   {!isChecked ? <ImCheckboxUnchecked /> : <ImCheckboxChecked />}
-                </button>
+                </button> */}
               </div>
 
               <div className="flex justify-between items-center">
@@ -83,15 +148,29 @@ const OrderCard: React.FC<OrderProps> = ({ order }) => {
         ))}
       </div>
       <hr />
-      
+
       <div className="flex justify-between items-center py-4">
         <div>
           <p>{totalItems} Items</p>
           <p className="font-medium">{totalPrice} tk</p>
         </div>
-        <Button className="bg-[#F57213] hover:bg-[#F57213] text-white">
-          Accept
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            onClick={() => handleStatus()}
+            disabled={order?.delivery=="DELIVERED" || order?.delivery=="CANCELLED"}
+            className="bg-[#F57213] hover:bg-[#F57213] text-white"
+          >
+           {deliveryStatus}
+          </Button>
+          {order?.delivery !== "CANCELLED" && (
+          <Button onClick={() => handleCancel()} className="bg-[#0db407] hover:bg-[#0db407] text-white">
+            Cancel
+          </Button>
+        )}
+        </div>
+        {/* <Button className="bg-[#F57213] hover:bg-[#F57213] text-white">
+          {order?.delivery}
+        </Button> */}
       </div>
     </div>
   );

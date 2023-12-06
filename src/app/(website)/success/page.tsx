@@ -31,11 +31,12 @@ const SuccessPage = () => {
            const data = await axios.post('http://localhost:3000/api/orders',{
             price: totalPrice,
             items: cart,
-            
+            restaurantName: cart[0]?.restaurant?.name,
             // userEmail: session?.user?.email,
             // userName: session?.user?.name,
             payment_id:payment_intent,
             status:"Paid",
+            restaurantId: cart[0]?.RestaurantId
             // deliver: "PENDING"
           })
           dispatch(clearCart());

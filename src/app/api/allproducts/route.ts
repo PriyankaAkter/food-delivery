@@ -11,7 +11,7 @@ export const GET = async () => {
       include: {
         category:true,
         restaurant:true,
-        orders: true
+        
       },
     });
 

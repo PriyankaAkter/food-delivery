@@ -43,7 +43,7 @@ const Hero:React.FC<RestaurantCardProps> = ({item}) => {
           </div>
           
         </div>
-        <div className="border border-[#F29F05] rounded-lg p-4 grid gap-5">
+        {/* <div className="border border-[#F29F05] rounded-lg p-4 grid gap-5">
           <h6 className="text-[#F29F05]">Offers</h6>
           <div className="flex gap-2 items-center">
             <RiCoupon5Fill className="w-4 h-4 text-[#F29F05]" />
@@ -53,7 +53,7 @@ const Hero:React.FC<RestaurantCardProps> = ({item}) => {
             <RiCoupon5Fill className="w-4 h-4 text-[#F29F05]" />
             <p className="text-white">20% off | use code PARTY</p>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

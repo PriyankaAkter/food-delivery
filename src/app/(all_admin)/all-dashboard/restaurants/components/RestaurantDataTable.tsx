@@ -112,7 +112,7 @@ const columns: ColumnDef<RestaurantColumnType>[] = [
       
       return (
         <div className="flex gap-5 justify-center">
-          <DialogDemo initialValue={row.original} className="p-3 rounded-lg bg-bone hover:bg-none border border-[#F57213]" title="Update Restaurant" update="update" icon={<BiSolidPencil className="text-[#F57213] w-5 h-5" />}  />
+          {/* <DialogDemo initialValue={row.original} className="p-3 rounded-lg bg-bone hover:bg-none border border-[#F57213]" title="Update Restaurant" update="update" icon={<BiSolidPencil className="text-[#F57213] w-5 h-5" />}  /> */}
           <button onClick={()=>DeleteRestaurant(row.original)} className="p-3 rounded-lg bg-bone hover:bg-none border border-[#F57213]">
             <RiDeleteBin5Fill className="text-[#F57213] w-4 h-4" />
           </button>

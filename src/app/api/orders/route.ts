@@ -37,13 +37,19 @@ import { NextRequest, NextResponse } from "next/server";
 // }
 
 export const GET = async () => {
-  // const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
   try {
     const orders = await prisma.order.findMany({
+      where:{
+        restaurantName: session?.user?.name
+      },
       include:{
         user: true,
         products: true,
         restaurant: true
+      },
+      orderBy: {
+        createdAt: 'desc'
       }
     });
     return NextResponse.json(

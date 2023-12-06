@@ -44,13 +44,13 @@ const SettingsForm = () => {
         `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
         formData
       );
-  
+
       const imageUrl = uploadFile.data.secure_url;
       console.log({ imageUrl });
-  
+
       // Continue with the rest of your onSubmit logic
       console.log({ data, imageUrl });
-      
+
       const updateProduct = await axios.put(
         `http://localhost:3000/api/user/${session?.user?.id}`,
         {
@@ -67,7 +67,7 @@ const SettingsForm = () => {
     } else {
       // Continue with the rest of your onSubmit logic without image
       console.log({ data });
-      
+
       const updateProduct = await axios.put(
         `http://localhost:3000/api/user/${session?.user?.id}`,
         {
@@ -81,7 +81,6 @@ const SettingsForm = () => {
       queryClient.invalidateQueries({ queryKey: ["user"] });
       return updateProduct.data;
     }
-  
   };
 
   return (

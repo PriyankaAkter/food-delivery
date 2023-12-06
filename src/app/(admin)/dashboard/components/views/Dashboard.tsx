@@ -1,16 +1,18 @@
 'use client'
 import axios from 'axios';
 import OrderCard from './OrderCard'
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { OrderType } from '@/app/types/type';
 
 const Dashboard = () => {
+  const queryClient = useQueryClient();
     const { data, isLoading, error } = useQuery({
-        queryKey: ["products"],
+        queryKey: ["orders"],
         queryFn: async () => {
           const ordersData = await axios.get(
             `http://localhost:3000/api/orders`
           );
+          // queryClient.invalidateQueries({ queryKey: ["orders"] });
           return ordersData.data;
         },
       });

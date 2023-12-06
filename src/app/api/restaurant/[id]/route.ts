@@ -1,4 +1,6 @@
+import { authOptions } from "@/lib/auth";
 import prisma from "@/lib/db"
+import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server"
 
 
@@ -61,7 +63,7 @@ export const PUT = async (req:NextRequest,{params:{id}}:{params:{id:string}}) =>
 
 
 export const DELETE = async (req:NextRequest,{params:{id}}:{params:{id:string}}) => {
-
+    const session = await getServerSession(authOptions)
     console.log({id});
 
     try {
@@ -70,6 +72,13 @@ export const DELETE = async (req:NextRequest,{params:{id}}:{params:{id:string}})
               id: id
             }
           })
+
+        const user = await prisma.user.delete({
+          where:{
+            email: restaurant?.email
+          }
+        })
+
           return NextResponse.json(
             { message: "Delete Restaurant", restaurant },
             { status: 200 }

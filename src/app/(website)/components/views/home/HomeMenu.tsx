@@ -35,7 +35,7 @@ const HomeMenu = () => {
   }
   if (error) return "An error has occurred: " + error.message;
 
-  console.log({ data });
+  console.log({ productData });
 
   // const uniqueCategories: any = [];
 
