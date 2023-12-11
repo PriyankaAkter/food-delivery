@@ -29,50 +29,90 @@ const slice = createSlice({
     //   }
     // },
 
-
     addCart: (state, action: PayloadAction<ProductType>) => {
       const newProduct = action.payload;
       const existingProducts = state.products;
-    
-      // Check if the cart is empty or products are from the same restaurant
-      if (
-        existingProducts.length === 0 ||
+
+      // Check if the cart is empty
+      if (existingProducts.length === 0) {
+        // Cart is empty, add the new product
+        const updatedProducts = [newProduct];
+        state.products = updatedProducts;
+
+        // Update localStorage
+        localStorage.setItem('cart', JSON.stringify(updatedProducts));
+
+        // Additional logic or messaging if needed
+        console.log('Product added to the empty cart.');
+      } else if (
         existingProducts[0]?.restaurant?.id === newProduct.restaurant?.id
       ) {
         // Check if the new product is not already in the cart
         const isProductInCart = existingProducts.some(
           (product) => product.id === newProduct.id
         );
-    
+
         if (!isProductInCart) {
           // Add the new product to the cart
           const updatedProducts = [...existingProducts, newProduct];
           state.products = updatedProducts;
-    
+
           // Update localStorage
-          localStorage.setItem("cart", JSON.stringify(updatedProducts));
+          localStorage.setItem('cart', JSON.stringify(updatedProducts));
+
+          // Additional logic or messaging if needed
+          console.log('Product added to the cart.');
         } else {
           // Show an alert indicating that the product is already in the cart
-          window.alert("This product is already in your cart.");
+          console.log('This product is already in your cart.');
         }
       } else {
         // Show an alert before replacing the cart
-        const confirmReplace = window.confirm(
-          "Adding a product from a different restaurant will replace your existing cart. Do you want to proceed?"
-        );
-    
-        if (confirmReplace) {
-          // Clear the existing cart and add the new product
-          const updatedProducts = [newProduct];
-          state.products = updatedProducts;
-    
-          // Update localStorage
-          localStorage.setItem("cart", JSON.stringify(updatedProducts));
-        } else {
-          // User canceled the operation, do nothing
-        }
+        // You can customize this logic based on your UI requirements
+        // For now, we assume the user confirmed to replace the cart
+        const updatedProducts = [newProduct];
+        state.products = updatedProducts;
+
+        localStorage.setItem('cart', JSON.stringify(updatedProducts));
+
+        // Additional logic or messaging if needed
+        console.log('Product added to the cart. Existing cart replaced.');
       }
     },
+    // addCart: (state, action: PayloadAction<ProductType>) => {
+    //   const newProduct = action.payload;
+    //   const existingProducts = state.products;
+    
+    //   // Check if the cart is empty or products are from the same restaurant
+    //   if (
+    //     existingProducts.length === 0 ||
+    //     existingProducts[0]?.restaurant?.id === newProduct.restaurant?.id
+    //   ) {
+    //     // Check if the new product is not already in the cart
+    //     const isProductInCart = existingProducts.some(
+    //       (product) => product.id === newProduct.id
+    //     );
+    
+    //     if (!isProductInCart) {
+    //       // Add the new product to the cart
+    //       const updatedProducts = [...existingProducts, newProduct];
+    //       state.products = updatedProducts;
+    
+    //       // Update localStorage
+    //       localStorage.setItem("cart", JSON.stringify(updatedProducts));
+    //     } else {
+        
+    //       console.log("This product is already in your cart.");
+    //     }
+    //   } else {
+        
+    //     const updatedProducts = [newProduct];
+    //     state.products = updatedProducts;
+  
+        
+    //     localStorage.setItem("cart", JSON.stringify(updatedProducts));
+    //   }
+    // },
     
     clearCart: (state) => {
       state.products = [];

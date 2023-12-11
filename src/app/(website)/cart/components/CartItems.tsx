@@ -40,15 +40,16 @@ const CartItems = () => {
     if (!session) {
       router.push("/sign-in");
     } else {
-      try {
-        const res = await axios.post('http://localhost:3000/api/create-intent',totalPrice)
-        const data = await res.data
-        // console.log({data});
+      router.push("/billing");
+      // try {
+      //   const res = await axios.post('http://localhost:3000/api/create-intent',totalPrice)
+      //   const data = await res.data
+      //   // console.log({data});
         
-        router.push(`/payment/${data?.clientSecret}`)
-      } catch (error) {
-        console.log(error);
-      }
+      //   router.push(`/payment/${data?.clientSecret}`)
+      // } catch (error) {
+      //   console.log(error);
+      // }
     }
   };
 

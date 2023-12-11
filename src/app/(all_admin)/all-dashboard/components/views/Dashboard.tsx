@@ -33,7 +33,12 @@ const Dashboard = () => {
       header: "Restaurant",
       cell: ({ row }) => {
         console.log(row.original);
-        if(!row.original?.image || !row.original?.address || !row.original?.address) return ""
+        if (
+          !row.original?.image ||
+          !row.original?.address ||
+          !row.original?.address
+        )
+          return "";
         return (
           <div className="flex items-center gap-2">
             <div className="w-16 h-16 relative">
@@ -48,19 +53,30 @@ const Dashboard = () => {
       },
     },
     {
+      id: "orders",
+      header: "Total Orders",
+      cell: ({ row }) => {
+        // console.log(row?.original);
+
+        const deliveredOrders = row?.original?.orders?.filter(
+          (earning) => earning.delivery === "DELIVERED"
+        );
+        
+        const totalDeliveredOrders = deliveredOrders?.length;
+        return <h6>{totalDeliveredOrders}</h6>;
+      },
+    },
+    {
       id: "earning",
       header: "Total Earning",
-      cell: ({row}) => {
+      cell: ({ row }) => {
         // console.log(row?.original);
-        const totalEarning = row?.original?.orders?.reduce(
-          (sum, earning) => sum + Number(earning?.price),
-          0
-        );
+
+        const totalEarning = row?.original?.orders?.filter((earning) => earning.delivery === "DELIVERED")
+          .reduce((sum, earning) => sum + Number(earning?.price), 0);
         // console.log({totalEarning});
         // if(!row.original?.image) return ""
-        return (
-          <h6>{totalEarning} tk</h6>
-        );
+        return <h6>{totalEarning} tk</h6>;
       },
     },
 

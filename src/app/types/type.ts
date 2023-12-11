@@ -132,6 +132,11 @@ export type RestaurantColumnType = {
     items?: ProductType[]
     payment_id?: string
     delivery?: string
+    notes?: string
+    billingname?:  string
+   billingemail?: string
+   billingphone?: string
+   billingaddress?: string
     products?: ProductType[]
     restaurant?: RestaurantColumnType
     restaurantId?: string

@@ -23,9 +23,9 @@ const HomeNearbyRes = () => {
 
   return (
     <div className="py-28 container">
-      <p className="text-[#F3AB24] mb-4">Restaurants</p>
+      {/* <p className="text-[#F3AB24] mb-4">Restaurants</p> */}
       <div className="flex  justify-between items-center mb-5">
-        <h5 className="mb-8 font-semibold text-4xl">Nearby Restaurants</h5>
+        <h5 className="mb-8 font-semibold text-4xl">Restaurants</h5>
         <Link href='/restaurants' className="text-black flex gap-2  items-center">
           <p className="font-bold">View All</p>
           <IoIosArrowForward className="w-5 h-5" />

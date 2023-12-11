@@ -41,9 +41,9 @@ const OrderCard: React.FC<OrderProps> = ({ order }) => {
           newStatus = "PROCESSING";
           break;
         case "PROCESSING":
-          newStatus = "OUT_OF_DELIVERY";
+          newStatus = "OUT_FOR_DELIVERY";
           break;
-        case "OUT_OF_DELIVERY":
+        case "OUT_FOR_DELIVERY":
           newStatus = "DELIVERED";
           break;
         // case "delivered":

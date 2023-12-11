@@ -84,7 +84,7 @@ const OrderHistory = () => {
       },
     },
     {
-      header: "DELIVER STATUS",
+      header: "STATUS",
       accessorKey: "deliver",
       cell: ({ row }) => {
         // console.log(row.original);

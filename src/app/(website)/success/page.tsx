@@ -20,6 +20,7 @@ const SuccessPage = () => {
     (sum: number, item: any) => sum + item?.price * item?.quantity,
     0
   );
+  const deliveryCost = totalPrice + 60
   const [isLoading,setIsLoading] = useState(true);
   const [error,setError] = useState<null| string>(null)
 
@@ -29,7 +30,7 @@ const SuccessPage = () => {
       const makeRequest = async () => {
         try {
            const data = await axios.post('http://localhost:3000/api/orders',{
-            price: totalPrice,
+            price: deliveryCost,
             items: cart,
             restaurantName: cart[0]?.restaurant?.name,
             // userEmail: session?.user?.email,

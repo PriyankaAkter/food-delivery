@@ -34,7 +34,7 @@ const DesktopNavbar = async () => {
           <Link href="/shop">Shop</Link>
           <Link href="/restaurants">Restaurants</Link>
           {/* <Link href="/shop">Best Offers</Link> */}
-          <Link href="/contact">Contact Us</Link>
+          {/* <Link href="/contact">Contact Us</Link> */}
         </nav>
         <div className="flex items-center  gap-2">
           <CartCount />

@@ -1,91 +1,92 @@
 "use client";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { items } from "../../components/views/data";
 import ButtonOne from "../../components/shared/ButtonOne";
 import getCart from "@/utilis/getCart";
 
 import { useStripe } from "@stripe/react-stripe-js";
 
-import { ProductType } from "@/app/types/type";
+import { CustomerType, ProductType } from "@/app/types/type";
 import axios from "axios";
 import { useAppSelector } from "@/app/redux_store/store";
 import { ZodType, z } from "zod";
-
-
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 type formDataType = {
   name?: string;
   phone?: string;
-  area?: string;
-  code?: number;
-  city?:string;
-  district?: string;
+  address?: string;
   email?: string;
-  optional?:string;
+  // optional?: string;
 };
 
-const signInSchema: ZodType<formDataType> = z
-  .object({
-    name: z.string().min(1, "Name is required"),
-    phone: z.string().min(1, "phone is required"),
-    district: z.string().min(1, "district is required"),
-    city: z.string().min(1, "city is required"),
-    area: z.string().min(1, "area is required"),
-    code: z.number(),
-    email: z.string().min(1, "Email is required"),
-    optional: z.string()
-  })
+// const signInSchema: ZodType<formDataType> = z
+//   .object({
+//     name: z.string().min(1, "Name is required"),
+//     phone: z.string().min(1, "phone is required"),
+//     address: z.string().min(1, "address is required"),
+//     email: z.string().min(1, "Email is required"),
+//     notes: z.string()
+//   })
 
 const BillingDetails = () => {
+  const { data: session } = useSession();
+  const cart = useAppSelector((state) => state?.cart?.products);
   const form = useForm();
+  const queryClient = useQueryClient();
+  const router = useRouter();
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const userData = await axios.get(
+        `http://localhost:3000/api/user/${session?.user?.id}`
+      );
+      return userData.data;
+    },
+  });
+
+  if (isLoading) {
+    return <h6>Loading...</h6>;
+  }
+  if (error) return "An error has occurred: " + error.message;
+
+  console.log({ data });
+  queryClient.invalidateQueries({ queryKey: ["user"] });
 
   const { register, handleSubmit, formState } = form;
-  // const { errors, isSubmitting } = formState;
-  // const stripe = useStripe();
-  const cart = useAppSelector((state) => state?.cart?.products);
+  const { errors } = formState;
+
   console.log({ cart });
 
   const totalPrice = cart.reduce(
-    (sum: number, item:any) => sum + (item?.price * item?.quantity),
+    (sum: number, item: any) => sum + item?.price * item?.quantity,
     0
   );
 
-  const onSubmit = async (data: formDataType) => {
-    console.log(data);
-  
-    // try {
-    //   if (!cart.length) {
-    //     return;
-    //   }
-  
-    //   const sessionResponse = await checkoutSession(cart);
-  
-    //   // Check if sessionResponse is defined before parsing
-    //   if (sessionResponse) {
-    //     const session = JSON.parse(sessionResponse);
-  
-    //     // Continue with the rest of your code...
-    //     // await axios.post(
-    //     //   "http://localhost:3000/api/order/createOrder",
-    //     //   {
-    //     //     data,
-    //     //     cart,
-    //     //     sessionId: session.id,
-    //     //   }
-    //     // );
-    //     await postOrder(data, cart, session.id);
-    //     stripe?.redirectToCheckout({
-    //       sessionId: session.id,
-    //     });
-    //   } else {
-    //     console.error("Failed to retrieve checkout session.");
-    //   }
-    // } catch (error) {
-    //   console.error("Error occurs");
-    // }
+  const deliveryCost = totalPrice + 60
+
+  const onSubmit: SubmitHandler<CustomerType> = async (data) => {
+    try {
+      const res = await axios.post("/api/create-intent", deliveryCost);
+
+      const clientSecret = res.data.clientSecret;
+
+      // Update user information
+      const updateUserData = await axios.put(`/api/user/${session?.user?.id}`, {
+        name: data.name,
+        email: data.email,
+        address: data.address,
+        phone: data.phone,
+      });
+
+      // Redirect to the payment page with the client secret
+      router.push(`/payment/${clientSecret}`);
+    } catch (error) {
+      console.log(error);
+    }
   };
-  
-  
 
   return (
     <div className="container py-10">
@@ -97,7 +98,7 @@ const BillingDetails = () => {
           action="/"
           className="grid gap-12"
         >
-          <div>
+          <div className="space-y-6">
             <div className="grid grid-cols-2 gap-10">
               <div className="grid gap-3">
                 <label htmlFor="name" className="text-base">
@@ -107,73 +108,47 @@ const BillingDetails = () => {
                   <input
                     type="text"
                     id="name"
+                    disabled
                     {...register("name")}
+                    defaultValue={data?.user?.name}
                     className="border border-theme-gray w-full pl-4 py-4"
                   />
                 </div>
-                {/* <p className="text-red-500">{errors.name?.message}</p> */}
+                {/* <p className="text-red-500">{errors?.name?.message}</p> */}
               </div>
               <div className="grid gap-3">
-                <label htmlFor="district" className="text-base">
-                  District
+                <label htmlFor="email" className="text-base">
+                  Email Address
                 </label>
                 <div>
                   <input
-                    type="text"
-                    id="district"
-                    {...register("district")}
+                    type="email"
+                    id="email"
+                    disabled
+                    {...register("email")}
+                    defaultValue={data?.user?.email}
                     className="border border-theme-gray w-full pl-4 py-4"
                   />
                 </div>
-                {/* <p className="text-red-500">{errors.district?.message}</p> */}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-10">
-              <div className="grid gap-3">
-                <label htmlFor="city" className="text-base">
-                  Town/ City
-                </label>
-                <div>
-                  <input
-                    type="text"
-                    id="city"
-                    {...register("city")}
-                    className="border border-theme-gray w-full pl-4 py-4"
-                  />
-                </div>
-                {/* <p className="text-red-500">{errors.city?.message}</p> */}
-              </div>
-              <div className="grid gap-3">
-                <label htmlFor="code" className="text-base">
-                  Postal code
-                </label>
-                <div>
-                  <input
-                    type="number"
-                    id="code"
-                    {...register("code")}
-                    className="border border-theme-gray w-full pl-4 py-4"
-                  />
-                </div>
-                {/* <p className="text-red-500">{errors.code?.message}</p> */}
+                {/* <p className="text-red-500">{errors.email?.message}</p> */}
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-10">
               <div className="grid gap-3">
-                <label htmlFor="area" className="text-base">
-                  Area
+                <label htmlFor="address" className="text-base">
+                  address
                 </label>
                 <div>
                   <input
                     type="text"
-                    id="area"
-                    {...register("area")}
+                    id="address"
+                    {...register("address")}
+                    defaultValue={data?.user?.address}
                     className="border border-theme-gray w-full pl-4 py-4"
                   />
                 </div>
-                {/* <p className="text-red-500">{errors.area?.message}</p> */}
+                {/* <p className="text-red-500">{errors.address?.message}</p> */}
               </div>
               <div className="grid gap-3">
                 <label htmlFor="phone" className="text-base">
@@ -184,6 +159,7 @@ const BillingDetails = () => {
                     type="text"
                     id="phone"
                     {...register("phone")}
+                    defaultValue={data?.user?.phone}
                     className="border border-theme-gray w-full pl-4 py-4"
                   />
                 </div>
@@ -191,25 +167,9 @@ const BillingDetails = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-10">
-              <div className="grid gap-3">
-                <label htmlFor="email" className="text-base">
-                  Email Address
-                </label>
-                <div>
-                  <input
-                    type="email"
-                    id="email"
-                    {...register("email")}
-                    className="border border-theme-gray w-full pl-4 py-4"
-                  />
-                </div>
-                {/* <p className="text-red-500">{errors.email?.message}</p> */}
-              </div>
-            </div>
-            <div className="grid gap-3">
+            {/* <div className="grid gap-3">
               <label htmlFor="optional" className="text-base">
-                Notes about your order, special notes for delivery.
+                Message
               </label>
               <div>
                 <textarea
@@ -221,7 +181,7 @@ const BillingDetails = () => {
                   {...register("optional")}
                 ></textarea>
               </div>
-            </div>
+            </div> */}
           </div>
           <div>
             <div className="flex justify-between items-center my-4 pr-2">
@@ -241,7 +201,7 @@ const BillingDetails = () => {
 
             <div className="flex justify-end gap-12 items-center bg-secondary py-4 pr-2">
               <h6>Total Cost</h6>
-              <h6>{totalPrice + 60} tk</h6>
+              <h6>{deliveryCost} tk</h6>
             </div>
           </div>
 
