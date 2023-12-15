@@ -13,9 +13,9 @@ export default function Home() {
      <HomeHero />
      {/* <HomeMenu /> */}
       {/* <HomeCategories /> */}
-      <HomeMenu />
+      {/* <HomeMenu /> */}
       {/* <HomePopularItems /> */}
-      <HomeNearbyRes />
+      {/* <HomeNearbyRes /> */}
       {/* <HomeOurOffers /> */}
       {/* <HomePersonalRecommendations /> */}
       {/* <HomeItems />

@@ -16,6 +16,7 @@ import { BiSolidPencil } from "react-icons/bi";
 import { AiOutlinePlus } from "react-icons/ai";
 import Image from "next/image";
 import BasicTable1 from "../../components/shared/BasicTable1";
+import { toast } from "react-toastify";
 
 export function ProductDataTable() {
   const queryClient = useQueryClient();
@@ -43,10 +44,13 @@ export function ProductDataTable() {
       const deleteProduct = await axios.delete(
         `http://localhost:3000/api/products/${data.id}`
       );
+      
       queryClient.invalidateQueries({ queryKey: ["products"] });
+      toast.success("Product deleted successfully");
       return deleteProduct.data;
     } catch (error) {
       console.error(error);
+      toast.error("Error deleting the product");
     }
   };
 
@@ -55,7 +59,7 @@ export function ProductDataTable() {
       id: "name",
       header: "name",
       cell: ({ row }) => {
-        console.log(row?.original);
+        // console.log(row?.original);
 
         if (!row?.original?.name) return "--";
 
@@ -66,7 +70,7 @@ export function ProductDataTable() {
       id: "image",
       header: "image",
       cell: ({ row }) => {
-        console.log(row?.original);
+        // console.log(row?.original);
 
         if (!row?.original?.image) return "--";
 
@@ -81,7 +85,7 @@ export function ProductDataTable() {
       id: "slug",
       header: "slug",
       cell: ({ row }) => {
-        console.log(row?.original);
+        // console.log(row?.original);
 
         if (!row?.original?.slug) return "--";
 
@@ -101,7 +105,7 @@ export function ProductDataTable() {
       id: "description",
       header: "description",
       cell: ({ row }) => {
-        console.log(row?.original);
+        // console.log(row?.original);
 
         if (!row?.original?.description) return "--";
 
@@ -113,7 +117,7 @@ export function ProductDataTable() {
       id: "stock",
       header: "Stock",
       cell: ({ row }) => {
-        console.log(row?.original);
+        // console.log(row?.original);
 
         if (!row?.original?.stock) return "--";
 
@@ -124,7 +128,7 @@ export function ProductDataTable() {
       id: "price",
       header: "price",
       cell: ({ row }) => {
-        console.log(row?.original);
+        // console.log(row?.original);
 
         if (!row?.original?.price) return "--";
 
@@ -135,7 +139,7 @@ export function ProductDataTable() {
       id: "action",
       header: "ACTION",
       cell: ({ row }) => {
-        console.log(row.original);
+        // console.log(row.original);
 
         return (
           <div className="flex gap-3 justify-center">

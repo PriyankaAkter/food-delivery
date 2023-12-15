@@ -46,6 +46,7 @@ export type RestaurantColumnType = {
     role?: string
     address?: string
     phone?: string,
+    review?: ReviewType[]
     orders?: OrderType[]
     createdAt?: string
     updatedAt?: string
@@ -82,6 +83,7 @@ export type RestaurantColumnType = {
     price?: number
     stock?: string
     quantity?: number
+    review?: ReviewType[]
     orders?: OrderType[]
     category?: CategoryType
     categoryId?: string
@@ -141,4 +143,31 @@ export type RestaurantColumnType = {
     restaurant?: RestaurantColumnType
     restaurantId?: string
     createdAt?:string
+  }
+
+
+
+  // model Review {
+  //   id        String    @unique @default(uuid())
+  //   review_id    Int?  @default(autoincrement()) 
+  //   rating      Int?
+  //   comment      String?  
+  //   user     User?   @relation(fields: [userId], references: [id])
+  //   userId String?
+  //   products     Food?   @relation(fields: [productId], references: [id])
+  //   productId String?
+  //   createdAt DateTime @default(now())
+  //   updatedAt DateTime @updatedAt
+  // }
+  export type ReviewType = {
+    id?: string
+    review_id?: number
+    rating?: number
+    comment?: string
+    user?: OrderType[]
+    userId?: string,
+    products: ProductType[]
+    productId?: string
+    createdAt?: string
+    updatedAt?: string
   }

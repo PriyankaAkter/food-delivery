@@ -29,7 +29,7 @@ console.log({data});
   // console.log({allItems});
   
   return (
-    <div>
+    <div >
         <Hero item={item} />
         <AllItems item={item} />
         {/* <AllItems /> */}

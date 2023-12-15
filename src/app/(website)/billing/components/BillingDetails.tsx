@@ -14,26 +14,12 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-type formDataType = {
-  name?: string;
-  phone?: string;
-  address?: string;
-  email?: string;
-  // optional?: string;
-};
 
-// const signInSchema: ZodType<formDataType> = z
-//   .object({
-//     name: z.string().min(1, "Name is required"),
-//     phone: z.string().min(1, "phone is required"),
-//     address: z.string().min(1, "address is required"),
-//     email: z.string().min(1, "Email is required"),
-//     notes: z.string()
-//   })
 
 const BillingDetails = () => {
   const { data: session } = useSession();
   const cart = useAppSelector((state) => state?.cart?.products);
+
   const form = useForm();
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -52,13 +38,13 @@ const BillingDetails = () => {
   }
   if (error) return "An error has occurred: " + error.message;
 
-  console.log({ data });
+  // console.log({ data });
   queryClient.invalidateQueries({ queryKey: ["user"] });
 
   const { register, handleSubmit, formState } = form;
   const { errors } = formState;
 
-  console.log({ cart });
+  // console.log({ cart });
 
   const totalPrice = cart.reduce(
     (sum: number, item: any) => sum + item?.price * item?.quantity,
@@ -79,6 +65,7 @@ const BillingDetails = () => {
         email: data.email,
         address: data.address,
         phone: data.phone,
+        
       });
 
       // Redirect to the payment page with the client secret
@@ -89,7 +76,7 @@ const BillingDetails = () => {
   };
 
   return (
-    <div className="container py-10">
+    <div className="w-[900px] mx-auto py-10">
       <div className=" bg-[#F9F8F8] p-5 2xl:p-[68px]">
         <h5 className="mb-[11px]">Billing Details</h5>
         <hr className="mb-20 bg-primary" />

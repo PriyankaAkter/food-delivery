@@ -10,6 +10,7 @@ import { DialogOrder } from "./DialogOrder";
 import { useSession } from "next-auth/react";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import BasicTable1 from "../../components/shared/BasicTable1";
+import { toast } from "react-toastify";
 
 const OrderHistory = () => {
   const { data: session } = useSession();
@@ -27,14 +28,6 @@ const OrderHistory = () => {
   }
   if (error) return "An error has occurred: " + error.message;
 
-  // console.log({ data });
-
-  // const fetchOrders = data?.orders?.map((order: OrderType) =>
-  //   order?.items?.filter(
-  //     (i: ProductType) => i?.restaurant?.email === session?.user?.email
-  //   )
-  // );
-  // console.log({ fetchOrders });
 
 
     // single data delete
@@ -44,10 +37,12 @@ const OrderHistory = () => {
           `http://localhost:3000/api/orders/${data.id}`
         );
         queryClient.invalidateQueries({ queryKey: ["orders"] });
+        toast.success("Order deleted successfully");
         // console.log(deleteOrder.data);
         return deleteOrder.data;
       } catch (error) {
         console.error(error);
+        toast.error("Error Occur!");
       }
     };
   

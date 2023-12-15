@@ -1,10 +1,14 @@
+'use client'
 import Image from "next/image";
 import Link from "next/link";
-import { BsSearch } from "react-icons/bs";
+import { ToastContainer, toast } from "react-toastify";
+
 
 export const HomeHero = () => {
+  
+
   return (
-    <div className="py-20 container">
+    <div className="py-20 container ">
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-[186px] ">
         <div className="flex flex-col justify-center gap-12">
           <h1 className="text-[60px] text-[#0F172A] font-semibold leading-[70px]">
@@ -15,7 +19,7 @@ export const HomeHero = () => {
             Order your foods at any time and we’ll safely delivery them straight
             to your home, we’ll it on time so you are not hungry.
           </p>
-
+          
           <Link href='/about' className="bg-[#F29F05] w-fit text-white font-medium py-3 px-5 rounded-[4px]">
               Learn More
             </Link>

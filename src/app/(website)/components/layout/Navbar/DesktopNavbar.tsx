@@ -2,23 +2,12 @@ import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
-import { AiOutlineShoppingCart } from "react-icons/ai";
-
-import { Divide } from "lucide-react";
-import UserAcoount from "./UserAcoount";
-import { IoBagHandleOutline } from "react-icons/io5";
-
-import { signIn, signOut } from "next-auth/react";
-import prisma from "@/lib/db";
-import { DropdownMenuCheckboxItem } from "@radix-ui/react-dropdown-menu";
 import { DropdownMenuRadioGroupDemo } from "./DropDown";
-import { useDispatch } from "react-redux";
 import CartCount from "./CartCount";
+import WishListCount from "./WishListCount";
 
 const DesktopNavbar = async () => {
   const session = await getServerSession(authOptions);
-  // console.log({session});
-  
 
   return (
     <div className="w-screen bg-inherit h-32 lg:flex hidden">
@@ -27,7 +16,7 @@ const DesktopNavbar = async () => {
           <div className="w-6 h-5 relative">
             <Image src="/assests/images/home/logo-yellow.svg" fill alt="logo" />
           </div>
-          <h5 className="font-bold text-[#FFB93E] text-[28px]">Food Court</h5>
+          <h5 className="font-bold text-[#FFB93E] text-[28px]">FoodExpress</h5>
         </Link>
         <nav className="2xl:flex gap-16 text-[18px] font-medium text-[#0F172A] ">
           <Link href="/">Home</Link>
@@ -36,8 +25,11 @@ const DesktopNavbar = async () => {
           {/* <Link href="/shop">Best Offers</Link> */}
           {/* <Link href="/contact">Contact Us</Link> */}
         </nav>
-        <div className="flex items-center  gap-2">
+        <div className="flex items-center  gap-5">
+          <div className="flex items-center gap-5">
+          <WishListCount />
           <CartCount />
+          </div>
           
           {session?.user ? (
             <div className="flex items-center gap-2">

@@ -45,7 +45,10 @@ export function DialogOrder({ initialValue }: DialogOrderType) {
   // console.log({totalPrice});
 
   // const totalItems = filterItems?.reduce((sum, item) => sum + (1 * Number(item?.quantity)), 0);
-
+  const totalItems = initialValue?.items?.reduce(
+    (sum, item) => sum + 1 * Number(item?.quantity),
+    0
+  );
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -56,7 +59,7 @@ export function DialogOrder({ initialValue }: DialogOrderType) {
       <DialogContent className="sm:max-w-[625px] bg-white">
         <DialogHeader>
           <DialogTitle>Order #{initialValue?.id}</DialogTitle>
-          <DialogDescription>{initialValue?.createdAt}</DialogDescription>
+          <DialogDescription>{new Date(initialValue?.createdAt)?.toLocaleString()}</DialogDescription>
         </DialogHeader>
         <div className="grid ">
           {initialValue?.items?.map((item: ProductType, index: number) => (
@@ -87,7 +90,7 @@ export function DialogOrder({ initialValue }: DialogOrderType) {
           
         </div>
         <DialogFooter className="grid grid-cols-2">
-          <h6>{initialValue?.items?.length} Items</h6>
+          <h6>{totalItems} Items</h6>
           <h6 className="text-end">Total: {totalPrice} tk</h6>
         </DialogFooter>
       </DialogContent>

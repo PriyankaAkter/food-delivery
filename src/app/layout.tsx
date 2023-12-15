@@ -4,7 +4,7 @@ import { Poppins } from "next/font/google";
 import QueryProvider from "./providers/QueryProvider";
 import ReduxProvider from "./providers/ReduxProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Toast } from "@/components/ui/toast";
+import { ToastContainer } from 'react-toastify';
 import Session from "./providers/Session";
 const poppins = Poppins({
   subsets: ["latin"],
@@ -23,16 +23,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+    
     <html lang="en">
       <body className={`${poppins.variable} `}>
         <Session>
           <QueryProvider>
             <ReduxProvider>
-            <div className="">{children}</div>
+            <div className="">{children}
+            </div>
             </ReduxProvider>
           </QueryProvider>
         </Session>
+      
       </body>
     </html>
+    
   );
 }

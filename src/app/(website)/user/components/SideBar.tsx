@@ -61,6 +61,8 @@ import { MdLogout } from "react-icons/md";
 import { UserLogOut } from "./UserLogOut";
 import OrderHistory from "./order-history/OrderHistory";
 import Settings from "./settings/Settings";
+import WishList from "./wishlist/WishList";
+import { FaRegHeart } from "react-icons/fa";
 
 // ... other imports ...
 
@@ -86,7 +88,17 @@ export const SideBar = () => {
               Order History
             </span>
           </div>
-
+          <div
+            className="flex gap-8 items-center cursor-pointer"
+            onClick={() => handleComponentChange("WishList")}
+          >
+            <div>
+              <FaRegHeart className="text-primary w-5 h-5 hover:text-secondary" />
+            </div>
+            <span className="text-xl font-medium hover:text-secondary">
+              WishList
+            </span>
+          </div>
           <div
             className="flex gap-8 items-center cursor-pointer"
             onClick={() => handleComponentChange("Settings")}
@@ -110,6 +122,7 @@ export const SideBar = () => {
       <div className="w-full">
         {/* Render the selected component */}
         {selectedComponent === "OrderHistory" && <OrderHistory />}
+        {selectedComponent === "WishList" && <WishList />}
         {selectedComponent === "Settings" && <Settings />}
       </div>
     </div>

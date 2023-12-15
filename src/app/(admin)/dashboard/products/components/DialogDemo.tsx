@@ -17,6 +17,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 type DialogDemoType = {
   title: string;
@@ -111,7 +112,7 @@ export function DialogDemo({
           }
         );
         queryClient.invalidateQueries({ queryKey: ["products"] });
-
+        toast.success("Product added successfully");
         // Reset only specific fields if needed
 
         return createProduct.data;
@@ -131,11 +132,12 @@ export function DialogDemo({
           }
         );
         queryClient.invalidateQueries({ queryKey: ["products"] });
+        toast.success("Product updated successfully");
         return updateProduct.data;
       }
     } catch (error) {
       console.error("Error handling file or submitting form:", error);
-      // Handle error here, show a message to the user, etc.
+      toast.error("Error occur!");
     }
   };
 

@@ -6,6 +6,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 
 type RestaurantformDataType = {
@@ -57,9 +58,11 @@ const SignUpForm = () => {
       });
 
       if (response.status === 200) {
+        toast.success('Restaurant registered successfully')
         router.push("/sign-in");
       } else {
         console.error("Failed to sign up");
+        toast.error("Error Occur!");
       }
     } catch (error) {
       console.error("Error signing up:", error);

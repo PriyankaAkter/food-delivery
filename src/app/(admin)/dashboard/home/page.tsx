@@ -30,11 +30,9 @@ const Page = () => {
             </div>
           </div>
         </div>
-        <LineChartInteractiveExample />
-        
-      </div>
-      <div className="flex gap-7 mt-12">
-        <div
+        {/* <LineChartInteractiveExample /> */}
+        <div className="flex gap-7 ">
+        {/* <div
           className="grid grid-cols-2 place-items-center px-9 py-12 w-[711px]"
           style={{ boxShadow: "0px 4px 10px 0px rgba(0, 0, 0, 0.16)" }}
         >
@@ -64,9 +62,11 @@ const Page = () => {
               <h6>$1000</h6>
             </div>
           </div>
-        </div>
+        </div> */}
         <QuickDeals />
       </div>
+      </div>
+      
     </div>
   );
 };

@@ -5,9 +5,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import {signIn} from 'next-auth/react'
-import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
 import Link from "next/link";
+import { toast } from 'react-toastify';
 
 type formDataType = {
   email: string;
@@ -44,12 +44,13 @@ const SignInForm = () => {
       });
       
       if (signInData?.ok) {
+        
         router.refresh()
         router.push('/');
         // console.log("Data get successfully");
         
       }
-      console.log({signInData});
+      // console.log({signInData});
       
       // if (signInData?.ok) {
       //   // Check the user's role in the token or session
@@ -67,14 +68,7 @@ const SignInForm = () => {
       // }
     } catch (error) {
       console.error(error);
-      
-      toast({
-        title: "Error",
-        description: "Oops! Something went wrong",
-        // action: (
-        //   <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
-        // ),
-      })
+      // toast("Error Occur!");
     }
   };
 

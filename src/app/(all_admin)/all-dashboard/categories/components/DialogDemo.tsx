@@ -15,6 +15,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 // type FormInputsType = {
 //   id: number;
@@ -50,17 +51,23 @@ export function DialogDemo({
   const queryClient = useQueryClient();
 
   const onSubmit:any = async (data:CategoryType) => {
-
-    if(!initialValue){
-      const createCategory = await axios.post("http://localhost:3000/api/categories",data)
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
-      return createCategory.data
-    }
-    else{
-      const updateCategory = await axios.put(`http://localhost:3000/api/categories/${initialValue.id}`,data)
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
-      return updateCategory.data
-    }
+try {
+  if(!initialValue){
+    const createCategory = await axios.post("http://localhost:3000/api/categories",data)
+    queryClient.invalidateQueries({ queryKey: ["categories"] });
+    toast.success('Category added successfully')
+    return createCategory.data
+  }
+  else{
+    const updateCategory = await axios.put(`http://localhost:3000/api/categories/${initialValue.id}`,data)
+    queryClient.invalidateQueries({ queryKey: ["categories"] });
+    toast.success('Category updated successfully')
+    return updateCategory.data
+  }
+} catch (error) {
+  toast.error("Error Occur!");
+}
+   
     
   };
 

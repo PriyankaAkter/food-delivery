@@ -6,6 +6,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 
 
@@ -58,7 +59,7 @@ const SignUpForm = () => {
   } = useForm<formDataType>({ resolver: zodResolver(signUpSchema) });
 
   const onSubmit = async (data: formDataType) => {
-    console.log("Form data", data);
+    // console.log("Form data", data);
     try {
       const response = await axios.post("/api/user", {
         name: data.name,
@@ -67,12 +68,14 @@ const SignUpForm = () => {
       });
 
       if (response.status === 200) {
+        toast.success('User registered successfully')
         router.push("/sign-in");
       } else {
         console.error("Failed to sign up");
       }
     } catch (error) {
       console.error("Error signing up:", error);
+      toast.error("Error Occur!");
     }
   };
 

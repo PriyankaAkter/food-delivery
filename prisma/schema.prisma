@@ -47,8 +47,11 @@ model User {
   role          UserRole  @default(USER)
   address       String?
   phone       String?
-  
+
+  review Review[]
   orders Order[]
+  wishlist Json?
+  cart Json?
   accounts      Account[]
   sessions      Session[]
 }
@@ -107,6 +110,7 @@ model Food {
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   orders Order[]
+  review Review[]
   categoryId   String
   RestaurantId String
   restaurant   Restaurant @relation(fields: [RestaurantId], references: [id])
@@ -160,6 +164,21 @@ model Order {
   restaurant     Restaurant?   @relation(fields: [restaurantId], references: [id])
   restaurantId String?
 }
+
+
+model Review {
+  id        String    @unique @default(uuid())
+  review_id    Int?  @default(autoincrement()) 
+  rating      Int?
+  comment      String?  
+  user     User?   @relation(fields: [userId], references: [id])
+  userId String?
+  products     Food?   @relation(fields: [productId], references: [id])
+  productId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 
 
 

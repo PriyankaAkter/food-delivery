@@ -5,6 +5,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const SettingsForm = () => {
   const { data: session } = useSession();
@@ -29,57 +30,61 @@ const SettingsForm = () => {
   }
   if (error) return "An error has occurred: " + error.message;
 
-  console.log({ data });
+  // console.log({ data });
 
   const onSubmit: SubmitHandler<CustomerType & { image: FileList }> = async (
     data
   ) => {
-    console.log(data);
-    if (data.image) {
-      const file = data?.image[0];
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", preset_key);
-      const uploadFile = await axios.post(
-        `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
-        formData
-      );
-
-      const imageUrl = uploadFile.data.secure_url;
-      console.log({ imageUrl });
-
-      // Continue with the rest of your onSubmit logic
-      console.log({ data, imageUrl });
-
-      const updateProduct = await axios.put(
-        `http://localhost:3000/api/user/${session?.user?.id}`,
-        {
-          id: data.id,
-          name: data?.name,
-          email: data?.email,
-          address: data?.address,
-          phone: data?.phone,
-          image: imageUrl,
-        }
-      );
-      queryClient.invalidateQueries({ queryKey: ["user"] });
-      return updateProduct.data;
-    } else {
-      // Continue with the rest of your onSubmit logic without image
-      console.log({ data });
-
-      const updateProduct = await axios.put(
-        `http://localhost:3000/api/user/${session?.user?.id}`,
-        {
-          id: data.id,
-          name: data?.name,
-          email: data?.email,
-          address: data?.address,
-          phone: data?.phone,
-        }
-      );
-      queryClient.invalidateQueries({ queryKey: ["user"] });
-      return updateProduct.data;
+    // console.log(data);
+    try {
+      if (data.image) {
+        const file = data?.image[0];
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", preset_key);
+        const uploadFile = await axios.post(
+          `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
+          formData
+        );
+  
+        const imageUrl = uploadFile.data.secure_url;
+        console.log({ imageUrl });
+  
+        console.log({ data, imageUrl });
+  
+        const updateProduct = await axios.put(
+          `http://localhost:3000/api/user/${session?.user?.id}`,
+          {
+            id: data.id,
+            name: data?.name,
+            email: data?.email,
+            address: data?.address,
+            phone: data?.phone,
+            image: imageUrl,
+          }
+        );
+        queryClient.invalidateQueries({ queryKey: ["user"] });
+        toast.success("Profile updated successfully");
+        return updateProduct.data;
+      } else {
+        
+  
+        const updateProduct = await axios.put(
+          `http://localhost:3000/api/user/${session?.user?.id}`,
+          {
+            id: data.id,
+            name: data?.name,
+            email: data?.email,
+            address: data?.address,
+            phone: data?.phone,
+          }
+        );
+        queryClient.invalidateQueries({ queryKey: ["user"] });
+        toast.success("Profile updated successfully");
+        return updateProduct.data;
+      }
+    } catch (error) {
+      toast.error("Error Occur!");
     }
   };
 
@@ -148,7 +153,7 @@ const SettingsForm = () => {
       <input
         type="submit"
         value="Save Changes"
-        className="p-3 rounded-lg bg-[#F57213] text-white mt-8"
+        className="p-3 rounded-lg bg-[#F57213] text-white mt-8 cursor-pointer"
       />
     </form>
   );

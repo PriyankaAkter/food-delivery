@@ -93,7 +93,7 @@ const OrderCard: React.FC<OrderProps> = ({ order }) => {
     (sum, item) => sum + 1 * Number(item?.quantity),
     0
   );
-
+const deliveryCost = Number(totalPrice) + 60
   return (
     <div className="w-full  border border-[#E9EFF6] h-auto  rounded-[10px] p-10">
       <div>
@@ -152,7 +152,8 @@ const OrderCard: React.FC<OrderProps> = ({ order }) => {
       <div className="flex justify-between items-center py-4">
         <div>
           <p>{totalItems} Items</p>
-          <p className="font-medium">{totalPrice} tk</p>
+          {/* <p className="font-medium">{totalPrice} tk</p> */}
+          <p className="font-medium">Total: {deliveryCost} tk</p>
         </div>
         <div className="flex gap-2">
           <Button

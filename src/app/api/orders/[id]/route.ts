@@ -2,6 +2,10 @@ import prisma from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
 
+
+
+
+
 export const DELETE = async (req:NextRequest,{params:{id}}:{params:{id:number}}) => {
 
     console.log({id});

@@ -17,29 +17,24 @@ const Page = () => {
     queryKey: ["product"],
     queryFn: async () => {
       const product = await axios.get(
-        `http://localhost:3000/api/allproducts/${foodSlug}`
+        `http://localhost:3000/api/allproducts`
       );
       return product.data;
     },
   });
-  console.log({params});
- //all products fetch
-  const { data:allProducts} = useQuery({
-    queryKey: ["allproducts"],
-    queryFn: async () => {
-      const allproducts = await axios.get(
-        `http://localhost:3000/api/allproducts`
-      );
-      return allproducts.data;
-    },
-  });
+  // console.log({data});
 
-  console.log({allProducts});
+
+
+
+  const item = data?.products?.find((items:ProductType)=> items?.slug==foodSlug)
+  // console.log({item});
+
   
 
   return (
     <div>
-        <ItemHero item={data?.product} />
+        <ItemHero item={item} />
         {/* <RelatedItems relatedItems={relatedItems} /> */}
     </div>
   )

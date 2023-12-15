@@ -17,6 +17,7 @@ import axios from "axios";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { BiSolidPencil } from "react-icons/bi";
 import BasicTable1 from "@/app/(admin)/dashboard/components/shared/BasicTable1";
+import { toast } from "react-toastify";
 
 
 
@@ -44,9 +45,11 @@ export function CategoryDataTable() {
       try {
         const deleteData = await axios.delete(`http://localhost:3000/api/categories/${data.id}`)
         queryClient.invalidateQueries({ queryKey: ["categories"] });
+        toast.success('Category deleted successfully')
         return deleteData.data
       } catch (error) {
         console.error(error)
+        toast.error("Error Occur!");
       }
     };
   

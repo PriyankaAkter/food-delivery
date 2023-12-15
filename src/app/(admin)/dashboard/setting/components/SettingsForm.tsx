@@ -3,6 +3,7 @@ import { RestaurantColumnType } from "@/app/types/type";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { toast } from "react-toastify";
 
 type Inputs = {
   mobile: string;
@@ -43,7 +44,8 @@ const SettingsForm = () => {
 
   const onSubmit: SubmitHandler<RestaurantColumnType & { image: FileList }> = async (data) => {
     console.log(data);
-    const file = data?.image[0];
+    try {
+      const file = data?.image[0];
       const formData = new FormData();
       formData.append("file", file);
       formData.append("upload_preset", preset_key);
@@ -73,7 +75,12 @@ const SettingsForm = () => {
       }
     );
     queryClient.invalidateQueries({ queryKey: ["products"] });
+    toast.success("Profile updated successfully");
     return updateProduct.data;
+    } catch (error) {
+      toast.error("Error occur!");
+    }
+    
   };
 
 
@@ -175,7 +182,7 @@ const SettingsForm = () => {
       <input
         type="submit"
         value="Save Changes"
-        className="p-3 rounded-lg bg-[#F57213] text-white mt-8"
+        className="p-3 rounded-lg bg-[#F57213] text-white mt-8 cursor-pointer"
       />
     </form>
   );

@@ -34,13 +34,19 @@ const CartCount = () => {
   }, []);
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-1 relative ">
+        <div className="w-4 h-4 bg-[#F29F05] rounded-full flex items-center justify-center text-white text-[12px] absolute -right-2 -top-2">{cart.length}</div>
       <Link href="/cart">
-        {/* <AiOutlineShoppingCart className="w-6 h-6 text-black" /> */}
-        <IoBagHandleOutline className="w-6 h-6 text-black" />
+      <IoBagHandleOutline className="w-6 h-6 text-black" />
       </Link>
-      <h6>( {cart.length} )</h6>
     </div>
+    // <div className="flex items-center gap-1">
+    //   <Link href="/cart">
+    //     {/* <AiOutlineShoppingCart className="w-6 h-6 text-black" /> */}
+    //     <IoBagHandleOutline className="w-6 h-6 text-black" />
+    //   </Link>
+    //   <h6>( {cart.length} )</h6>
+    // </div>
   );
 };
 

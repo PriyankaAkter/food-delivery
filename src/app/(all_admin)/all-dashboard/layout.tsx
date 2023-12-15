@@ -1,5 +1,7 @@
-import { SideBar } from "./components/shared/SideBar";
 
+import { SideBar } from "./components/shared/SideBar";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function RootLayout({
@@ -11,6 +13,7 @@ export default function RootLayout({
     <div className="flex">
     <SideBar />
     <div className="flex-1">{children}</div>
+    <ToastContainer />
   </div>
   );
 }

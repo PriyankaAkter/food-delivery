@@ -13,7 +13,7 @@ const Footer = () => {
           <div className="w-6 h-5 relative">
             <Image src="/assests/images/home/logo.png" alt="Logo" fill />
           </div>
-          <h4>Food Court</h4>
+          <h4>FoodExpress</h4>
         </div>
         <div className="grid justify-center items-center  gap-5 2xl:gap-5">
           <div className="flex   gap-5 2xl:gap-[60px]">

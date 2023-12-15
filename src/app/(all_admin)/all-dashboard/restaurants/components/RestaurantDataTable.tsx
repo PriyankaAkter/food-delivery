@@ -11,6 +11,7 @@ import { BiSolidPencil } from 'react-icons/bi';
 import { DialogDemo } from './DialogDemo';
 import Image from 'next/image';
 import BasicTable1 from '@/app/(admin)/dashboard/components/shared/BasicTable1';
+import { toast } from 'react-toastify';
 
 
 
@@ -43,9 +44,11 @@ const DeleteRestaurant = async (data:RestaurantColumnType) => {
     try {
       const deleteData = await axios.delete(`http://localhost:3000/api/restaurant/${data.id}`)
       queryClient.invalidateQueries({ queryKey: ["restaurant"] });
+      toast.success('Restaurant deleted successfully')
       return deleteData.data
     } catch (error) {
       console.error(error)
+      toast.error("Error Occur!");
     }
   };
 

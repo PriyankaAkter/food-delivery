@@ -33,49 +33,30 @@ const slice = createSlice({
       const newProduct = action.payload;
       const existingProducts = state.products;
 
-      // Check if the cart is empty
       if (existingProducts.length === 0) {
-        // Cart is empty, add the new product
         const updatedProducts = [newProduct];
         state.products = updatedProducts;
-
-        // Update localStorage
         localStorage.setItem('cart', JSON.stringify(updatedProducts));
-
-        // Additional logic or messaging if needed
         console.log('Product added to the empty cart.');
       } else if (
         existingProducts[0]?.restaurant?.id === newProduct.restaurant?.id
       ) {
-        // Check if the new product is not already in the cart
         const isProductInCart = existingProducts.some(
           (product) => product.id === newProduct.id
         );
 
         if (!isProductInCart) {
-          // Add the new product to the cart
           const updatedProducts = [...existingProducts, newProduct];
           state.products = updatedProducts;
-
-          // Update localStorage
           localStorage.setItem('cart', JSON.stringify(updatedProducts));
-
-          // Additional logic or messaging if needed
           console.log('Product added to the cart.');
         } else {
-          // Show an alert indicating that the product is already in the cart
           console.log('This product is already in your cart.');
         }
       } else {
-        // Show an alert before replacing the cart
-        // You can customize this logic based on your UI requirements
-        // For now, we assume the user confirmed to replace the cart
         const updatedProducts = [newProduct];
         state.products = updatedProducts;
-
         localStorage.setItem('cart', JSON.stringify(updatedProducts));
-
-        // Additional logic or messaging if needed
         console.log('Product added to the cart. Existing cart replaced.');
       }
     },
