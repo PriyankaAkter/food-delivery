@@ -190,6 +190,7 @@ enum Status {
 enum UserRole {
   USER
   ADMIN
+  DELIVERY_MAN
   SUPER_ADMIN
 }
 

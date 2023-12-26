@@ -95,7 +95,11 @@ export function DialogDemo({
 
       // Continue with the rest of your onSubmit logic
       console.log({ data, imageUrl });
-
+      
+      if (data?.price <= 0 || isNaN(data?.price)) {
+        toast.error("Price must be a valid positive number");
+        return;
+      }
       if (!initialValue) {
         const createProduct = await axios.post(
           `http://localhost:3000/api/products`,
@@ -188,7 +192,7 @@ export function DialogDemo({
                 price
               </Label>
               <Input
-                {...register("price", { required: true })}
+                {...register("price", { required: true, valueAsNumber: true,  })}
                 id="price"
                 defaultValue=""
                 className=""

@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
-import { GrFormNext, GrFormPrevious } from "react-icons/gr";
-import BasicTable from "../../components/shared/BasicTable";
+
 import axios from "axios";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
@@ -11,6 +10,8 @@ import { useSession } from "next-auth/react";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import BasicTable1 from "../../components/shared/BasicTable1";
 import { toast } from "react-toastify";
+import { Button } from "@/components/ui/button";
+import * as XLSX from 'xlsx';
 
 const OrderHistory = () => {
   const { data: session } = useSession();
@@ -55,11 +56,16 @@ const OrderHistory = () => {
       header: "ORDER",
       accessorKey: "id",
     },
+   
     {
       header: "TIME",
       accessorKey: "createdAt",
+      cell: ({ row }) => {
+        // console.log(row.original);
+        if (!row.original?.createdAt) return "";
+        return <div>{new Date(row.original?.createdAt)?.toLocaleString()}</div>;
+      },
     },
-
     {
       header: "CUSTOMER",
       accessorKey: "userName",
@@ -120,6 +126,39 @@ const OrderHistory = () => {
       },
     },
   ];
+
+
+  
+
+  const exportToExcel = () => {
+    const columnsToExport = [
+      "id",
+      "createdAt",
+      "userName",
+      "status",
+      "delivery",
+      "price",
+    ];
+  
+    // Extract only the columns that you want to export
+    const dataToExport = data?.orders.map(order =>
+      columnsToExport.reduce((acc, column) => {
+        acc[column] = order[column];
+        return acc;
+      }, {})
+    );
+  
+    const ws = XLSX.utils.json_to_sheet(dataToExport);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+  
+    // Save the Excel file
+    XLSX.writeFile(wb, 'tableData.xlsx');
+  };
+  
+
+
+
   return (
     <div
       className="rounded-[10px] w-full "
@@ -130,7 +169,11 @@ const OrderHistory = () => {
       </div>
     
       <BasicTable1 data={data?.orders} columns={columns} />
-      
+      <div>
+      <Button onClick={exportToExcel} className="bg-[#F57213] text-white  mb-10 ml-5">
+        Export to Excel
+      </Button>
+      </div>
     </div>
   );
 };

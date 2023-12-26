@@ -224,6 +224,15 @@
   color: red;
 }
 
+@media print {
+  .print{
+    margin-left: 80px; /* Adjust the margin as needed */
+  }
+}
+
+
+
+
 .container {
   margin: 0 auto;
   width: calc(100% - 20px);
@@ -348,6 +357,5 @@ input[type="range"]::-moz-range-track {
 .custom-modal button:last-child {
   margin-right: 0;
 }
-
 
 

@@ -1,14 +1,10 @@
 "use client";
-import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import { ColumnDef } from "@tanstack/react-table";
 import { Select } from "@/components/ui/select";
 import {
   ProductType,
-  ProductType1,
-  RestaurantColumnType,
 } from "@/app/types/type";
 import { DialogDemo } from "./DialogDemo";
-import BasicTable from "../../components/shared/BasicTable";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import axios from "axios";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -17,10 +13,13 @@ import { AiOutlinePlus } from "react-icons/ai";
 import Image from "next/image";
 import BasicTable1 from "../../components/shared/BasicTable1";
 import { toast } from "react-toastify";
+import { useRef } from "react";
+import ReactToPrint from 'react-to-print';
 
 export function ProductDataTable() {
   const queryClient = useQueryClient();
-
+  const componentRef = useRef();
+ 
   const { data, isLoading, error } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
@@ -44,7 +43,7 @@ export function ProductDataTable() {
       const deleteProduct = await axios.delete(
         `http://localhost:3000/api/products/${data.id}`
       );
-      
+
       queryClient.invalidateQueries({ queryKey: ["products"] });
       toast.success("Product deleted successfully");
       return deleteProduct.data;
@@ -142,7 +141,7 @@ export function ProductDataTable() {
         // console.log(row.original);
 
         return (
-          <div className="flex gap-3 justify-center">
+          <div className="flex gap-3 justify-center  w-[400px]">
             <DialogDemo
               initialValue={row.original}
               className="p-3 rounded-lg bg-bone hover:bg-none border border-[#F57213]"
@@ -180,9 +179,12 @@ export function ProductDataTable() {
           <Select />
         </div>
       </div>
-      
-      <BasicTable1 data={data?.foods} columns={columns} />
-      
+
+      <BasicTable1  data={data?.foods} columns={columns} />
+      {/* <ReactToPrint
+        trigger={() => <button className="bg-[#F57213] text-white py-3 px-10 rounded-md ml-4 my-4">Print</button>}
+        content={() => componentRef?.current}
+      /> */}
     </div>
   );
 }

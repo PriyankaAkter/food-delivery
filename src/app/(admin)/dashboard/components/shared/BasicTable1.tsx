@@ -49,7 +49,7 @@ const BasicTable1 = <TData, TValue>({data,columns}: DataTableProps<TData, TValue
         />
       </div> */}
 
-      <table className="w-full">
+      <table className="">
         <thead className="border-none">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr
@@ -101,7 +101,7 @@ const BasicTable1 = <TData, TValue>({data,columns}: DataTableProps<TData, TValue
                 >
                   {row.getVisibleCells().map((cell) => {
                     return (
-                      <td key={cell.id} className=" py-4 ">
+                      <td key={cell.id} className="py-4 px-4 w-56 ">
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

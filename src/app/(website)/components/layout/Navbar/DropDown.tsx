@@ -34,8 +34,9 @@ export function DropdownMenuRadioGroupDemo() {
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
             
-        <DropdownMenuRadioItem value="bottom">{session?.user?.role=="USER"? <Link href="/user" >USER</Link>: <Link href="/sign-in" >USER</Link>}</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="bottom">{session?.user?.role=="ADMIN"? <Link href="/dashboard" >ADMIN</Link>: <Link href="/sign-in" >ADMIN</Link>}</DropdownMenuRadioItem>
+        <DropdownMenuRadioItem value="right">{session?.user?.role=="USER"? <Link href="/user" >USER</Link>: <Link href="/sign-in" >USER</Link>}</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="right">{session?.user?.role=="ADMIN"? <Link href="/dashboard" >ADMIN</Link>: <Link href="/sign-in" >ADMIN</Link>}</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="right">{session?.user?.role=="DELIVERY_MAN"? <Link href="/delivery-man" >DELIVERY MAN</Link>: <Link href="/sign-in" >DELIVERY MAN</Link>}</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="right">{session?.user?.role=="SUPER_ADMIN"? <Link href="/all-dashboard" >SUPER ADMIN</Link>: <Link href="/sign-in" >SUPER ADMIN</Link>}</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="right"><UserAcoount /></DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>

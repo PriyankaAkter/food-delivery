@@ -9,6 +9,8 @@ import Link from "next/link";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { addWishlist } from "@/app/redux_store/wishlistAddSlice";
 import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface CardProps {
   item: ProductType;
@@ -16,21 +18,30 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ item }) => {
   const dispatch = useDispatch();
+  const {data: session} = useSession()
   const cartProducts = useSelector((state: RootState) => state.cart.products);
-  const isExistCart = cartProducts.find(c=>item?.id===c?.id)
+  const isExistCart = cartProducts.find((c) => item?.id === c?.id);
   const wishList = useSelector((state: RootState) => state.wishlist.products);
-  const isExist = wishList.find(w=>item?.id===w?.id)
+  const isExist = wishList.find((w) => item?.id === w?.id);
   const [showConfirmation, setShowConfirmation] = useState(false);
+ const router = useRouter()
 
   const handleAddToCart = () => {
-    if (cartProducts.length === 0) {
-      dispatch(addCart(item));
-      toast.success('Product added successfully')
-    } else if (cartProducts[0]?.restaurant?.id !== item.restaurant?.id) {
-      setShowConfirmation(true);
+    // Check if the user is logged in
+    if (!session?.user) {
+      // Redirect to the sign-in page
+      router.push('/sign-in'); // Replace '/signin' with your actual sign-in page route
     } else {
-      dispatch(addCart(item));
-      toast.success('Product added successfully')
+      // Continue with the existing logic if the user is logged in
+      if (cartProducts.length === 0) {
+        dispatch(addCart(item));
+        toast.success("Product added successfully");
+      } else if (cartProducts[0]?.restaurant?.id !== item.restaurant?.id) {
+        setShowConfirmation(true);
+      } else {
+        dispatch(addCart(item));
+        toast.success("Product added successfully");
+      }
     }
   };
 
@@ -63,34 +74,33 @@ const Card: React.FC<CardProps> = ({ item }) => {
             {item?.name}
           </Link>
           <button
-              disabled={isExist}
-                className="text-lg"
-                onClick={() => {
-                  try {
-                    dispatch(addWishlist(item))
-                    toast.success("Wishlist added successfully");
-                  } catch (error) {
-                    toast.error("Error Occur!");
-                  }
-                  
-                }}
-              >
-                {/* <BsCartPlus className="w-7 h-7 text-secondary" /> */}
-                {!isExist ? (
-            <FaRegHeart className="w-7 h-7 text-[#F29F05]" />
-          ) : (
-            <FaHeart  className="w-7 h-7 text-[#F29F05]" />
-          )}
-              </button>
-          
+            disabled={isExist}
+            className="text-lg"
+            onClick={() => {
+              try {
+                dispatch(addWishlist(item));
+                toast.success("Wishlist added successfully");
+              } catch (error) {
+                toast.error("Error Occur!");
+              }
+            }}
+          >
+            
+            {session?.user ? !isExist ? (
+              <FaRegHeart className="w-7 h-7 text-[#F29F05]" />
+            ) : (
+              <FaHeart className="w-7 h-7 text-[#F29F05]" />
+            ):""}
+          </button>
         </div>
-        <h6>{item?.category?.name}</h6>
+        <p>{item?.description}</p>
+        
         <h6 className="text-[#FFB93E] text-[28px] font-medium mt-5">
           {item?.price}.00 tk
         </h6>
-     
+   
         <button
-        disabled={isExistCart}
+          disabled={isExistCart}
           onClick={handleAddToCart}
           className="bg-[#F29F05] py-3 rounded-[4px] mt-7 text-white flex items-center gap-3 w-full justify-center"
         >
