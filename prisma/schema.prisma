@@ -163,6 +163,8 @@ model Order {
   restaurantName   String?
   restaurant     Restaurant?   @relation(fields: [restaurantId], references: [id])
   restaurantId String?
+  deliveryBoy String?
+  deliveryBoyPhone String?
 }
 
 

@@ -8,21 +8,46 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/image";
 import { useState } from "react";
 import React, { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
+import { toast } from "react-toastify";
 interface OrderProps {
   order: OrderType;
 }
 
 const OrderCard: React.FC<OrderProps> = ({ order }) => {
   const componentRef = useRef(null);
+  const queryClient = useQueryClient();
+  const [selectedDeliveryMan, setSelectedDeliveryMan] = useState("");
   const [deliveryStatus, setDeliveryStatus] = useState(
     order?.delivery || "PENDING"
   );
   const [isCanceled, setIsCanceled] = useState(false);
+  const {
+    data: deliveryMan,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const userData = await axios.get(`http://localhost:3000/api/user`);
+      return userData.data;
+    },
+  });
+  // print invoice
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+  if (isLoading) {
+    return <h6>Loading...</h6>;
+  }
+  if (error) return "An error has occurred: " + error.message;
+
+  // console.log({ deliveryMan });
 
   const handleStatus = async () => {
     try {
@@ -37,7 +62,7 @@ const OrderCard: React.FC<OrderProps> = ({ order }) => {
         case "PROCESSING":
           newStatus = "READY_FOR_DELIVERY";
           break;
-        
+
         case "READY_FOR_DELIVERY":
           newStatus = "DELIVERED";
           break;
@@ -77,6 +102,25 @@ const OrderCard: React.FC<OrderProps> = ({ order }) => {
     }
   };
 
+  const handleAssign = async () => {
+    try {
+      const updateOrder = await axios.put(
+        `http://localhost:3000/api/orders/${order?.id}`,
+        {
+          deliveryBoy: selectedDeliveryMan,
+        }
+      );
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+      toast.success("Delivery Boy assigned successfully");
+      console.log({ updateOrder });
+
+      setSelectedDeliveryMan("");
+    } catch (error: any) {
+      toast.error("Error Occur!");
+      console.error("Error assigning delivery man:", error);
+    }
+  };
+
   const totalPrice = order?.items?.reduce(
     (sum, item) => sum + Number(item.price) * Number(item?.quantity),
     0
@@ -86,13 +130,6 @@ const OrderCard: React.FC<OrderProps> = ({ order }) => {
     0
   );
   const deliveryCost = Number(totalPrice) + 60;
-
-
- // print invoice
- 
- const handlePrint = useReactToPrint({
-   content: () => componentRef.current,
- });
 
   return (
     <div className="w-full  border border-[#E9EFF6] h-auto  rounded-[10px] p-10 print">
@@ -156,8 +193,21 @@ const OrderCard: React.FC<OrderProps> = ({ order }) => {
             <p>{totalItems} Items</p>
             <p className="font-medium">Total: {deliveryCost} tk</p>
             <p className="font-medium">Status: {deliveryStatus}</p>
+            <p className="font-medium">
+              Delivery Boy name: {order?.deliveryBoy}
+            </p>
+            {/* {
+              order?.deliveryBoy ? (<p className="font-medium">Delivery Boy name: {order?.deliveryBoy}</p>) : (<p className="font-medium">Delivery Boy name: Not Assigned yet!</p>)
+            }
+             */}
+            {/* 
+            <p className="font-medium">Delivery Boy phone: {order?.deliveryBoyPhone}</p> */}
           </div>
-          {/* <div className="flex gap-2">
+        </div>
+      </div>
+      <div>
+        <div className="flex justify-between items-center">
+          <div className="flex gap-2">
             <Button
               onClick={() => handleStatus()}
               disabled={
@@ -176,33 +226,43 @@ const OrderCard: React.FC<OrderProps> = ({ order }) => {
                   Cancel
                 </Button>
               )}
-          </div> */}
-        </div>
-      </div>
-      <div className="flex justify-between items-center">
-        <div className="flex gap-2">
+          </div>
           <Button
-            onClick={() => handleStatus()}
-            disabled={
-              order?.delivery == "DELIVERED" || order?.delivery == "CANCELLED"
-            }
+            onClick={handlePrint}
             className="bg-[#F57213] hover:bg-[#F57213] text-white"
           >
-            {deliveryStatus}
+            Invoice Print
           </Button>
-          {order?.delivery !== "DELIVERED" &&
-            order?.delivery !== "CANCELLED" && (
-              <Button
-                onClick={() => handleCancel()}
-                className="bg-[#0db407] hover:bg-[#0db407] text-white"
-              >
-                Cancel
-              </Button>
-            )}
         </div>
-        <Button onClick={handlePrint} className="bg-[#F57213] hover:bg-[#F57213] text-white">
-          Invoice Print
-        </Button>
+        {
+          order?.delivery !== "DELIVERED" && <div className="flex gap-2 items-center mt-6">
+          <select
+            name="show"
+            id="show"
+            className="border border-[#94A3B8] py-2 px-4 w-full rounded-md"
+            value={selectedDeliveryMan}
+            onChange={(e) => setSelectedDeliveryMan(e.target.value)}
+          >
+            <option value="" disabled>
+              Select delivery Man
+            </option>
+            {deliveryMan?.users
+              ?.filter((d: any) => d?.role === "DELIVERY_MAN")
+              .map((d: any, index: number) => (
+                <option key={index} value={d?.name}>
+                  {d?.name}
+                </option>
+              ))}
+          </select>
+          <Button
+            onClick={handleAssign}
+            className="bg-[#F57213] hover:bg-[#F57213] text-white"
+          >
+            Assign
+          </Button>
+        </div>
+        }
+        
       </div>
     </div>
   );

@@ -228,6 +228,9 @@
   .print{
     margin-left: 80px; /* Adjust the margin as needed */
   }
+  .print-hidden {
+    display: none !important;
+  }
 }
 
 

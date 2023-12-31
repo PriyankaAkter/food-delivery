@@ -142,6 +142,8 @@ export type RestaurantColumnType = {
     products?: ProductType[]
     restaurant?: RestaurantColumnType
     restaurantId?: string
+    deliveryBoy?: string
+    deliveryBoyPhone?: string
     createdAt?:string
   }
 

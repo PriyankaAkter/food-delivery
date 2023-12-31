@@ -1,6 +1,4 @@
 "use client";
-import React from "react";
-
 import axios from "axios";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ColumnDef } from "@tanstack/react-table";
@@ -11,10 +9,13 @@ import { RiDeleteBin5Fill } from "react-icons/ri";
 import BasicTable1 from "../../components/shared/BasicTable1";
 import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
-import * as XLSX from 'xlsx';
+import * as XLSX from "xlsx";
+import React, { useRef } from "react";
+import { useReactToPrint } from "react-to-print";
+import PrintTable from "./PrintTable";
 
 const OrderHistory = () => {
-  const { data: session } = useSession();
+  const componentRef = useRef(null);
   const queryClient = useQueryClient();
   const { data, isLoading, error } = useQuery({
     queryKey: ["orders"],
@@ -29,34 +30,35 @@ const OrderHistory = () => {
   }
   if (error) return "An error has occurred: " + error.message;
 
+  // single data delete
+  const DeleteOrder = async (data: OrderType) => {
+    try {
+      const deleteOrder = await axios.delete(
+        `http://localhost:3000/api/orders/${data.id}`
+      );
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+      toast.success("Order deleted successfully");
+      // console.log(deleteOrder.data);
+      return deleteOrder.data;
+    } catch (error) {
+      console.error(error);
+      toast.error("Error Occur!");
+    }
+  };
 
+  // console.log({ deleteOrder });
 
-    // single data delete
-    const DeleteOrder = async (data: OrderType) => {
-      try {
-        const deleteOrder = await axios.delete(
-          `http://localhost:3000/api/orders/${data.id}`
-        );
-        queryClient.invalidateQueries({ queryKey: ["orders"] });
-        toast.success("Order deleted successfully");
-        // console.log(deleteOrder.data);
-        return deleteOrder.data;
-      } catch (error) {
-        console.error(error);
-        toast.error("Error Occur!");
-      }
-    };
-  
-    // console.log({ deleteOrder });
-
-
+    // // print table
+    // const handlePrint = useReactToPrint({
+    //   content: () => componentRef.current,
+    // });
 
   const columns: ColumnDef<OrderType>[] = [
     {
       header: "ORDER",
       accessorKey: "id",
     },
-   
+
     {
       header: "TIME",
       accessorKey: "createdAt",
@@ -103,7 +105,7 @@ const OrderHistory = () => {
         // item?.restaurant?.name == session?.user?.name
         // )
         // const totalPrice = fecthItems?.reduce((sum, item) => sum + (Number(item.price) * Number(item?.quantity)), 0);
-  // console.log({totalPrice});
+        // console.log({totalPrice});
         return <div>{row.original?.price} tk</div>;
       },
     },
@@ -113,7 +115,7 @@ const OrderHistory = () => {
       header: "ACTION",
       cell: ({ row }) => {
         return (
-          <div className="flex gap-5 justify-center">
+          <div className="flex gap-5 justify-center action-column"> {/* Add class name here */}
             <DialogOrder initialValue={row?.original} />
             <button
               onClick={() => DeleteOrder(row.original)}
@@ -125,6 +127,7 @@ const OrderHistory = () => {
         );
       },
     },
+    
   ];
 
 
@@ -139,23 +142,23 @@ const OrderHistory = () => {
       "delivery",
       "price",
     ];
-  
+
     // Extract only the columns that you want to export
-    const dataToExport = data?.orders.map(order =>
+    const dataToExport = data?.orders.map((order:any) =>
       columnsToExport.reduce((acc, column) => {
         acc[column] = order[column];
         return acc;
       }, {})
     );
-  
+
     const ws = XLSX.utils.json_to_sheet(dataToExport);
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-  
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
     // Save the Excel file
-    XLSX.writeFile(wb, 'tableData.xlsx');
+    XLSX.writeFile(wb, "tableData.xlsx");
   };
-  
+
 
 
 
@@ -167,12 +170,23 @@ const OrderHistory = () => {
       <div className="flex justify-between items-center py-8 px-6">
         <h6>All Orders</h6>
       </div>
-    
-      <BasicTable1 data={data?.orders} columns={columns} />
+
+      <BasicTable1   data={data?.orders} columns={columns} ref={componentRef} />
       <div>
-      <Button onClick={exportToExcel} className="bg-[#F57213] text-white  mb-10 ml-5">
-        Export to Excel
-      </Button>
+        {/* <Button
+          onClick={handlePrint}
+          className="bg-[#F57213] hover:bg-[#F57213] text-white"
+        >
+          Print
+        </Button> */}
+        <PrintTable componentRef={componentRef} columnsToPrint={['0', '1', '2', '3', '4', '5']} />
+
+        <Button
+          onClick={exportToExcel}
+          className="bg-[#F57213] text-white  mb-10 ml-5"
+        >
+          Export to Excel
+        </Button>
       </div>
     </div>
   );
