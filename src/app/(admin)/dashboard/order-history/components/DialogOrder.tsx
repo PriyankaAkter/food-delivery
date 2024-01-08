@@ -10,41 +10,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { AiOutlinePlus } from "react-icons/ai";
-// import {useState} from 'react'
+
 
 type DialogOrderType = {
   initialValue?: OrderType;
 };
 
 export function DialogOrder({ initialValue }: DialogOrderType) {
-  const {data:session} = useSession()
-  // console.log({ initialValue });
- 
-  
-
-
-  // const filterItems = initialValue?.items?.filter((item:ProductType)=>item?.restaurant?.email === session?.user?.email)
-  // const [isAdd,setIsAdd] = useState(true)
-  // console.log({filterItems});
-
   const totalPrice = initialValue?.items?.reduce((sum, item) => sum + (Number(item.price) * Number(item?.quantity)), 0);
-  // console.log({totalPrice});
-
-  // const totalItems = filterItems?.reduce((sum, item) => sum + (1 * Number(item?.quantity)), 0);
+  
   const totalItems = initialValue?.items?.reduce(
     (sum, item) => sum + 1 * Number(item?.quantity),
     0
@@ -56,14 +33,18 @@ export function DialogOrder({ initialValue }: DialogOrderType) {
           view
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[625px] bg-white">
+      <DialogContent className="max-w-[350px] sm:max-w-[625px] bg-white">
         <DialogHeader>
           <DialogTitle>Order #{initialValue?.id}</DialogTitle>
-          <DialogDescription>{new Date(initialValue?.createdAt)?.toLocaleString()}</DialogDescription>
+          <DialogDescription>
+    {initialValue?.createdAt
+      ? new Date(initialValue?.createdAt).toLocaleString()
+      : 'N/A'}
+  </DialogDescription>
         </DialogHeader>
         <div className="grid ">
           {initialValue?.items?.map((item: ProductType, index: number) => (
-            <div className="flex border-y  justify-between pr-6  items-center py-4 " key={index}>
+            <div className="flex flex-col sm:flex-row border-y  sm:justify-between   sm:items-center py-4 " key={index}>
               <div className="flex gap-5 items-center py-4">
                 <div className="w-16 h-16 relative">
                   <Image

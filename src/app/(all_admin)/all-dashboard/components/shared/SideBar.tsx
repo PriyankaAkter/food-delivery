@@ -13,27 +13,27 @@ import { authOptions } from "@/lib/auth";
 export const SideBar = async () => {
   const session = await getServerSession(authOptions)
   return (
-    <div className="w-[400px] bg-[#f1f2f6] py-14 px-14 h-screen">
+    <div className="w-[400px] bg-[#f1f2f6] py-14 px-14 h-screen hidden 2xl:block">
       <div className="flex justify-between items-center mb-24">
         <div className="flex gap-4">
-          <div className="w-16 h-16 relative ">
+          {/* <div className="w-16 h-16 relative ">
             <Image
               fill
               src="/assests/images/home/img1.png"
               alt="profile"
               className="rounded-full"
             />
-          </div>
+          </div> */}
           <div>
             {/* <p>Hello,</p> */}
             <h6>{session?.user?.name}</h6>
             <p>{session?.user?.role}</p>
           </div>
         </div>
-
+{/* 
         <div className="">
           <RiFolderSharedLine className="text-primary w-5 h-5" />
-        </div>
+        </div> */}
       </div>
       <div className="grid gap-5 mt-24">
         <div className="flex gap-8 items-center">
@@ -56,6 +56,17 @@ export const SideBar = async () => {
             className="text-xl font-medium hover:text-secondary"
           >
             All Restaurants
+          </Link>
+        </div>
+        <div className="flex gap-8 items-center">
+          <div>
+            <AiOutlineHistory className="text-primary w-5 h-5 hover:text-secondary" />
+          </div>
+          <Link
+            href="/all-dashboard/delivery-mans"
+            className="text-xl font-medium hover:text-secondary"
+          >
+            All Delivery Man
           </Link>
         </div>
 

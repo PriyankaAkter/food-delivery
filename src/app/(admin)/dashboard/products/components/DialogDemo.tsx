@@ -27,7 +27,9 @@ type DialogDemoType = {
   className?: string;
   initialValue?: ProductType;
 };
-
+type ProductFormType = ProductType & {
+  image: string | FileList;
+};
 export function DialogDemo({
   title,
   button1,
@@ -41,8 +43,8 @@ export function DialogDemo({
     handleSubmit,
     reset,
     formState: { errors, isLoading },
-  } = useForm({
-    defaultValues: initialValue,
+  } = useForm<ProductFormType>({
+    defaultValues: initialValue || {},
   });
 
   const cloud_name = "dvbkbxen4";
@@ -75,9 +77,7 @@ export function DialogDemo({
     },
   });
 
-  const onSubmit: SubmitHandler<ProductType & { image: FileList }> = async (
-    data
-  ) => {
+  const onSubmit: SubmitHandler<ProductFormType> = async (data) => {
     console.log({ data });
 
     try {
@@ -96,8 +96,12 @@ export function DialogDemo({
       // Continue with the rest of your onSubmit logic
       console.log({ data, imageUrl });
       
-      if (data?.price <= 0 || isNaN(data?.price)) {
+      if (data?.price === undefined || data.price <= 0 || isNaN(data.price)) {
         toast.error("Price must be a valid positive number");
+        return;
+      }
+      if (data?.stock === undefined || data?.stock < 0 || isNaN(data?.stock)) {
+        toast.error("Stock can not be negative number");
         return;
       }
       if (!initialValue) {
@@ -155,7 +159,7 @@ export function DialogDemo({
           {button1}
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-white">
+      <DialogContent className="max-w-[350px] sm:max-w-[425px] bg-white">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
@@ -163,7 +167,7 @@ export function DialogDemo({
         <form
           onSubmit={handleSubmit(onSubmit)}
           action=""
-          className="grid gap-4 py-4"
+          className="grid gap-4 py-4 "
         >
           <div className="flex flex-col items-start gap-3">
             <Label htmlFor="name" className="text-right">
@@ -203,7 +207,7 @@ export function DialogDemo({
                 stock
               </Label>
               <Input
-                {...register("stock", { required: true })}
+                {...register("stock", { required: true, valueAsNumber:true })}
                 id="stock"
                 defaultValue=""
                 className=""
@@ -253,7 +257,7 @@ export function DialogDemo({
             </Label>
             <textarea
               className="border  w-full"
-              rows={10}
+              rows={5}
               {...register("description", { required: true })}
               id="description"
               defaultValue=""
@@ -266,7 +270,7 @@ export function DialogDemo({
             </Label>
             <Input type="file" id="image" {...register("image")} />
           </div>
-          <DialogFooter>
+          <DialogFooter className="flex flex-row gap-2">
             <Button
               type="reset"
               className="bg-[#F57213] hover:bg-[#F57213] text-white"

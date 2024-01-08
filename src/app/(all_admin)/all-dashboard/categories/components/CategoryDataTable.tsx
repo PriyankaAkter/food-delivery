@@ -95,7 +95,7 @@ export function CategoryDataTable() {
 
   return (
     <div
-      className="rounded-[10px] "
+      className="overflow-x-auto rounded-[10px] my-4 p-4 shadow-md"
       style={{ boxShadow: "0px 4px 10px 0px rgba(0, 0, 0, 0.16)" }}
     >
       <div className="flex justify-between items-center py-8 px-6">

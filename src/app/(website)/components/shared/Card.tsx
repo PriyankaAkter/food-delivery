@@ -11,6 +11,8 @@ import { addWishlist } from "@/app/redux_store/wishlistAddSlice";
 import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface CardProps {
   item: ProductType;
@@ -20,6 +22,7 @@ const Card: React.FC<CardProps> = ({ item }) => {
   const dispatch = useDispatch();
   const {data: session} = useSession()
   const cartProducts = useSelector((state: RootState) => state.cart.products);
+  const queryClient = useQueryClient();
   const isExistCart = cartProducts.find((c) => item?.id === c?.id);
   const wishList = useSelector((state: RootState) => state.wishlist.products);
   const isExist = wishList.find((w) => item?.id === w?.id);
@@ -27,12 +30,9 @@ const Card: React.FC<CardProps> = ({ item }) => {
  const router = useRouter()
 
   const handleAddToCart = () => {
-    // Check if the user is logged in
     if (!session?.user) {
-      // Redirect to the sign-in page
-      router.push('/sign-in'); // Replace '/signin' with your actual sign-in page route
+      router.push('/sign-in'); 
     } else {
-      // Continue with the existing logic if the user is logged in
       if (cartProducts.length === 0) {
         dispatch(addCart(item));
         toast.success("Product added successfully");
@@ -53,6 +53,29 @@ const Card: React.FC<CardProps> = ({ item }) => {
   const handleCancelAddToCart = () => {
     setShowConfirmation(false);
   };
+
+
+  const handleAddToWishlist = async () => {
+    try {
+      dispatch(addWishlist(item));
+      const updatedWishlist = [...wishList, item]; 
+  
+      const updateWishlistResponse = await axios.put(
+        `http://localhost:3000/api/user/${session?.user?.id}`,
+        {
+          wishlist: updatedWishlist,
+        }
+      );
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+  
+      toast.success("Wishlist added successfully");
+      return updateWishlistResponse.data;
+    } catch (error) {
+      toast.error("Error Occurred!");
+    }
+  };
+  
+
 
   return (
     <div
@@ -76,14 +99,7 @@ const Card: React.FC<CardProps> = ({ item }) => {
           <button
             disabled={isExist}
             className="text-lg"
-            onClick={() => {
-              try {
-                dispatch(addWishlist(item));
-                toast.success("Wishlist added successfully");
-              } catch (error) {
-                toast.error("Error Occur!");
-              }
-            }}
+            onClick={handleAddToWishlist}
           >
             
             {session?.user ? !isExist ? (
@@ -100,14 +116,15 @@ const Card: React.FC<CardProps> = ({ item }) => {
         </h6>
    
         <button
-          disabled={isExistCart}
-          onClick={handleAddToCart}
-          className="bg-[#F29F05] py-3 rounded-[4px] mt-7 text-white flex items-center gap-3 w-full justify-center"
-        >
-          <AiOutlineShoppingCart className="w-[22px] h-[22px] text-white" />
-          Add to Cart
-        </button>
-
+        disabled={isExistCart || item?.stock === 0} // Disable if already in cart or stock is zero
+        onClick={handleAddToCart}
+        className={`${
+          item.stock === 0 ? "bg-[#F29F05] cursor-not-allowed" : "bg-[#F29F05]"
+        } py-3 rounded-[4px] mt-7 text-white flex items-center gap-3 w-full justify-center`}
+      >
+        <AiOutlineShoppingCart className="w-[22px] h-[22px] text-white" />
+        {item.stock === 0 ? "Out of Stock" : "Add to Cart"}
+      </button>
         {/* Custom Confirmation Modal */}
         {showConfirmation && (
           <div className="custom-modal">

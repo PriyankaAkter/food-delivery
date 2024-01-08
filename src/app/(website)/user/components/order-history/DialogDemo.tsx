@@ -11,12 +11,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ChangeEvent, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import {  useForm } from "react-hook-form";
 import StarRating from "./StarRating";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import { SubmitHandler, FieldValues } from "react-hook-form";
 
 type DialogDemoType = {
   title: string;
@@ -44,7 +45,7 @@ export function DialogDemo({
     setRating(newRating);
   };
 
-  const onSubmit = async (data: ReviewType) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data, rating);
     try {
       const addReview = await axios.post(`http://localhost:3000/api/reviews`, {
@@ -71,7 +72,7 @@ export function DialogDemo({
           {button1}
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-white">
+      <DialogContent className="max-w-[350px] sm:max-w-[425px] bg-white">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
@@ -89,7 +90,7 @@ export function DialogDemo({
             <Input id="comment" {...register("comment", { required: true })} />
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="flex flex-row gap-2">
             <Button
               type="reset"
               className="bg-[#F57213] hover:bg-[#F57213] text-white"

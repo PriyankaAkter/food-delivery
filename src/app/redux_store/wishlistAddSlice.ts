@@ -16,24 +16,35 @@ const wishlistSlice = createSlice({
   initialState,
   reducers: {
     addWishlist: (state, action: PayloadAction<ProductType>) => {
+      // const newProduct = action.payload;
       const isExist = state.products.find(
         (product) => product.id === action.payload.id
       );
+      
       if (!isExist) {
         state.products.push(action.payload);
-        if (!localStorage.getItem("wishlist")) {
-          localStorage.setItem("wishlist", JSON.stringify([action.payload]));
-        } else {
-          localStorage.setItem("wishlist", JSON.stringify(state.products));
-        }
+      } else {
+        // Update the existing product's properties if needed
+        // For now, just log a message
+        console.log('Product already exists in the wishlist. You might want to update its properties.');
       }
+    
+      // Update local storage with the complete wishlist array
+      localStorage.setItem("wishlist", JSON.stringify(state.products));
     },
+   
+    // removeWishlist: (state, action: PayloadAction<number>) => {
+    //   const findId = state.products.findIndex(
+    //     (product) => product.id === action.payload
+    //   );
+    //   if (findId !== -1) {
+    //     state.products.splice(findId, 1);
+    //     localStorage.setItem("wishlist", JSON.stringify(state.products));
+    //   }
+    // },
 
     
-    clearCart: (state) => {
-      state.products = [];
-      localStorage.removeItem("wishlist");
-    },
+   
     removeWishist: (state, action) => {
       const findId = state.products.findIndex(
         (product) => product.id === action.payload
@@ -43,7 +54,10 @@ const wishlistSlice = createSlice({
         localStorage.setItem("wishlist", JSON.stringify(state.products));
       }
     },
-
+    clearWishlist: (state) => {
+      state.products = [];
+      localStorage.removeItem("wishlist");
+    },
    
     
   },
@@ -52,7 +66,7 @@ const wishlistSlice = createSlice({
 export const {
     addWishlist,
     removeWishist,
-  clearCart,
+    clearWishlist,
 
 } = wishlistSlice.actions;
 export default wishlistSlice.reducer;

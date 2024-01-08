@@ -15,24 +15,20 @@ const PrintTable: React.FC<PrintTableProps> = ({ componentRef, columnsToPrint })
       const clonedComponent = componentRef.current.cloneNode(true);
 
       // Remove styling and keep only the table structure
-      clonedComponent.style = '';
-      clonedComponent.querySelectorAll('*').forEach((el:any) => {
-        el.removeAttribute('style');
-      });
+      // clonedComponent.style = '';
+      // clonedComponent.querySelectorAll('*').forEach((el: any) => {
+      //   el.removeAttribute('style');
+      // });
 
       // Hide columns that are not in the columnsToPrint array
-    //   const allCells = clonedComponent.querySelectorAll('td, th');
-    //   allCells.forEach((cell:any) => {
-    //     const columnIndex = Array.from(cell.parentNode.children).indexOf(cell);
-    //     if (columnIndex !== -1 && !columnsToPrint.includes(columnIndex.toString())) {
-    //       cell.style.display = 'none';
-    //     }
-    //   });
-
-      // Hide the ACTION column specifically (add a class to identify these cells)
-      const actionColumnCells = clonedComponent.querySelectorAll('.action-column');
-      actionColumnCells.forEach((cell:any) => {
-        cell.style.display = 'none';
+      const allRows = clonedComponent.querySelectorAll('tr');
+      allRows.forEach((row: any) => {
+        const cells = row.querySelectorAll('td, th');
+        cells.forEach((cell: any, index: number) => {
+          if (!columnsToPrint.includes(index.toString())) {
+            cell.style.display = 'none';
+          }
+        });
       });
 
       return clonedComponent;
@@ -42,7 +38,7 @@ const PrintTable: React.FC<PrintTableProps> = ({ componentRef, columnsToPrint })
   return (
     <Button
       onClick={handlePrint}
-      className="bg-[#F57213] text-white  mb-10 ml-5"
+      className="bg-[#F57213] text-white mb-10 ml-5"
     >
       Print
     </Button>

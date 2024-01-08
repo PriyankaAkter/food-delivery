@@ -2,12 +2,11 @@
 import { useForm, SubmitHandler, Form } from "react-hook-form";
 import { ZodType, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import {signIn} from 'next-auth/react'
 import { useToast } from "@/components/ui/use-toast"
 import Link from "next/link";
-import { toast } from 'react-toastify';
+
 
 type formDataType = {
   email: string;
@@ -27,7 +26,7 @@ const signInSchema: ZodType<formDataType> = z
 
 const SignInForm = () => {
   const router = useRouter();
-  const { toast } = useToast()
+
   const {
     handleSubmit,
     register,
@@ -50,22 +49,7 @@ const SignInForm = () => {
         // console.log("Data get successfully");
         
       }
-      // console.log({signInData});
       
-      // if (signInData?.ok) {
-      //   // Check the user's role in the token or session
-      //   const userRole = signInData?.token?.role;
-      
-      //   // Conditionally redirect based on the user's role
-      //   if (userRole === 'ADMIN') {
-      //     router.push('/dashboard');
-      //   } else if (userRole === 'SUPER_ADMIN') {
-      //     router.push('/all-dashboard');
-      //   } else {
-      //     // Handle other roles or scenarios
-      //     console.error('Unknown user role:', userRole);
-      //   }
-      // }
     } catch (error) {
       console.error(error);
       // toast("Error Occur!");
@@ -79,7 +63,7 @@ const SignInForm = () => {
      <form
     onSubmit={handleSubmit(onSubmit)}
     
-      className="w-[500px] mx-auto py-10 grid gap-4 px-8 border"
+      className="w-full sm:w-[500px] mx-auto py-10 grid gap-4 px-8 border"
     >
       <h6 className="">Log In Form</h6>
       <div className=" flex flex-col gap-2">

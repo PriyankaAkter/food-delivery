@@ -80,7 +80,7 @@ try {
           {button1}
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-white">
+      <DialogContent className="max-w-[350px] sm:max-w-[425px] bg-white">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
@@ -114,16 +114,16 @@ try {
           {/* <input type="submit" /> */}
        
 
-        <DialogFooter>
+        <DialogFooter className="flex gap-2 flex-row">
           <Button
             type="reset"
-            className="bg-[#F57213] hover:bg-[#F57213] text-white"
+            className="bg-[#F57213] hover:bg-[#F57213] text-white w-fit"
           >
             Cancle
           </Button>
           <Button
             type="submit"
-            className="bg-[#F57213] hover:bg-[#F57213] text-white"
+            className="bg-[#F57213] hover:bg-[#F57213] text-white w-fit"
           >
             {update}
           </Button>

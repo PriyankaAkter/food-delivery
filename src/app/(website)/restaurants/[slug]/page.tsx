@@ -31,6 +31,7 @@ console.log({data});
   return (
     <div >
         <Hero item={item} />
+        
         <AllItems item={item} />
         {/* <AllItems /> */}
     </div>

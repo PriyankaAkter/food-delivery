@@ -1,7 +1,5 @@
 "use client";
 import DashboardDataTable from "./DashboardDataTable";
-import { Restaurants } from "@/app/(admin)/dashboard/components/shared/data";
-import { columns } from "./columns";
 import axios from "axios";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
@@ -15,7 +13,6 @@ const fetchRestaurant = async () => {
   return restaurantsData.data;
 };
 const Dashboard = () => {
-  // const queryClient = useQueryClient();
   const { data, isLoading, error } = useQuery({
     queryKey: ["restaurant"],
     queryFn: () => fetchRestaurant(),
@@ -25,7 +22,6 @@ const Dashboard = () => {
     return <h6>Loading...</h6>;
   }
   if (error) return "An error has occurred: " + error.message;
-  // console.log({ data });
 
   const columns: ColumnDef<RestaurantColumnType>[] = [
     {
@@ -40,12 +36,12 @@ const Dashboard = () => {
         )
           return "";
         return (
-          <div className="flex items-center gap-2">
-            <div className="w-16 h-16 relative">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-7 sm:w-16 sm:h-16 relative">
               <Image src={row.original?.image} alt="restaurant" fill />
             </div>
             <div>
-              <h6>{row.original?.name}</h6>
+              <h6 className="">{row.original?.name}</h6>
               <p>{row.original?.address}</p>
             </div>
           </div>
@@ -56,51 +52,37 @@ const Dashboard = () => {
       id: "orders",
       header: "Total Orders",
       cell: ({ row }) => {
-        // console.log(row?.original);
-
         const deliveredOrders = row?.original?.orders?.filter(
           (earning) => earning.delivery === "DELIVERED"
         );
         
         const totalDeliveredOrders = deliveredOrders?.length;
-        return <h6>{totalDeliveredOrders}</h6>;
+        return <h6 className="text-base lg:text-xl">{totalDeliveredOrders}</h6>;
       },
     },
     {
       id: "earning",
       header: "Total Earning",
       cell: ({ row }) => {
-        // console.log(row?.original);
-
         const totalEarning = row?.original?.orders?.filter((earning) => earning.delivery === "DELIVERED")
           .reduce((sum, earning) => sum + Number(earning?.price), 0);
-        // console.log({totalEarning});
-        // if(!row.original?.image) return ""
-        return <h6>{totalEarning} tk</h6>;
+        return <h6 className="text-base lg:text-xl">{totalEarning} tk</h6>;
       },
     },
-
     {
+      id: "createdAt",
       header: "Joined Date",
-      accessorKey: "createdAt",
-    },
+      cell: ({ row }) => {
+        const createdAt = row?.original?.createdAt as string | undefined;
+        if (createdAt) {
+          return <h6 className="text-base lg:text-xl">{new Date(createdAt).toLocaleString()}</h6>;
+        } else {
+          return <span className="text-base lg:text-xl">No joined date available</span>;
+        }
+      },
+    }
+    
 
-    // {
-    //   id: "action",
-    //   header: "ACTION",
-    //   cell: ({row}) => {
-    //     console.log(row.original);
-
-    //     return (
-    //       <div className="flex gap-5 justify-center">
-    //         <DialogDemo initialValue={row.original} className="p-3 rounded-lg bg-bone hover:bg-none border border-[#F57213]" title="Update Restaurant" update="update" icon={<BiSolidPencil className="text-[#F57213] w-5 h-5" />}  />
-    //         <button onClick={()=>DeleteRestaurant(row.original)} className="p-3 rounded-lg bg-bone hover:bg-none border border-[#F57213]">
-    //           <RiDeleteBin5Fill className="text-[#F57213] w-4 h-4" />
-    //         </button>
-    //       </div>
-    //     );
-    //   },
-    // },
   ];
 
   return (

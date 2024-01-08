@@ -18,7 +18,7 @@ const DesktopNavbar = async () => {
           </div>
           <h5 className="font-bold text-[#FFB93E] text-[28px]">FoodExpress</h5>
         </Link>
-        <nav className="2xl:flex gap-16 text-[18px] font-medium text-[#0F172A] ">
+        <nav className="flex lg:gap-8 2xl:gap-16 text-[18px] font-medium text-[#0F172A] ">
           <Link href="/">Home</Link>
           <Link href="/shop">Shop</Link>
           <Link href="/restaurants">Restaurants</Link>

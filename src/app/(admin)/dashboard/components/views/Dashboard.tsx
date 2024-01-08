@@ -23,7 +23,7 @@ const Dashboard = () => {
 
   // console.log({data});
   return (
-    <div className=" py-10 px-10 w-full">
+    <div className=" my-6 xl:my-16  w-full">
       <OrderDetails order={data?.orders} />
       <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3  gap-8 mt-10">
         {data?.orders?.map((order: OrderType, index: number) => (

@@ -63,7 +63,6 @@ const OrderHistory = () => {
       header: "TIME",
       accessorKey: "createdAt",
       cell: ({ row }) => {
-        // console.log(row.original);
         if (!row.original?.createdAt) return "";
         return <div>{new Date(row.original?.createdAt)?.toLocaleString()}</div>;
       },
@@ -72,7 +71,6 @@ const OrderHistory = () => {
       header: "CUSTOMER",
       accessorKey: "userName",
       cell: ({ row }) => {
-        // console.log(row.original);
         if (!row.original?.userName) return "";
         return <div>{row.original?.userName}</div>;
       },
@@ -81,7 +79,6 @@ const OrderHistory = () => {
       header: "PAYMENT STATUS",
       accessorKey: "status",
       cell: ({ row }) => {
-        // console.log(row.original);
         if (!row.original?.status) return "";
         return <div>{row.original?.status}</div>;
       },
@@ -90,7 +87,6 @@ const OrderHistory = () => {
       header: "STATUS",
       accessorKey: "deliver",
       cell: ({ row }) => {
-        // console.log(row.original);
         if (!row.original?.delivery) return "";
         return <div>{row.original?.delivery}</div>;
       },
@@ -101,11 +97,6 @@ const OrderHistory = () => {
       cell: ({ row }) => {
         console.log(row.original);
         if (!row.original?.price) return "";
-        // const fecthItems = row?.original?.items?.filter((item:ProductType,index:number)=>
-        // item?.restaurant?.name == session?.user?.name
-        // )
-        // const totalPrice = fecthItems?.reduce((sum, item) => sum + (Number(item.price) * Number(item?.quantity)), 0);
-        // console.log({totalPrice});
         return <div>{row.original?.price} tk</div>;
       },
     },
@@ -115,7 +106,7 @@ const OrderHistory = () => {
       header: "ACTION",
       cell: ({ row }) => {
         return (
-          <div className="flex gap-5 justify-center action-column"> {/* Add class name here */}
+          <div className="flex gap-5 justify-center action-column"> 
             <DialogOrder initialValue={row?.original} />
             <button
               onClick={() => DeleteOrder(row.original)}
@@ -143,8 +134,8 @@ const OrderHistory = () => {
       "price",
     ];
 
-    // Extract only the columns that you want to export
-    const dataToExport = data?.orders.map((order:any) =>
+   
+    const dataToExport = data?.orders.map((order:OrderType) =>
       columnsToExport.reduce((acc, column) => {
         acc[column] = order[column];
         return acc;
@@ -164,7 +155,7 @@ const OrderHistory = () => {
 
   return (
     <div
-      className="rounded-[10px] w-full "
+      className="rounded-[10px] w-full overflow-x-auto my-6 xl:my-16 "
       style={{ boxShadow: "0px 4px 10px 0px rgba(0, 0, 0, 0.16)" }}
     >
       <div className="flex justify-between items-center py-8 px-6">
@@ -173,12 +164,7 @@ const OrderHistory = () => {
 
       <BasicTable1   data={data?.orders} columns={columns} ref={componentRef} />
       <div>
-        {/* <Button
-          onClick={handlePrint}
-          className="bg-[#F57213] hover:bg-[#F57213] text-white"
-        >
-          Print
-        </Button> */}
+       
         <PrintTable componentRef={componentRef} columnsToPrint={['0', '1', '2', '3', '4', '5']} />
 
         <Button

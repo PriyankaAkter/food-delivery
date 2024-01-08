@@ -7,6 +7,9 @@ import Image from "next/image";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-toastify";
 
+
+
+
 const SettingsForm = () => {
   const { data: session } = useSession();
   const queryClient = useQueryClient();
@@ -110,7 +113,7 @@ const SettingsForm = () => {
             defaultValue={data?.user?.name}
           />
         </div>
-        <div className="grid grid-cols-2 gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 md:gap-16">
           <div className="grid gap-2">
             <label htmlFor="email">Email Address</label>
             <input
@@ -137,7 +140,7 @@ const SettingsForm = () => {
           <textarea
             // className="border  w-full"
             className="border border-gray-500 rounded-md py-3 pl-2 w-full"
-            rows={10}
+            rows={5}
             {...register("address")}
             id="address"
             defaultValue={data?.user?.address}

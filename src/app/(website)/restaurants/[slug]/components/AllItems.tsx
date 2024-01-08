@@ -46,15 +46,18 @@ const AllItems: React.FC<AllItemsProps> = ({ item }) => {
 
   return (
     <div className="py-16 container">
-      <div className="flex gap-10 ">
+      <div className="flex flex-col xl:flex-row gap-10 ">
         <div
-          className="w-[360px] py-4 px-7 h-fit"
+          className="w-full sm:w-[360px] py-4 px-7 h-fit"
           style={{ boxShadow: "0px 4px 10px 0px rgba(0, 0, 0, 0.16)" }}
         >
           <h6 className="py-4">Foods Category</h6>
 
           {categoryData?.categories?.map((category: any) => (
-            <div className="py-4 flex justify-between items-center" key={category.name}>
+            <div
+              className="py-4 flex justify-between items-center"
+              key={category.name}
+            >
               <div className="flex items-center gap-2">
                 <input
                   className="w-4 h-4 sb"
@@ -104,7 +107,7 @@ const AllItems: React.FC<AllItemsProps> = ({ item }) => {
               </select>
             </div> */}
           </div>
-          <div className="grid grid-cols-3 gap-10  ">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10  ">
             {filteredItems?.map((foodItem: ProductType, index: number) => (
               <Card key={index} item={foodItem} />
             )) ?? []}

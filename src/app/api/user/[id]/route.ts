@@ -64,3 +64,25 @@ export const PUT = async (req: Request) => {
     );
   }
 };
+
+
+export const DELETE = async (req:NextRequest,{params:{id}}:{params:{id:string}}) => {
+   
+  console.log({id});
+  try {
+    const user = await prisma.user.delete({
+      where: {
+        id:id
+      }
+    });
+    return NextResponse.json(
+      {success: true, message: "user Deleted", user },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {success: false, message: "Something went wrong" },
+      { status: 400 }
+    );
+  }
+};

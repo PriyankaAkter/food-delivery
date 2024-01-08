@@ -9,17 +9,17 @@ import { toast } from 'react-toastify';
 
 
 
-const fetchRestaurant = async () => {
-    const restaurantsData = await axios.get(
-      "http://localhost:3000/api/restaurant"
+const fetchDeliveryMan = async () => {
+    const deliverymansData = await axios.get(
+      "http://localhost:3000/api/user"
     );
-    return restaurantsData.data;
+    return deliverymansData.data;
   };
 const RestaurantDataTable = () => {
     const queryClient = useQueryClient();
-    const { data:Restaurant, isLoading, error } = useQuery({
-        queryKey: ["restaurant"],
-        queryFn: () => fetchRestaurant(),
+    const { data:deliveryman, isLoading, error } = useQuery({
+        queryKey: ["deliveryman"],
+        queryFn: () => fetchDeliveryMan(),
       });
       
       
@@ -27,10 +27,10 @@ const RestaurantDataTable = () => {
         return <h6>Loading...</h6>;
       }
       if (error) return "An error has occurred: " + error.message;
-      // console.log({ Restaurant });
+      console.log({ deliveryman });
      
-
-
+const fetchDeli = deliveryman?.users?.filter((d:any)=>d?.role=="DELIVERY_MAN")
+console.log({ fetchDeli });
 
 
 //single data delete
@@ -38,10 +38,10 @@ const DeleteRestaurant = async (data:RestaurantColumnType) => {
   // console.log({data});
   
     try {
-      const deleteData = await axios.delete(`http://localhost:3000/api/restaurant/${data?.id}`)
+      const deleteData = await axios.delete(`http://localhost:3000/api/user/${data?.id}`)
       // console.log("Delete Response:", deleteData.data);
-      queryClient.invalidateQueries({ queryKey: ["restaurant"] });
-      toast.success('Restaurant deleted successfully')
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      toast.success('Delivery man deleted successfully')
       return deleteData?.data
     } catch (error) {
       console.error(error)
@@ -60,7 +60,7 @@ const columns: ColumnDef<RestaurantColumnType>[] = [
     id: "image",
     header: "image",
     cell: ({row}) => {
-      // console.log(row.original);
+      console.log(row.original);
       if(!row.original?.image) return ""
       return (
         <div className="w-16 h-16 relative"> 
@@ -69,19 +69,7 @@ const columns: ColumnDef<RestaurantColumnType>[] = [
       );
     },
   },
-  {
-    header: "Slug",
-    accessorKey: "slug",
-    cell: ({row}) => {
-      // console.log(row.original);
-      if(!row.original?.slug) return ""
-      return (
-        <div> 
-          {row.original?.slug}
-        </div>
-      );
-    },
-  },
+  
   {
     header: "Email",
     accessorKey: "email",
@@ -137,7 +125,7 @@ const columns: ColumnDef<RestaurantColumnType>[] = [
       style={{ boxShadow: "0px 4px 10px 0px rgba(0, 0, 0, 0.16)" }}
     >
       <div className="flex justify-between items-center py-8 px-6">
-        <h6>All Restaurants</h6>
+        <h6>All Delivery Mans</h6>
         <div>
          
 
@@ -152,7 +140,7 @@ const columns: ColumnDef<RestaurantColumnType>[] = [
         </div>
       </div>
       
-      <BasicTable1 data={Restaurant?.restaurants} columns={columns} />
+      <BasicTable1 data={fetchDeli} columns={columns} />
       
     </div>
   )

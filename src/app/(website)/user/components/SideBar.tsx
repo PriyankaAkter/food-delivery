@@ -74,8 +74,8 @@ export const SideBar = () => {
   };
 
   return (
-    <div className="flex gap-8  w-[1300px]">
-      <div className="w-[200px] 2xl:w-[400px] h-fit text-white bg-[#F29F05] py-14 px-14 ">
+    <div className="flex gap-8 flex-col lg:flex-row  w-[1300px]">
+      <div className="w-full  lg:w-[600px] h-fit text-white bg-[#F29F05] py-14 px-14 ">
         <div className="grid gap-5 ">
           <div
             className="flex gap-8 items-center cursor-pointer"

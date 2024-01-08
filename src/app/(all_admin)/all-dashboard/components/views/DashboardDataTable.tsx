@@ -1,4 +1,3 @@
-"use client";
 import { AiOutlinePlus } from "react-icons/ai";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import {
@@ -36,16 +35,12 @@ export function DashboardDataTable<TData, TValue>({
   });
 
   return (
-    <div
-      className="rounded-[10px] w-full overflow-x-auto"
-      style={{ boxShadow: "0px 4px 10px 0px rgba(0, 0, 0, 0.16)" }}
-    >
-      <div className="py-8 px-6">
-        <h6>Most Earning Restaurants</h6>
-        
+    <div className="overflow-x-auto rounded-[10px] my-4 p-4 shadow-md">
+      <div className="">
+        <h6 className="text-xl">Most Earning Restaurants</h6>
       </div>
-      <hr className="" />
-      <Table className="">
+      <hr className="my-4" />
+      <Table className="w-full table-auto">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id} className="border-none ">
@@ -100,9 +95,9 @@ export function DashboardDataTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
-      <div className="py-10">
+      <div className="py-4">
         <hr />
-        <div className="flex justify-between items-center px-6 pt-5">
+        <div className="flex justify-between items-center px-4 pt-3">
           <h6>Rows Per Page 10</h6>
           <div className="flex items-center gap-4">
             <GrFormPrevious className="w-6 h-6 text-black" />

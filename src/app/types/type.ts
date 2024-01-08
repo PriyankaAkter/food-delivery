@@ -13,6 +13,7 @@ export type RestaurantColumnType = {
   deliveryTime?: string
   openingHour?: string
   closingHour?: String
+  createdAt?: String
 }
   export type CategoryType = {
     id?: string
@@ -81,7 +82,7 @@ export type RestaurantColumnType = {
     image?: string 
     slug?: string
     price?: number
-    stock?: string
+    stock?: number
     quantity?: number
     review?: ReviewType[]
     orders?: OrderType[]

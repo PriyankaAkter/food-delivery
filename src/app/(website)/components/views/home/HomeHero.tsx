@@ -1,18 +1,50 @@
 'use client'
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
 
 export const HomeHero = () => {
+  const {data:session} = useSession()
+  const queryClient = useQueryClient();
+  useEffect(() => {
+    const fetchData = async () => {
+      if (session) {
+        try {
+          const userData = await axios.get(`http://localhost:3000/api/user/${session?.user?.id}`);
+          console.log('userData:', userData);
   
-
+          // Check if userData is defined and has the expected structure
+          if (userData?.data?.user) {
+            queryClient.invalidateQueries({ queryKey: ["user"] });
+  
+            const wishlist = userData.data.user.wishlist || [];
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+  
+            console.log('Wishlist stored successfully:', wishlist);
+          } else {
+            console.error('userData or wishlist is undefined:', userData);
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      }
+    };
+  
+    fetchData();
+  }, [session, queryClient]);
+  
+  
   return (
     <div className="py-20 container ">
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-[186px] ">
-        <div className="flex flex-col justify-center gap-12">
-          <h1 className="text-[60px] text-[#0F172A] font-semibold leading-[70px]">
-            Best & Fastest <br />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 xl:gap-[186px] ">
+        <div className="flex flex-col justify-center gap-5 xl:gap-12 w-full sm:w-[450px] xl:w-[650px]">
+          <h1 className="">
+            Best & Fastest 
             Delivery in Your Place
           </h1>
           <p className="w-full ">
@@ -23,24 +55,10 @@ export const HomeHero = () => {
           <Link href='/about' className="bg-[#F29F05] w-fit text-white font-medium py-3 px-5 rounded-[4px]">
               Learn More
             </Link>
-          {/* <div className="flex gap-7">
-            <form className="flex flex-col 2xl:flex-row gap-5 w-[515px] h-12 relative">
-              <input
-                type="text"
-                className="w-full lg:w-[622px] border border-[#808080] py-4 pl-5 rounded-[4px]"
-                placeholder="Search foods or restaurants"
-              ></input>
-              <div className="absolute right-5 top-4">
-                <BsSearch className="w-4 h-4 text-[#94A3B8]" />
-              </div>
-            </form>
-            <button className="bg-[#F29F05] text-white font-medium py-3 px-5 rounded-[4px]">
-              Search
-            </button>
-          </div> */}
+          
         </div>
 
-        <div className="relative w-[450px] xl:w-full h-[350px] xl:h-[397px]">
+        <div className="relative w-full sm:w-[450px] xl:w-full h-[250px] sm:h-[350px] xl:h-[397px]">
           <Image
             src="/assests/images/home/hero1.png"
             fill

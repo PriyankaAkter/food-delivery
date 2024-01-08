@@ -104,7 +104,7 @@ model Food {
   image        String?
   slug         String?
   price        Decimal
-  stock        String?
+  stock        Int?
   description  String?
   quantity Int? @default(1)
   createdAt    DateTime   @default(now())

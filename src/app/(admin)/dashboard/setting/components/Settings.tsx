@@ -3,7 +3,7 @@ import SettingsHeader from "./SettingsHeader"
 
 const Settings = () => {
   return (
-    <div className="p-8">
+    <div className="">
       {/* <SettingsHeader /> */}
       <SettingsForm />
     </div>

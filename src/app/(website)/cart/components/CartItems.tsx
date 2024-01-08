@@ -7,7 +7,6 @@ import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "@/app/redux_store/store";
 import { ProductType } from "@/app/types/type";
 import {
-  
   clearCart,
   decrementQuantity,
   incrementQuantity,
@@ -17,7 +16,6 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FaRegFaceSadTear } from "react-icons/fa6";
-
 
 // const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 // console.log({stripe});
@@ -37,15 +35,15 @@ const CartItems = () => {
   const router = useRouter();
 
   const handleCheckout = async () => {
-    if (!session) {
-      router.push("/sign-in");
-    } else {
+    if (session && session?.user?.role==="USER") {
       router.push("/billing");
+    } else {
+      router.push("/sign-in");
       // try {
       //   const res = await axios.post('http://localhost:3000/api/create-intent',totalPrice)
       //   const data = await res.data
       //   // console.log({data});
-        
+
       //   router.push(`/payment/${data?.clientSecret}`)
       // } catch (error) {
       //   console.log(error);
@@ -53,15 +51,10 @@ const CartItems = () => {
     }
   };
 
-
-
-
-
   return (
     <div className="my-[134px] container">
-       {
-          cart.length > 0 ? (  <div className="container py-28">
-       
+      {cart.length > 0 ? (
+        <div className="container py-28">
           <div className="overflow-x-auto">
             <table className="border w-full ">
               <thead className="rounded-2xl ">
@@ -70,8 +63,12 @@ const CartItems = () => {
                     Products
                   </th>
                   <th className="text-base font-normal text-primary">Price</th>
-                  <th className="text-base font-normal text-primary">Quantity</th>
-                  <th className="text-base font-normal text-primary">Subtotal</th>
+                  <th className="text-base font-normal text-primary">
+                    Quantity
+                  </th>
+                  <th className="text-base font-normal text-primary">
+                    Subtotal
+                  </th>
                   <th></th>
                 </tr>
               </thead>
@@ -90,7 +87,7 @@ const CartItems = () => {
                               className="object-cover"
                             />
                           </div>
-  
+
                           <span className="text-base sm:text-[22px] font-normal text-primary">
                             {e?.name}
                           </span>
@@ -101,7 +98,7 @@ const CartItems = () => {
                         <td className="px-8">
                           <div className="text-base sm:text-[22px] font-normal text-primary w-28 sm:w-[171px] mx-auto p-1 bg-[#EFF6F1] rounded-full flex justify-between items-center">
                             <button
-                            disabled={e?.quantity==1}
+                              disabled={e?.quantity == 1}
                               onClick={() => dispatch(decrementQuantity(e))}
                               className="bg-white p-2 rounded-full text-base sm:text-2xl"
                             >
@@ -109,6 +106,7 @@ const CartItems = () => {
                             </button>
                             <span>{e?.quantity}</span>
                             <button
+                              disabled={e?.quantity === e?.stock}
                               onClick={() => dispatch(incrementQuantity(e))}
                               className="bg-white p-2 rounded-full text-base sm:text-2xl"
                             >
@@ -117,7 +115,7 @@ const CartItems = () => {
                           </div>
                         </td>
                         <td className="text-base sm:text-[22px] font-medium text-primary px-8">
-                          {e?.price && (e?.price * e?.quantity)} tk
+                          {e?.price && e?.price * (e?.quantity || 0)} tk
                         </td>
                         <td className="px-8">
                           <button
@@ -141,7 +139,7 @@ const CartItems = () => {
           </div>
           <button
             onClick={handleCheckout}
-            className="bg-[#F29F05] text-white font-medium text-xl  py-3 px-8 rounded-md"
+            className="bg-[#F29F05] text-white font-medium text-xl  py-3 px-8 rounded-md mt-5"
           >
             Checkout
           </button>
@@ -150,17 +148,29 @@ const CartItems = () => {
             title="Checkout"
             className="border border-secondary"
           /> */}
-        </div>): (<div className="mx-auto   flex flex-col items-center gap-6 py-10 my-20">
+        </div>
+      ) : (
+        <div className="mx-auto   flex flex-col items-center gap-6 py-10 my-20">
           <div className="w-[360px]  h-[220px] relative">
-
-        <Image src="/assests/images/home/empty-cart.png" fill alt="empty-cart" />
+            <Image
+              src="/assests/images/home/empty-cart.png"
+              fill
+              alt="empty-cart"
+            />
           </div>
           <h3>Your Cart is empty!</h3>
-          <h6 className="text-center">Looks like you haven't added anything in your cart.<br />Go ahead and explore our shop.</h6>
-          <ButtonOne href="/shop" title="Continue Shopping" className="bg-[#F29F05] rounded-md text-white" />
-        </div>)
-        }
-    
+          <h6 className="text-center">
+            Looks like you haven't added anything in your cart.
+            <br />
+            Go ahead and explore our shop.
+          </h6>
+          <ButtonOne
+            href="/shop"
+            title="Continue Shopping"
+            className="bg-[#F29F05] rounded-md text-white"
+          />
+        </div>
+      )}
     </div>
   );
 };

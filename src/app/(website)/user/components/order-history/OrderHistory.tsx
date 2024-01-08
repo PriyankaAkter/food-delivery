@@ -61,7 +61,7 @@ const OrderHistory = () => {
               {order?.items?.map((item: ProductType, index: number) => (
                 <div className="py-4" key={index}>
                   <div className="flex items-center justify-between gap-10">
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-col sm:flex-row items-center gap-2">
                       <div className="relative w-20 h-20">
                         <Image
                           src={item?.image || ""}

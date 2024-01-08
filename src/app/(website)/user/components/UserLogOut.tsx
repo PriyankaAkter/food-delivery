@@ -2,19 +2,23 @@
 import { signOut, useSession } from "next-auth/react";
 
 export const UserLogOut = () => {
- 
-    return (
-  
-      <button
-        onClick={() =>
-          signOut({
-            redirect: true,
-            callbackUrl: `/sign-in`,
-          })
-        }
-        className=" text-xl font-medium hover:text-secondary"
-      >
-        Sign Out
-      </button>
-    );
+  const { data: session } = useSession();
+
+  const handleSignOut = () => {
+    localStorage.removeItem('wishlist');
+    
+    signOut({
+      redirect: true,
+      callbackUrl: `/sign-in`,
+    });
   };
+
+  return (
+    <button
+      onClick={handleSignOut}
+      className="text-xl font-medium hover:text-secondary"
+    >
+      Sign Out
+    </button>
+  );
+};

@@ -63,9 +63,9 @@ const OrderCard: React.FC<OrderProps> = ({ order }) => {
           newStatus = "READY_FOR_DELIVERY";
           break;
 
-        case "READY_FOR_DELIVERY":
-          newStatus = "DELIVERED";
-          break;
+        // case "READY_FOR_DELIVERY":
+        //   newStatus = "DELIVERED";
+        //   break;
         default:
           newStatus = "PENDING";
       }
@@ -132,11 +132,12 @@ const OrderCard: React.FC<OrderProps> = ({ order }) => {
   const deliveryCost = Number(totalPrice) + 60;
 
   return (
-    <div className="w-full  border border-[#E9EFF6] h-auto  rounded-[10px] p-10 print">
+    <div className="w-full  border border-[#E9EFF6] h-auto  rounded-[10px] p-5 lg:p-10 print">
       <div ref={componentRef}>
         <div>
           <h6>Order #{order?.id}</h6>
-          <p>{new Date(order?.createdAt)?.toLocaleString()}</p>
+          <p>{order?.createdAt ? new Date(order.createdAt).toLocaleString() : ''}</p>
+
         </div>
         <hr />
         <div>
@@ -147,8 +148,8 @@ const OrderCard: React.FC<OrderProps> = ({ order }) => {
               </AccordionTrigger>
               <AccordionContent>
                 <p>Name: {order?.user?.name}</p>
-                <p>Phone: {order?.user?.phone}</p>
-                <p>Address: {order?.user?.address}</p>
+                <p>Phone: {order?.billingphone}</p>
+                <p>Address: {order?.billingaddress}</p>
               </AccordionContent>
             </AccordionItem>
           </Accordion>
@@ -211,7 +212,7 @@ const OrderCard: React.FC<OrderProps> = ({ order }) => {
             <Button
               onClick={() => handleStatus()}
               disabled={
-                order?.delivery == "DELIVERED" || order?.delivery == "CANCELLED"
+                order?.delivery == "DELIVERED" || order?.delivery == "CANCELLED" || order?.delivery == "READY_FOR_DELIVERY"
               }
               className="bg-[#F57213] hover:bg-[#F57213] text-white"
             >

@@ -2,12 +2,17 @@
 import { signOut } from "next-auth/react";
 
 const UserAcoount = () => {
-  return (
-    <button onClick={()=>signOut({
+  const handleSignOut = () => {
+    localStorage.removeItem('wishlist');
+    
+    signOut({
       redirect: true,
       callbackUrl: `${window.location.origin}/sign-in`
-    })} className=" text-black">
-    Sign Out
+    });
+  };
+  return (
+    <button onClick={handleSignOut} className=" text-black">
+    SIGN OUT
   </button>
     
   );

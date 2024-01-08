@@ -73,7 +73,7 @@ const SignUpForm = () => {
     <form
       onSubmit={handleSubmit(onSubmit)}
       action=""
-      className="w-[500px] mx-auto py-10 grid gap-4 px-8 border"
+      className="w-full sm:w-[500px] mx-auto py-10 grid gap-4 px-8 border"
     >
       <h6 className="">Restaurant register Form</h6>
       <div className=" flex flex-col gap-2">

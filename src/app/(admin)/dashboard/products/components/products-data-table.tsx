@@ -118,7 +118,7 @@ export function ProductDataTable() {
       cell: ({ row }) => {
         // console.log(row?.original);
 
-        if (!row?.original?.stock) return "--";
+        // if (!row?.original?.stock) return "--";
 
         return <div>{row.original?.stock}</div>;
       },
@@ -141,7 +141,7 @@ export function ProductDataTable() {
         // console.log(row.original);
 
         return (
-          <div className="flex gap-3 justify-center  w-[400px]">
+          <div className="flex gap-3 justify-center w-full sm:w-[400px]">
             <DialogDemo
               initialValue={row.original}
               className="p-3 rounded-lg bg-bone hover:bg-none border border-[#F57213]"
@@ -163,7 +163,7 @@ export function ProductDataTable() {
 
   return (
     <div
-      className="rounded-[10px] w-full overflow-x-auto"
+      className="rounded-[10px] w-full overflow-x-auto my-6 xl:my-16 "
       style={{ boxShadow: "0px 4px 10px 0px rgba(0, 0, 0, 0.16)" }}
     >
       <div className="flex justify-between items-center py-8 px-6">

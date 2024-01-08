@@ -1,15 +1,8 @@
 "use client";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { items } from "../../components/views/data";
-import ButtonOne from "../../components/shared/ButtonOne";
-import getCart from "@/utilis/getCart";
-
-import { useStripe } from "@stripe/react-stripe-js";
-
-import { CustomerType, ProductType } from "@/app/types/type";
+import { CustomerType } from "@/app/types/type";
 import axios from "axios";
 import { useAppSelector } from "@/app/redux_store/store";
-import { ZodType, z } from "zod";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -19,7 +12,7 @@ import { useRouter } from "next/navigation";
 const BillingDetails = () => {
   const { data: session } = useSession();
   const cart = useAppSelector((state) => state?.cart?.products);
-
+ 
   const form = useForm();
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -32,7 +25,7 @@ const BillingDetails = () => {
       return userData.data;
     },
   });
-
+ 
   if (isLoading) {
     return <h6>Loading...</h6>;
   }
@@ -42,7 +35,7 @@ const BillingDetails = () => {
   queryClient.invalidateQueries({ queryKey: ["user"] });
 
   const { register, handleSubmit, formState } = form;
-  const { errors } = formState;
+
 
   // console.log({ cart });
 
@@ -76,17 +69,17 @@ const BillingDetails = () => {
   };
 
   return (
-    <div className="w-[900px] mx-auto py-10">
+    <div className="w-full xl:w-[900px] mx-auto py-10 px-2">
       <div className=" bg-[#F9F8F8] p-5 2xl:p-[68px]">
         <h5 className="mb-[11px]">Billing Details</h5>
-        <hr className="mb-20 bg-primary" />
+        <hr className="mb-10 md:mb-20 bg-primary" />
         <form
           onSubmit={handleSubmit(onSubmit)}
           action="/"
           className="grid gap-12"
         >
           <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-10">
+            <div className="grid md:grid-cols-2 gap-10">
               <div className="grid gap-3">
                 <label htmlFor="name" className="text-base">
                   Full Name
@@ -121,7 +114,7 @@ const BillingDetails = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-10">
+            <div className="grid md:grid-cols-2 gap-10">
               <div className="grid gap-3">
                 <label htmlFor="address" className="text-base">
                   address
@@ -130,7 +123,7 @@ const BillingDetails = () => {
                   <input
                     type="text"
                     id="address"
-                    {...register("address")}
+                    {...register("address",{ required: true })}
                     defaultValue={data?.user?.address}
                     className="border border-theme-gray w-full pl-4 py-4"
                   />
@@ -145,7 +138,7 @@ const BillingDetails = () => {
                   <input
                     type="text"
                     id="phone"
-                    {...register("phone")}
+                    {...register("phone",{ required: true })}
                     defaultValue={data?.user?.phone}
                     className="border border-theme-gray w-full pl-4 py-4"
                   />

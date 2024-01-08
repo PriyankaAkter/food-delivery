@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { FaRegHeart } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { ProductType } from "@/app/types/type";
 
 const WishListCount = () => {
   const { data: session } = useSession();
@@ -22,18 +23,20 @@ const WishListCount = () => {
   });
 
   // console.log({data});
-
-  const loadWishlistFromLocalStorage = () => {
-    if (typeof window !== "undefined" && session?.user) {
-      const storedProducts = localStorage.getItem(
-        `wishlist_${session.user.id}`
-      );
-
+  
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedProducts = localStorage.getItem("wishlist");
+      
       if (storedProducts) {
         try {
           const products = JSON.parse(storedProducts);
+  
+          // Check if the parsed data is an array
           if (Array.isArray(products)) {
-            dispatch(addWishlist(products));
+            products.forEach((element: any) => {
+              dispatch(addWishlist(element));
+            });
           } else {
             console.error("Stored products is not an array:", products);
           }
@@ -42,21 +45,11 @@ const WishListCount = () => {
         }
       }
     }
-  };
-
-  // Load wishlist from local storage when the component mounts
-  useEffect(() => {
-    loadWishlistFromLocalStorage();
   }, []);
-
-  // Load wishlist from local storage when the user changes (login/logout)
-  useEffect(() => {
-    loadWishlistFromLocalStorage();
-  }, [session]);
 
   // ... (your existing code)
 
-  return session?.user ? (
+  return session?.user && session?.user?.role==="USER" ? (
     <div className="flex items-center gap-1 relative">
       <div className="w-4 h-4 bg-[#F29F05] rounded-full flex items-center justify-center text-white text-[12px] absolute -right-2 -top-2">
         {data?.user?.wishlist?.length}

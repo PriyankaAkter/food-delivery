@@ -16,15 +16,9 @@ export const SideBar = async () => {
   console.log({ session });
 
   return (
-    <div className="w-[200px] 2xl:w-[450px] bg-[#f1f2f6] py-14 px-14 h-screen">
+    <div className="w-[200px] 2xl:w-[450px] bg-[#f1f2f6] py-14 px-14 h-screen hidden 2xl:block">
       <div className="flex justify-between items-center mb-24">
         <div className="flex gap-4 items-center">
-          {/* {session?.user && session?.user?.role === "ADMIN" && (
-            <div className="w-16 h-16 relative">
-              
-              <h6>{session?.user?.name}</h6>
-            </div>
-          )} */}
           <div className="w-16 h-16 relative">
             <Image
               fill
@@ -36,9 +30,9 @@ export const SideBar = async () => {
           <h6>{session?.user?.name}</h6>
         </div>
 
-        <div className="">
+        {/* <div className="">
           <RiFolderSharedLine className="text-primary w-5 h-5" />
-        </div>
+        </div> */}
       </div>
       <div className="grid gap-5 mt-24">
         <div className="flex gap-8 items-center">

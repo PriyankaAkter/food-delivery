@@ -12,10 +12,10 @@ const SearchBar = ({Filter,placeholder}:any) => {
 
   return (
     <div
-      className=""
+      className="w-full"
       
     >
-      <form className="flex flex-col 2xl:flex-row gap-5 w-[379px] relative">
+      <form className="flex flex-col 2xl:flex-row gap-5 w-full sm:w-[379px] relative">
         <input
           onChange={Filter}
           type="text"

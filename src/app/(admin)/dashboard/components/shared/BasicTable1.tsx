@@ -48,7 +48,7 @@ interface DataTableProps<TData, TValue> {
           />
         </div> */}
   
-        <table className="">
+        <table className="w-full">
           <thead className="border-none">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr
@@ -114,7 +114,7 @@ interface DataTableProps<TData, TValue> {
           </tbody>
         </table>
         <div className="flex justify-between py-10 items-center px-6 print-hidden">
-          <h6>Rows per page 10 items</h6>
+          <h6 className="text-base lg:text-xl">Rows per page 10 items</h6>
           <div className="mt-2 flex gap-2">
             <button
               disabled={!table.getCanPreviousPage()}

@@ -207,7 +207,7 @@ const CheckoutForm = () => {
     <form
       id="payment-form"
       onSubmit={handleSubmit}
-      className="w-[800px] mx-auto p-4 lg:px-20 xl:px-40 flex flex-col gap-8 py-16"
+      className="w-full lg:w-[800px] mx-auto p-4 lg:px-20 xl:px-40 flex flex-col gap-8 py-16"
     >
       <LinkAuthenticationElement id="link-authentication-element" />
       <PaymentElement

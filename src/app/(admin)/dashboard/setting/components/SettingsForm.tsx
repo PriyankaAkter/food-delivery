@@ -5,13 +5,10 @@ import axios from "axios";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-toastify";
 
-type Inputs = {
-  mobile: string;
-  email: string;
-  country: string;
-  address: string;
-  openAndClosed: string;
+type RestaurantFormType = RestaurantColumnType & {
+  image: FileList;
 };
+
 const SettingsForm = () => {
   const queryClient = useQueryClient();
   const {
@@ -19,7 +16,7 @@ const SettingsForm = () => {
     handleSubmit,
     
     formState: { errors },
-  } = useForm<RestaurantColumnType>();
+  } = useForm<RestaurantFormType>();
 
   const cloud_name = "dvbkbxen4";
   const preset_key = "wzcxmcgg";
@@ -42,7 +39,7 @@ const SettingsForm = () => {
   // console.log(data?.restaurant);
 
 
-  const onSubmit: SubmitHandler<RestaurantColumnType & { image: FileList }> = async (data) => {
+  const onSubmit: SubmitHandler<RestaurantFormType> = async (data) => {
     console.log(data);
     try {
       const file = data?.image[0];
@@ -85,10 +82,10 @@ const SettingsForm = () => {
 
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="my-16 w-full">
+    <form onSubmit={handleSubmit(onSubmit)} className="my-6 xl:my-16 w-full">
       <h5>Change your account details</h5>
-      <div className="grid gap-4">
-        <div className="grid grid-cols-2 gap-16 mt-8">
+      <div className="grid gap-4 ">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-16 mt-8">
           <div className="grid gap-2">
             <label htmlFor="name">Restaurant Name</label>
             <input disabled
@@ -109,7 +106,7 @@ const SettingsForm = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-16">
           <div className="grid gap-2">
             <label htmlFor="email">Email Address</label>
             <input
@@ -131,7 +128,7 @@ const SettingsForm = () => {
           </div>
           
         </div>
-        <div className="grid grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-16">
         <div className="grid gap-2">
             <label htmlFor="deliveryTime">Delivery Time</label>
             <input
